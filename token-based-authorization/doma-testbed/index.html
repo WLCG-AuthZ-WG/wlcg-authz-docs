@@ -13,7 +13,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
     
     
       
@@ -21,9 +21,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.18ac144a.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a2408e81.min.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.616af814.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
       
         
@@ -470,9 +470,29 @@
 <li>https://wlcg.cloud.cnaf.infn.it</li>
 </ul>
 <h3 id="rucio">RUCIO</h3>
-<pre><code class="INI">[client]
-rucio_host = https://rucio-doma.cern.ch
-auth_host = https://rucio-doma-auth.cern.ch
+<p>Install <a href="https://rucio.readthedocs.io/en/latest/installing_clients.html">rucio client</a></p>
+<pre><code class="shell">virtualenv rucio
+source rucio/bin/activate
+pip install rucio-clients
+mkdir rucio/etc
+cat &gt; rucio/etc/rucio.cfg &lt;&lt;EOF
+[client]
+rucio_host = https://rucio-doma.cern.ch:443
+auth_host = https://rucio-doma-auth.cern.ch:443
+auth_type = x509_proxy
+# admin credentials
+#auth_type = userpass
+#username = ddmlab
+#password = secret
+account = root
+ca_cert = /etc/grid-security/certificates
+request_retries = 3
+EOF
+</code></pre>
+
+<p>Setup rucio client</p>
+<pre><code class="shell">source rucio/bin/activate
+export RUCIO_HOME=`pwd`/rucio
 </code></pre>
 
 <h3 id="fts">FTS</h3>
