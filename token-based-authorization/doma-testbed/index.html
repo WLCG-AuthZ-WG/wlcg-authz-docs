@@ -497,9 +497,11 @@ export RUCIO_HOME=`pwd`/rucio
 </code></pre>
 
 <h3 id="fts">FTS</h3>
-<ul>
-<li>?</li>
-</ul>
+<p><a href="https://fts3-devel.cern.ch:8449">CERN Devel FTS</a> with 3.10.x provides JWT support for WLCG and XDC.</p>
+<pre><code>fts-rest-transfer-submit --access-token=&lt;token&gt; -s https://fts3-devel.cern.ch:8446 &lt;src_url&gt; &lt;dst_url&gt;
+fts-rest-transfer-status --access-token=&lt;token&gt; -s https://fts3-devel.cern.ch:8446
+</code></pre>
+
 <h3 id="dcache">dCache</h3>
 <ul>
 <li><a href="https://prometheus.desy.de:2443/VOs/wlcg">Prometheus dev endpoint</a></li>
@@ -514,7 +516,7 @@ export RUCIO_HOME=`pwd`/rucio
 </ul>
 <h3 id="eos">EOS</h3>
 <ul>
-<li>?</li>
+<li><a href="https://eospps.cern.ch:443/eos/opstest/tpc/https">CERN dev endpoint</a> (not yet ready / working)</li>
 </ul>
 <h3 id="storm">StoRM</h3>
 <ul>
@@ -523,7 +525,7 @@ export RUCIO_HOME=`pwd`/rucio
 </ul>
 <h3 id="xrootd">XRootD</h3>
 <ul>
-<li>?</li>
+<li><a href="https://red-gridftp12.unl.edu:1094/user/dteam">Nebraska dev endpoint</a></li>
 </ul>
                 
               
