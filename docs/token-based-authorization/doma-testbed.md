@@ -34,7 +34,7 @@ source rucio/bin/activate
 export RUCIO_HOME=`pwd`/rucio
 ```
 
-### FTS
+### [FTS](http://fts3-docs.web.cern.ch/fts3-docs/docs/install/fts3.html)
 
 [CERN Devel FTS](https://fts3-devel.cern.ch:8449) with 3.10.x provides JWT support for WLCG and XDC.
 ```
@@ -42,11 +42,11 @@ fts-rest-transfer-submit --access-token=<token> -s https://fts3-devel.cern.ch:84
 fts-rest-transfer-status --access-token=<token> -s https://fts3-devel.cern.ch:8446
 ```
 
-### dCache
+### [dCache](https://www.dcache.org/manuals/Book-5.2/config-gplazma.shtml#using-openid-connect) ([https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer](transfer documentation))
 
 - [Prometheus dev endpoint](https://prometheus.desy.de:2443/VOs/wlcg)
 
-### DPM
+### [DPM](https://twiki.cern.ch/twiki/bin/view/DPM/DpmSetupPuppetInstallation#OpenID_Connect_and_WLCG_bearer_t)
 
 - [PRAGUE production endpoint](https://golias100.farm.particle.cz:443/dpm/farm.particle.cz/home/wlcg)
 
