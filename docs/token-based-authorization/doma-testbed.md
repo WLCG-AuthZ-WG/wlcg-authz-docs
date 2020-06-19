@@ -36,7 +36,11 @@ export RUCIO_HOME=`pwd`/rucio
 
 ### FTS
 
-- ?
+[CERN Devel FTS](https://fts3-devel.cern.ch:8449) with 3.10.x provides JWT support for WLCG and XDC.
+```
+fts-rest-transfer-submit --access-token=<token> -s https://fts3-devel.cern.ch:8446 <src_url> <dst_url>
+fts-rest-transfer-status --access-token=<token> -s https://fts3-devel.cern.ch:8446
+```
 
 ### dCache
 
@@ -52,7 +56,7 @@ export RUCIO_HOME=`pwd`/rucio
 
 ### EOS
 
-- ?
+- [CERN dev endpoint](https://eospps.cern.ch:443/eos/opstest/tpc/https) (not yet ready / working)
 
 ### StoRM
 
@@ -61,4 +65,4 @@ export RUCIO_HOME=`pwd`/rucio
   
 ### XRootD
 
-- ?
+- [Nebraska dev endpoint](https://red-gridftp12.unl.edu:1094/user/dteam)
