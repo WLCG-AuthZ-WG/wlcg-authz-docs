@@ -57,6 +57,7 @@ fts-rest-transfer-status --access-token=<token> -s https://fts3-devel.cern.ch:84
 ### EOS
 
 - [CERN dev endpoint](https://eospps.cern.ch:443/eos/opstest/tpc/https) (not yet ready / working)
+- [CERN ATLAS production endpoint](https://eosatlas.cern.ch:443/eos/atlas/atlasscratchdisk/3rdpartycopy) (only for ATLAS members)
 
 ### StoRM
 
