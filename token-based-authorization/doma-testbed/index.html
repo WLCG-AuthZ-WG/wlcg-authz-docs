@@ -13,7 +13,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.2">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -278,7 +278,7 @@
         
           <li class="md-nav__item">
   <a href="#dcache-httpswwwdcacheorgmanualsuserguide-62webdavshtmlauthorising-the-data-transfer" class="md-nav__link">
-    dCache (https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer)
+    dCache (https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer )
   </a>
   
 </li>
@@ -403,7 +403,7 @@
         
           <li class="md-nav__item">
   <a href="#dcache-httpswwwdcacheorgmanualsuserguide-62webdavshtmlauthorising-the-data-transfer" class="md-nav__link">
-    dCache (https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer)
+    dCache (https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer )
   </a>
   
 </li>
@@ -471,38 +471,40 @@
 <li>https://wlcg.cloud.cnaf.infn.it</li>
 </ul>
 <h3 id="rucio">RUCIO</h3>
-<p>Install <a href="https://rucio.readthedocs.io/en/latest/installing_clients.html">rucio client</a></p>
+<p>Install Rucio client with one method described in <a href="https://rucio.readthedocs.io/en/latest/installing_clients.html">documentation</a>, e.g.</p>
 <pre><code class="shell">virtualenv rucio
 source rucio/bin/activate
 pip install rucio-clients
-mkdir rucio/etc
-cat &gt; rucio/etc/rucio.cfg &lt;&lt;EOF
-[client]
+</code></pre>
+
+<p>and save following configuration file in <code>rucio/etc/rucio.cfg</code> for WLCG DOMA Rucio OIDC tests</p>
+<pre><code class="shell">[client]
 rucio_host = https://rucio-doma.cern.ch:443
 auth_host = https://rucio-doma-auth.cern.ch:443
-auth_type = x509_proxy
-# admin credentials
-#auth_type = userpass
-#username = ddmlab
-#password = secret
-account = root
+auth_type = oidc
+account = wlcg_doma
+oidc_issuer = wlcg
 ca_cert = /etc/grid-security/certificates
-request_retries = 3
-EOF
+#ca_cert = /etc/pki/tls/certs/CERN-bundle.pem
 </code></pre>
 
-<p>Setup rucio client</p>
+<p>Setup environment for Rucio client installed in virtualenv</p>
 <pre><code class="shell">source rucio/bin/activate
-export RUCIO_HOME=`pwd`/rucio
 </code></pre>
 
+<p>or if you use different installation method just set <code>RUCIO_HOME</code> environment variable to the base directory with <code>etc/rucio.cfg</code> file</p>
+<pre><code class="shell">export RUCIO_HOME=/path/to/your/rucio
+</code></pre>
+
+<p>WLCG IAM account is necessary to access WLCG DOMA Rucio instance user sub claim (WLCG IAM uuid identity) must be associated with <code>wlcg_doma</code> Rucio account.</p>
 <h3 id="fts"><a href="http://fts3-docs.web.cern.ch/fts3-docs/docs/install/fts3.html">FTS</a></h3>
 <p><a href="https://fts3-devel.cern.ch:8449">CERN Devel FTS</a> with 3.10.x provides JWT support for WLCG and XDC.</p>
 <pre><code>fts-rest-transfer-submit --access-token=&lt;token&gt; -s https://fts3-devel.cern.ch:8446 &lt;src_url&gt; &lt;dst_url&gt;
 fts-rest-transfer-status --access-token=&lt;token&gt; -s https://fts3-devel.cern.ch:8446
 </code></pre>
 
-<h3 id="dcache-httpswwwdcacheorgmanualsuserguide-62webdavshtmlauthorising-the-data-transfer"><a href="https://www.dcache.org/manuals/Book-5.2/config-gplazma.shtml#using-openid-connect">dCache</a> (<a href="transfer documentation">https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer</a>)</h3>
+<p>Be aware that for sucessfull FTS transfer submission with OIDC you also need recent 3.10.x FTS rest client.</p>
+<h3 id="dcache-httpswwwdcacheorgmanualsuserguide-62webdavshtmlauthorising-the-data-transfer"><a href="https://www.dcache.org/manuals/Book-6.2/config-gplazma.shtml#using-openid-connect">dCache</a> (<a href="transfer documentation">https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer</a> )</h3>
 <ul>
 <li><a href="https://prometheus.desy.de:2443/VOs/wlcg">Prometheus dev endpoint</a></li>
 </ul>
@@ -595,14 +597,14 @@ fts-rest-transfer-status --access-token=&lt;token&gt; -s https://fts3-devel.cern
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.a14cc5fd.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.7f4f3c92.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.7a2ea5ba.min.js"
+            worker: "../../assets/javascripts/worker/search.9b3611bd.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
