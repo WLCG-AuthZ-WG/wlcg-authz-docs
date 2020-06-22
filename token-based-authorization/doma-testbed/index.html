@@ -277,8 +277,16 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#dcache-httpswwwdcacheorgmanualsuserguide-62webdavshtmlauthorising-the-data-transfer" class="md-nav__link">
-    dCache (https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer )
+  <a href="#storage" class="md-nav__link">
+    Storage
+  </a>
+  
+    <nav class="md-nav" aria-label="Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dcache-transfer-documentation" class="md-nav__link">
+    dCache (transfer documentation)
   </a>
   
 </li>
@@ -291,8 +299,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#echo" class="md-nav__link">
-    Echo
+  <a href="#echo-ceph" class="md-nav__link">
+    Echo (CEPH)
   </a>
   
 </li>
@@ -315,6 +323,11 @@
   <a href="#xrootd" class="md-nav__link">
     XRootD
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -402,8 +415,16 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#dcache-httpswwwdcacheorgmanualsuserguide-62webdavshtmlauthorising-the-data-transfer" class="md-nav__link">
-    dCache (https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer )
+  <a href="#storage" class="md-nav__link">
+    Storage
+  </a>
+  
+    <nav class="md-nav" aria-label="Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dcache-transfer-documentation" class="md-nav__link">
+    dCache (transfer documentation)
   </a>
   
 </li>
@@ -416,8 +437,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#echo" class="md-nav__link">
-    Echo
+  <a href="#echo-ceph" class="md-nav__link">
+    Echo (CEPH)
   </a>
   
 </li>
@@ -440,6 +461,11 @@
   <a href="#xrootd" class="md-nav__link">
     XRootD
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -492,41 +518,50 @@ ca_cert = /etc/grid-security/certificates
 <pre><code class="shell">source rucio/bin/activate
 </code></pre>
 
-<p>or if you use different installation method just set <code>RUCIO_HOME</code> environment variable to the base directory with <code>etc/rucio.cfg</code> file</p>
-<pre><code class="shell">export RUCIO_HOME=/path/to/your/rucio
+<p>or if you use different installation method just set <code>RUCIO_HOME</code> environment
+variable to the base directory with <code>etc/rucio.cfg</code> file</p>
+<pre><code class="shell">export RUCIO_HOME=/base/path/to/rucio
 </code></pre>
 
-<p>WLCG IAM account is necessary to access WLCG DOMA Rucio instance user sub claim (WLCG IAM uuid identity) must be associated with <code>wlcg_doma</code> Rucio account.</p>
+<p>WLCG IAM account is necessary to access WLCG DOMA Rucio instance and user sub
+claim (WLCG IAM uuid identity) must be associated with <code>wlcg_doma</code> Rucio
+account. It is also possible to associate user certificate subject with
+<code>wlcg_doma</code> Rucio account and then user can use normal certificate proxy
+after changing <code>auth_type = x509_proxy</code> or set environment variable
+<code>RUCIO_AUTH_TYPE=x509_proxy</code>.</p>
 <h3 id="fts"><a href="http://fts3-docs.web.cern.ch/fts3-docs/docs/install/fts3.html">FTS</a></h3>
 <p><a href="https://fts3-devel.cern.ch:8449">CERN Devel FTS</a> with 3.10.x provides JWT support for WLCG and XDC.</p>
-<pre><code>fts-rest-transfer-submit --access-token=&lt;token&gt; -s https://fts3-devel.cern.ch:8446 &lt;src_url&gt; &lt;dst_url&gt;
+<pre><code>fts-rest-whoami --access-token=&lt;token&gt; -s https://fts3-devel.cern.ch:8446
+fts-rest-transfer-submit --access-token=&lt;token&gt; -s https://fts3-devel.cern.ch:8446 &lt;src_url&gt; &lt;dst_url&gt;
 fts-rest-transfer-status --access-token=&lt;token&gt; -s https://fts3-devel.cern.ch:8446
 </code></pre>
 
 <p>Be aware that for sucessfull FTS transfer submission with OIDC you also need recent 3.10.x FTS rest client.</p>
-<h3 id="dcache-httpswwwdcacheorgmanualsuserguide-62webdavshtmlauthorising-the-data-transfer"><a href="https://www.dcache.org/manuals/Book-6.2/config-gplazma.shtml#using-openid-connect">dCache</a> (<a href="transfer documentation">https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer</a> )</h3>
+<h3 id="storage">Storage</h3>
+<h4 id="dcache-transfer-documentation"><a href="https://www.dcache.org/manuals/Book-6.2/config-gplazma.shtml#using-openid-connect">dCache</a> (<a href="https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer">transfer documentation</a>)</h4>
 <ul>
 <li><a href="https://prometheus.desy.de:2443/VOs/wlcg">Prometheus dev endpoint</a></li>
 </ul>
-<h3 id="dpm"><a href="https://twiki.cern.ch/twiki/bin/view/DPM/DpmSetupPuppetInstallation#OpenID_Connect_and_WLCG_bearer_t">DPM</a></h3>
+<h4 id="dpm"><a href="https://twiki.cern.ch/twiki/bin/view/DPM/DpmSetupPuppetInstallation#OpenID_Connect_and_WLCG_bearer_t">DPM</a></h4>
+<p>It is necessary to add <code>head.oidc.allowaudience[]: rucio</code> in DPM headnode configuration <code>/etc/domehead.conf</code></p>
 <ul>
 <li><a href="https://golias100.farm.particle.cz:443/dpm/farm.particle.cz/home/wlcg">PRAGUE production endpoint</a></li>
 </ul>
-<h3 id="echo">Echo</h3>
+<h4 id="echo-ceph">Echo (CEPH)</h4>
 <ul>
 <li>?</li>
 </ul>
-<h3 id="eos">EOS</h3>
+<h4 id="eos">EOS</h4>
 <ul>
 <li><a href="https://eospps.cern.ch:443/eos/opstest/tpc/https">CERN dev endpoint</a> (not yet ready / working)</li>
 <li><a href="https://eosatlas.cern.ch:443/eos/atlas/atlasscratchdisk/3rdpartycopy">CERN ATLAS production endpoint</a> (only for ATLAS members)</li>
 </ul>
-<h3 id="storm">StoRM</h3>
+<h4 id="storm">StoRM</h4>
 <ul>
 <li><a href="https://xfer.cr.cnaf.infn.it:8443/wlcg">CNAF production endpoint</a></li>
 <li><a href="https://storm.cloud.cnaf.infn.it/wlcg">CNAF dev endpoint</a> (not yet active)</li>
 </ul>
-<h3 id="xrootd">XRootD</h3>
+<h4 id="xrootd">XRootD</h4>
 <ul>
 <li><a href="https://red-gridftp12.unl.edu:1094/user/dteam">Nebraska dev endpoint</a></li>
 </ul>
