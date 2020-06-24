@@ -76,7 +76,7 @@ It is necessary to add `head.oidc.allowaudience[]: rucio` in DPM headnode config
 - [CERN dev endpoint](https://eospps.cern.ch:443/eos/opstest/tpc/https) (not yet ready / working)
 - [CERN ATLAS production endpoint](https://eosatlas.cern.ch:443/eos/atlas/atlasscratchdisk/3rdpartycopy) (only for ATLAS members)
 
-#### StoRM
+#### StoRM ([configuration instructions](./configuration/storm.md))
 
 - [CNAF production endpoint](https://xfer.cr.cnaf.infn.it:8443/wlcg)
 - [CNAF dev endpoint](https://storm.cloud.cnaf.infn.it/wlcg) (not yet active)
