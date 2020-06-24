@@ -34,11 +34,15 @@ variable to the base directory with `etc/rucio.cfg` file
 ```shell
 export RUCIO_HOME=/base/path/to/rucio
 ```
-WLCG IAM account is necessary to access WLCG DOMA Rucio instance and user sub
-claim (WLCG IAM uuid identity) must be associated with `wlcg_doma` Rucio
-account. It is also possible to associate user certificate subject with
-`wlcg_doma` Rucio account and then user can use normal certificate proxy
-after changing `auth_type = x509_proxy` or set environment variable
+
+[WLCG IAM account](https://wlcg.cloud.cnaf.infn.it) is necessary to
+access [WLCG DOMA Rucio instance](https://rucio-doma-webui.cern.ch)
+and user sub claim (WLCG IAM uuid identity) must be associated with
+`wlcg_doma` Rucio account by DOMA Rucio ADMIN. It is also possible to
+associate user certificate subject with `wlcg_doma` Rucio account to
+provide access with WLCG VO X.509 certificate proxy, but for different
+authorization type it is necessary to update `auth_type = x509_proxy`
+in `rucio.cfg` or setting environment variable
 `RUCIO_AUTH_TYPE=x509_proxy`.
 
 ### [FTS](http://fts3-docs.web.cern.ch/fts3-docs/docs/install/fts3.html)
