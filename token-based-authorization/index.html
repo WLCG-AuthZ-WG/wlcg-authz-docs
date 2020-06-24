@@ -250,6 +250,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wlcg-iam-scope-policy-configuration" class="md-nav__link">
+    WLCG IAM scope policy configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#getting-tokens-out-iam" class="md-nav__link">
     Getting tokens out IAM
   </a>
@@ -267,13 +274,6 @@
           <li class="md-nav__item">
   <a href="#group-based-authorization" class="md-nav__link">
     Group-based authorization
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adding-audience-constraints" class="md-nav__link">
-    Adding audience constraints
   </a>
   
 </li>
@@ -308,9 +308,63 @@
 
 
   <li class="md-nav__item">
+    <a href="issues/" title="Known issues" class="md-nav__link">
+      Known issues
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="oidc-agent/" title="OIDC Agent" class="md-nav__link">
       OIDC Agent
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-5" type="checkbox" id="nav-2-5">
+    
+    <label class="md-nav__link" for="nav-2-5">
+      Configuration
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Configuration
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="configuration/storm/" title="StoRM" class="md-nav__link">
+      StoRM
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
         
@@ -359,6 +413,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wlcg-iam-scope-policy-configuration" class="md-nav__link">
+    WLCG IAM scope policy configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#getting-tokens-out-iam" class="md-nav__link">
     Getting tokens out IAM
   </a>
@@ -376,13 +437,6 @@
           <li class="md-nav__item">
   <a href="#group-based-authorization" class="md-nav__link">
     Group-based authorization
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adding-audience-constraints" class="md-nav__link">
-    Adding audience constraints
   </a>
   
 </li>
@@ -414,10 +468,88 @@
 <a href="https://wlcg.cloud.cnaf.infn.it">IAM VO page</a>.</p>
 <p>If you have a CERN account, use that account to login to the <code>wlcg</code> VO.</p>
 <h2 id="registering-a-client-in-the-wlcg-iam-instance">Registering a client in the WLCG IAM instance</h2>
+<p>The recommended way of registering a client in the WLCG IAM instance is to use
+<code>oidc-agent</code> as described <a href="oidc-agent/">here</a>.</p>
+<p>By default, clients registered in the WLCG IAM instance will use the <a href="https://zenodo.org/record/3460258">common
+WLCG JWT profile</a>.</p>
+<h2 id="wlcg-iam-scope-policy-configuration">WLCG IAM scope policy configuration</h2>
+<p>IAM allows to define policies to limit access to scopes only to selected
+classes of users.</p>
+<p>In the IAM <code>wlcg</code> instance policies are defined to limit access to <code>compute.*</code>
+and <code>storage.*</code> scopes, which are the scopes defined in the <a href="https://zenodo.org/record/3460258">WLCG JWT
+profile</a> to control access to compute and storage resources.</p>
+<p>In more detail:</p>
+<ul>
+<li>
+<p>access to the <code>compute.create</code>, <code>compute.read</code>, <code>compute.cancel</code>,
+  <code>compute.modify</code> scope is only granted to members of the <code>wlcg/pilots</code> group;</p>
+</li>
+<li>
+<p>access to the <code>storage.read</code>, <code>storage.modify</code>, <code>storage.create</code> scopes is
+  only granted to members of the <code>wlcg/xfers</code> group.</p>
+</li>
+</ul>
+<p>Membership in those groups can be requested, after registration, from the IAM
+dashboard.</p>
 <h2 id="getting-tokens-out-iam">Getting tokens out IAM</h2>
 <h3 id="scope-based-authorization">Scope-based authorization</h3>
+<p>In order to transfer data across WLCG storage elements using scope-based
+authorization, request a token with the 'storage.read:/' and 'storage.modify:/'
+scopes, as follows:</p>
+<pre><code>$ AT=$(oidc-token -s storage.read:/ -s storage.modify:/ wlcg)
+</code></pre>
+
+<p>You can use the <code>jwt</code> utility to inspect the token contents:</p>
+<pre><code>$ echo $AT | jwt
+...
+✻ Payload
+{
+  &quot;wlcg.ver&quot;: &quot;1.0&quot;,
+  &quot;sub&quot;: &quot;a1b98335-9649-4fb0-961d-5a49ce108d49&quot;,
+  &quot;aud&quot;: &quot;https://wlcg.cern.ch/jwt/v1/any&quot;,
+  &quot;nbf&quot;: 1593004542,
+  &quot;scope&quot;: &quot;storage.read:/ storage.modify:/&quot;,
+  &quot;iss&quot;: &quot;https://wlcg.cloud.cnaf.infn.it/&quot;,
+  &quot;exp&quot;: 1593008142,
+  &quot;iat&quot;: 1593004542,
+  &quot;jti&quot;: &quot;da0a2f89-3cbf-42a7-9403-0b43d814551d&quot;,
+  &quot;client_id&quot;: &quot;edfacfb1-f59d-44d0-9eb6-a745ac52f462&quot;
+}
+</code></pre>
+
+<p>Then you can use <code>davix</code> to access WLCG storage:</p>
+<pre><code>$ davix-ls -l --capath /etc/grid-security/certificates/ -H &quot;Authorization: Bearer ${AT}&quot; https://xfer.cr.cnaf.infn.it:8443/wlcg/
+
+drwxrwxrwx 0     0          2020-06-24 10:41:13 wlcgdoma
+-rwxrwxrwx 0     1048576    2020-06-18 11:16:25 1M
+-rwxrwxrwx 0     1048576    2020-06-19 08:49:34 x
+drwxrwxrwx 0     0          2020-04-08 14:56:56 https
+drwxrwxrwx 0     0          2020-06-24 15:18:36 test-andrea
+drwxrwxrwx 0     0          2020-06-22 13:06:24 vokac.fts-test
+
+$ davix-ls -l --capath /etc/grid-security/certificates/ -H &quot;Authorization: Bearer ${AT}&quot; https://prometheus.desy.de:2443/VOs/wlcg
+
+drwxrwxrwx 0     0          2020-06-24 06:01:59 Tape
+drwxrwxrwx 0     0          2020-06-24 06:11:33 Private
+-rwxrwxrwx 0     173        2020-06-24 06:11:33 public-file
+-rwxrwxrwx 0     1048576    2020-06-24 14:14:30 x
+drwxrwxrwx 0     0          2020-06-24 10:41:13 wlcgdoma
+-rwxrwxrwx 0     150        2020-06-24 06:11:34 private-file
+
+$ davix-ls -l --capath /etc/grid-security/certificates/ -H &quot;Authorization: Bearer ${AT}&quot; https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg
+-rw-rw-r-- 0     1048576    2020-06-18 08:12:23 1M
+drwxrwx--- 0     1048576    2020-04-01 10:13:52 acl1
+drwxrwxr-x 0     85983232   2020-06-19 22:19:00 doma
+drwxrwxr-x 0     14680064   2020-06-22 13:06:25 vokac.fts-test
+drwxrwxr-x 0     52428800   2020-06-24 10:41:13 wlcgdoma
+-rw-rw-r-- 0     1048576    2020-06-24 13:01:03 x
+-rw-rw-r-- 0     1048576    2020-03-31 00:20:00 x.pull
+-rw-rw-r-- 0     1048576    2020-03-31 00:20:00 x.push
+-rw-rw-r-- 0     1048576    2020-06-05 11:49:59 x1
+</code></pre>
+
 <h3 id="group-based-authorization">Group-based authorization</h3>
-<h3 id="adding-audience-constraints">Adding audience constraints</h3>
+<p>TBD</p>
                 
               
               
