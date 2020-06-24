@@ -13,7 +13,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.3">
     
     
       
@@ -523,11 +523,14 @@ variable to the base directory with <code>etc/rucio.cfg</code> file</p>
 <pre><code class="shell">export RUCIO_HOME=/base/path/to/rucio
 </code></pre>
 
-<p>WLCG IAM account is necessary to access WLCG DOMA Rucio instance and user sub
-claim (WLCG IAM uuid identity) must be associated with <code>wlcg_doma</code> Rucio
-account. It is also possible to associate user certificate subject with
-<code>wlcg_doma</code> Rucio account and then user can use normal certificate proxy
-after changing <code>auth_type = x509_proxy</code> or set environment variable
+<p><a href="https://wlcg.cloud.cnaf.infn.it">WLCG IAM account</a> is necessary to
+access <a href="https://rucio-doma-webui.cern.ch">WLCG DOMA Rucio instance</a>
+and user sub claim (WLCG IAM uuid identity) must be associated with
+<code>wlcg_doma</code> Rucio account by DOMA Rucio ADMIN. It is also possible to
+associate user certificate subject with <code>wlcg_doma</code> Rucio account to
+provide access with WLCG VO X.509 certificate proxy, but for different
+authorization type it is necessary to update <code>auth_type = x509_proxy</code>
+in <code>rucio.cfg</code> or setting environment variable
 <code>RUCIO_AUTH_TYPE=x509_proxy</code>.</p>
 <h3 id="fts"><a href="http://fts3-docs.web.cern.ch/fts3-docs/docs/install/fts3.html">FTS</a></h3>
 <p><a href="https://fts3-devel.cern.ch:8449">CERN Devel FTS</a> with 3.10.x provides JWT support for WLCG and XDC.</p>
@@ -632,7 +635,7 @@ fts-rest-transfer-status --access-token=&lt;token&gt; -s https://fts3-devel.cern
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.7f4f3c92.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.4a5ba8d6.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
