@@ -1,5 +1,9 @@
 # Known issues
 
+## oidc-agent
+
+- [not available in EPEL repository](https://github.com/indigo-dc/oidc-agent/issues/267)
+
 ## Scitokens
 
 - [storage.modify scope is not honoured by
@@ -33,8 +37,22 @@ STORM_WEBDAV_ENABLE_HTTP2="false"
 
 ## DPM
 
+- allows `HEAD` requests with just `scope.create:/`
+- doesn't reject access tokens with expiration time longer than 6 hours
+
 ## EOS
 
 ## RUCIO
 
+- token with `rucio` audience used for FTS file transfers (changed to `https://wlcg.cern.ch/jwt/v1/any` for Rucio DOMA instnace)
+- default `scope` set to `openid profile` wich is not sufficient e.g. for `rucio upload` or `rucio download`
+- fails in case there is expired X.509 proxy in `/tmp/x509up_u$(id -u)` although `auth_type` is set to `oidc`
+- use [non-standard location for access token](https://github.com/WLCG-AuthZ-WG/bearer-token-discovery/blob/master/specification.md) `/tmp/$(id -u -n)/.rucio_${RUCIO_ACCOUNT}/auth_token_${RUCIO_ACCOUNT}`
+- [CLI OIDC arguments differs from FTS REST client](https://gitlab.cern.ch/fts/fts-rest/-/merge_requests/34)
+
 ## FTS
+
+## Gfal
+
+- tokens can't be passed to `gfal-utils` CLI tools
+- unable to determine which audience and scope `storage.*:/path` should be in used for SRM+HTTP transfers (TURL returned by SRM srmPrepareToGet + srmPrepareToPut not known before calling `copy` function)

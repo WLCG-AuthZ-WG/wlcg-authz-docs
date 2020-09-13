@@ -5,14 +5,22 @@
 ### IAM
 
 - [WLCG IAM](https://wlcg.cloud.cnaf.infn.it)
+- [XDC IAM](https://iam.extreme-datacloud.eu)
+- [CMS IAM](https://cms-auth.web.cern.ch)
 
 ### RUCIO
 
 Install Rucio client with one method described in [documentation](https://rucio.readthedocs.io/en/latest/installing_clients.html), e.g.
 ```shell
+# python2 rucio client
 virtualenv rucio
 source rucio/bin/activate
-pip install rucio-clients
+pip install 'pyrsistent>=0.14.0,<=0.17.0' # newer versin requires python3
+pip install 'rucio-clients<1.23.0'
+# latest rucio client works only with python3
+virtualenv-3 rucio
+source rucio/bin/activate
+pip3 install rucio-clients
 ```
 and save following configuration file in `rucio/etc/rucio.cfg` for WLCG DOMA Rucio OIDC tests
 ```shell
@@ -63,24 +71,30 @@ Be aware that for sucessfull FTS transfer submission with OIDC you also need rec
 
 #### [DPM](https://twiki.cern.ch/twiki/bin/view/DPM/DpmSetupPuppetInstallation#OpenID_Connect_and_WLCG_bearer_t)
 
-It is necessary to add `head.oidc.allowaudience[]: rucio` in DPM headnode configuration `/etc/domehead.conf`
-
 - [PRAGUE production endpoint](https://golias100.farm.particle.cz:443/dpm/farm.particle.cz/home/wlcg)
 
 #### Echo (CEPH)
 
-- ?
+- [RAL dev endpoint](https://ceph-test-gw683.gridpp.rl.ac.uk/dteam:test/) (wlcg VO not yet supported?)
 
 #### EOS
 
-- [CERN dev endpoint](https://eospps.cern.ch:443/eos/opstest/tpc/https) (not yet ready / working)
+- [CERN dev endpoint](https://eospps.cern.ch:443/eos/opstest/tpc/https)
 - [CERN ATLAS production endpoint](https://eosatlas.cern.ch:443/eos/atlas/atlasscratchdisk/3rdpartycopy) (only for ATLAS members)
 
 #### StoRM ([configuration instructions](./configuration/storm.md))
 
 - [CNAF production endpoint](https://xfer.cr.cnaf.infn.it:8443/wlcg)
-- [CNAF dev endpoint](https://storm.cloud.cnaf.infn.it/wlcg) (not yet active)
+- [CNAF dev endpoint](https://amnesiac.cloud.cnaf.infn.it:8443/wlcg)
 
 #### XRootD
 
 - [Nebraska dev endpoint](https://red-gridftp12.unl.edu:1094/user/dteam)
+
+### Monitoring
+
+- [Functional Tests with WLCG OIDC](https://atlas-kibana.mwt2.org:5601/s/rucio/app/kibana#/dashboard/58b37580-b601-11ea-a57f-cfdaa2417d86)
+- [Rucio DOMA Configuration](https://gitlab.cern.ch/wlcg-doma-rucio/flux/-/tree/master/releases/integration)
+- [Rucio DOMA Logs](https://atlas-kibana.mwt2.org:5601/s/rucio/goto/2cdbb5f83cbe74358ed4287a764426dd)
+- [CERN FTS3 Devel](https://fts3-devel.cern.ch:8449/fts3/ftsmon/#/)
+- [FTS Grafana](https://monit-grafana.cern.ch/d/000000670/fts-servers-dashboard?orgId=25&var-group_by=activity&var-vo=dteam&var-vo_es=dteam&var-source_se=All&var-source_se_es=All&var-src_country=All&var-dst_country=All&var-src_site=All&var-dst_site=All&var-dest_se=All&var-dest_se_es=All&var-fts_server=fts3-devel.cern.ch&var-fts_server_es=fts3-devel.cern.ch&var-bin=1h&var-dest_hostname=All&var-source_hostname=All)

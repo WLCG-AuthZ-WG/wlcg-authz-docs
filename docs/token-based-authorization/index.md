@@ -68,37 +68,49 @@ $ echo $AT | jwt
 }
 ```
 
-Then you can use `davix` to access WLCG storage:
+or directly decode token payload with `echo $AT | sed 's/.*\.\(.*\)\..*/\1==/' | base64 -d | jq`
+
+Then you can use `davix` or `curl` to access WLCG storage:
 
 ```
-$ davix-ls -l --capath /etc/grid-security/certificates/ -H "Authorization: Bearer ${AT}" https://xfer.cr.cnaf.infn.it:8443/wlcg/
-
+$ davix-ls -l --capath /etc/grid-security/certificates -H "Authorization: Bearer ${AT}" https://xfer.cr.cnaf.infn.it:8443/wlcg/
 drwxrwxrwx 0     0          2020-06-24 10:41:13 wlcgdoma
 -rwxrwxrwx 0     1048576    2020-06-18 11:16:25 1M
--rwxrwxrwx 0     1048576    2020-06-19 08:49:34 x
 drwxrwxrwx 0     0          2020-04-08 14:56:56 https
 drwxrwxrwx 0     0          2020-06-24 15:18:36 test-andrea
-drwxrwxrwx 0     0          2020-06-22 13:06:24 vokac.fts-test
 
-$ davix-ls -l --capath /etc/grid-security/certificates/ -H "Authorization: Bearer ${AT}" https://prometheus.desy.de:2443/VOs/wlcg
+$ davix-put --capath /etc/grid-security/certificates -H "Authorization: Bearer ${AT}" /etc/services https://prometheus.desy.de:2443/VOs/wlcg/file1
+$ davix-get --capath /etc/grid-security/certificates https://prometheus.desy.de:2443/VOs/wlcg/file1 /tmp/x
+Performing Read operation on: http://[2001:638:700:1005:0:0:1:95]:21881/VOs/wlcg/file1?dcache-http-uuid=679aa9a4-b946-49fd-8522-156d165425c5
+[==================================] 100%     654KiB/654KiB         0B/s
+$ davix-mkdir --capath /etc/grid-security/certificates -H "Authorization: Bearer ${AT}" https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1
+$ davix-cp --capath /etc/grid-security/certificates -H "Authorization: Bearer ${AT}" -H "TransferHeaderAuthorization: Bearer ${AT}" --copy-mode pull https://prometheus.desy.de:2443/VOs/wlcg/file1 https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1.pull
+$ davix-cp --capath /etc/grid-security/certificates -H "Authorization: Bearer ${AT}" -H "TransferHeaderAuthorization: Bearer ${AT}" --copy-mode pull https://prometheus.desy.de:2443/VOs/wlcg/file1 https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1.push
+$ davix-rm --capath /etc/grid-security/certificates -H "Authorization: Bearer ${AT}" https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1
 
-drwxrwxrwx 0     0          2020-06-24 06:01:59 Tape
-drwxrwxrwx 0     0          2020-06-24 06:11:33 Private
--rwxrwxrwx 0     173        2020-06-24 06:11:33 public-file
--rwxrwxrwx 0     1048576    2020-06-24 14:14:30 x
-drwxrwxrwx 0     0          2020-06-24 10:41:13 wlcgdoma
--rwxrwxrwx 0     150        2020-06-24 06:11:34 private-file
+# Create directory
+$ curl --capath /etc/grid-security/certificates -X MKCOL -H "Authorization: Bearer ${AT}" https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1
+# Upload file
+$ curl --capath /etc/grid-security/certificates -L -X PUT -H "Authorization: Bearer ${AT}" --upload-file /etc/services https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1
+# Download file
+$ curl --capath /etc/grid-security/certificates -L -X GET -H "Authorization: Bearer ${AT}" --output /tmp/x https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1
+# TPC pull
+$ curl --capath /etc/grid-security/certificates -L -X COPY -H 'Credentials: none' -H "Authorization: Bearer ${AT}" -H "TransferHeaderAuthorization: Bearer ${AT}" -H "Source: https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1" https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file2
+# TPC push
+$ curl --capath /etc/grid-security/certificates -L -X COPY -H 'Credentials: none' -H "Authorization: Bearer ${AT}" -H "TransferHeaderAuthorization: Bearer ${AT}" -H "Destination: https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file3" https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1
+# Delete
+$ curl --capath /etc/grid-security/certificates -L -X DELETE -H "Authorization: Bearer ${AT}" https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1
+```
 
-$ davix-ls -l --capath /etc/grid-security/certificates/ -H "Authorization: Bearer ${AT}" https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg
--rw-rw-r-- 0     1048576    2020-06-18 08:12:23 1M
-drwxrwx--- 0     1048576    2020-04-01 10:13:52 acl1
-drwxrwxr-x 0     85983232   2020-06-19 22:19:00 doma
-drwxrwxr-x 0     14680064   2020-06-22 13:06:25 vokac.fts-test
-drwxrwxr-x 0     52428800   2020-06-24 10:41:13 wlcgdoma
--rw-rw-r-- 0     1048576    2020-06-24 13:01:03 x
--rw-rw-r-- 0     1048576    2020-03-31 00:20:00 x.pull
--rw-rw-r-- 0     1048576    2020-03-31 00:20:00 x.push
--rw-rw-r-- 0     1048576    2020-06-05 11:49:59 x1
+Gfal python API can be also used with tokens, e.g.
+
+```
+import os
+import gfal2
+ctx = gfal2.creat_context()
+cred = gfal2.cred_new("BEARER", os.getenv('TOKEN'))
+gfal2.cred_set(ctx, 'amnesiac.cloud.cnaf.infn.it', cred)
+ctx.stat('https://amnesiac.cloud.cnaf.infn.it:8443/wlcg/wlcgdoma/https/jwttest/1M')
 ```
 
 ### Group-based authorization
