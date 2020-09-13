@@ -13,7 +13,7 @@
       
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12">
     
     
       
@@ -21,14 +21,14 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.fe0cca5b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.4dd2dd8d.min.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/palette.a46bcfb3.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.6a5ad368.min.css">
       
       
         
         
-        <meta name="theme-color" content="#3f51b5">
+        <meta name="theme-color" content="#4051b5">
       
     
     
@@ -181,15 +181,11 @@
     
     <label class="md-nav__link" for="nav-2">
       Token based authorization
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Token based authorization" data-md-level="1">
       <label class="md-nav__title" for="nav-2">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+        <span class="md-nav__icon md-icon"></span>
         Token based authorization
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -211,9 +207,7 @@
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
         Token-based authorization
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
-        </span>
+        <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="./" title="Token-based authorization" class="md-nav__link md-nav__link--active">
@@ -228,9 +222,7 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -337,15 +329,11 @@
     
     <label class="md-nav__link" for="nav-2-5">
       Configuration
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Configuration" data-md-level="2">
       <label class="md-nav__title" for="nav-2-5">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+        <span class="md-nav__icon md-icon"></span>
         Configuration
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -391,9 +379,7 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -517,35 +503,44 @@ scopes, as follows:</p>
 }
 </code></pre>
 
-<p>Then you can use <code>davix</code> to access WLCG storage:</p>
-<pre><code>$ davix-ls -l --capath /etc/grid-security/certificates/ -H &quot;Authorization: Bearer ${AT}&quot; https://xfer.cr.cnaf.infn.it:8443/wlcg/
-
+<p>or directly decode token payload with <code>echo $AT | sed 's/.*\.\(.*\)\..*/\1==/' | base64 -d | jq</code></p>
+<p>Then you can use <code>davix</code> or <code>curl</code> to access WLCG storage:</p>
+<pre><code>$ davix-ls -l --capath /etc/grid-security/certificates -H &quot;Authorization: Bearer ${AT}&quot; https://xfer.cr.cnaf.infn.it:8443/wlcg/
 drwxrwxrwx 0     0          2020-06-24 10:41:13 wlcgdoma
 -rwxrwxrwx 0     1048576    2020-06-18 11:16:25 1M
--rwxrwxrwx 0     1048576    2020-06-19 08:49:34 x
 drwxrwxrwx 0     0          2020-04-08 14:56:56 https
 drwxrwxrwx 0     0          2020-06-24 15:18:36 test-andrea
-drwxrwxrwx 0     0          2020-06-22 13:06:24 vokac.fts-test
 
-$ davix-ls -l --capath /etc/grid-security/certificates/ -H &quot;Authorization: Bearer ${AT}&quot; https://prometheus.desy.de:2443/VOs/wlcg
+$ davix-put --capath /etc/grid-security/certificates -H &quot;Authorization: Bearer ${AT}&quot; /etc/services https://prometheus.desy.de:2443/VOs/wlcg/file1
+$ davix-get --capath /etc/grid-security/certificates https://prometheus.desy.de:2443/VOs/wlcg/file1 /tmp/x
+Performing Read operation on: http://[2001:638:700:1005:0:0:1:95]:21881/VOs/wlcg/file1?dcache-http-uuid=679aa9a4-b946-49fd-8522-156d165425c5
+[==================================] 100%     654KiB/654KiB         0B/s
+$ davix-mkdir --capath /etc/grid-security/certificates -H &quot;Authorization: Bearer ${AT}&quot; https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1
+$ davix-cp --capath /etc/grid-security/certificates -H &quot;Authorization: Bearer ${AT}&quot; -H &quot;TransferHeaderAuthorization: Bearer ${AT}&quot; --copy-mode pull https://prometheus.desy.de:2443/VOs/wlcg/file1 https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1.pull
+$ davix-cp --capath /etc/grid-security/certificates -H &quot;Authorization: Bearer ${AT}&quot; -H &quot;TransferHeaderAuthorization: Bearer ${AT}&quot; --copy-mode pull https://prometheus.desy.de:2443/VOs/wlcg/file1 https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1.push
+$ davix-rm --capath /etc/grid-security/certificates -H &quot;Authorization: Bearer ${AT}&quot; https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1
 
-drwxrwxrwx 0     0          2020-06-24 06:01:59 Tape
-drwxrwxrwx 0     0          2020-06-24 06:11:33 Private
--rwxrwxrwx 0     173        2020-06-24 06:11:33 public-file
--rwxrwxrwx 0     1048576    2020-06-24 14:14:30 x
-drwxrwxrwx 0     0          2020-06-24 10:41:13 wlcgdoma
--rwxrwxrwx 0     150        2020-06-24 06:11:34 private-file
+# Create directory
+$ curl --capath /etc/grid-security/certificates -X MKCOL -H &quot;Authorization: Bearer ${AT}&quot; https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1
+# Upload file
+$ curl --capath /etc/grid-security/certificates -L -X PUT -H &quot;Authorization: Bearer ${AT}&quot; --upload-file /etc/services https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1
+# Download file
+$ curl --capath /etc/grid-security/certificates -L -X GET -H &quot;Authorization: Bearer ${AT}&quot; --output /tmp/x https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1
+# TPC pull
+$ curl --capath /etc/grid-security/certificates -L -X COPY -H 'Credentials: none' -H &quot;Authorization: Bearer ${AT}&quot; -H &quot;TransferHeaderAuthorization: Bearer ${AT}&quot; -H &quot;Source: https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1&quot; https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file2
+# TPC push
+$ curl --capath /etc/grid-security/certificates -L -X COPY -H 'Credentials: none' -H &quot;Authorization: Bearer ${AT}&quot; -H &quot;TransferHeaderAuthorization: Bearer ${AT}&quot; -H &quot;Destination: https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file3&quot; https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1/file1
+# Delete
+$ curl --capath /etc/grid-security/certificates -L -X DELETE -H &quot;Authorization: Bearer ${AT}&quot; https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg/dir1
+</code></pre>
 
-$ davix-ls -l --capath /etc/grid-security/certificates/ -H &quot;Authorization: Bearer ${AT}&quot; https://golias100.farm.particle.cz/dpm/farm.particle.cz/home/wlcg
--rw-rw-r-- 0     1048576    2020-06-18 08:12:23 1M
-drwxrwx--- 0     1048576    2020-04-01 10:13:52 acl1
-drwxrwxr-x 0     85983232   2020-06-19 22:19:00 doma
-drwxrwxr-x 0     14680064   2020-06-22 13:06:25 vokac.fts-test
-drwxrwxr-x 0     52428800   2020-06-24 10:41:13 wlcgdoma
--rw-rw-r-- 0     1048576    2020-06-24 13:01:03 x
--rw-rw-r-- 0     1048576    2020-03-31 00:20:00 x.pull
--rw-rw-r-- 0     1048576    2020-03-31 00:20:00 x.push
--rw-rw-r-- 0     1048576    2020-06-05 11:49:59 x1
+<p>Gfal python API can be also used with tokens, e.g.</p>
+<pre><code>import os
+import gfal2
+ctx = gfal2.creat_context()
+cred = gfal2.cred_new(&quot;BEARER&quot;, os.getenv('TOKEN'))
+gfal2.cred_set(ctx, 'amnesiac.cloud.cnaf.infn.it', cred)
+ctx.stat('https://amnesiac.cloud.cnaf.infn.it:8443/wlcg/wlcgdoma/https/jwttest/1M')
 </code></pre>
 
 <h3 id="group-based-authorization">Group-based authorization</h3>
@@ -616,15 +611,15 @@ drwxrwxr-x 0     52428800   2020-06-24 10:41:13 wlcgdoma
       
     </div>
     
-      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../assets/javascripts/bundle.4a5ba8d6.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.3636a4ec.min.js"></script>
+      <script src="../assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.9b3611bd.min.js"
+            worker: "../assets/javascripts/worker/search.5eca75d3.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
