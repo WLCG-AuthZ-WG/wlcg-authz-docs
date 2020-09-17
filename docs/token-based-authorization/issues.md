@@ -38,7 +38,9 @@ STORM_WEBDAV_ENABLE_HTTP2="false"
 ## DPM
 
 - allows `HEAD` requests with just `scope.create:/`
+- use `storage.write` scope not defined in WLCG JWT profile
 - doesn't reject access tokens with expiration time longer than 6 hours
+- files created with OIDC authentication has empty group owner
 
 ## EOS
 
