@@ -72,6 +72,7 @@ Be aware that for sucessfull FTS transfer submission with OIDC you also need rec
 #### [DPM](https://twiki.cern.ch/twiki/bin/view/DPM/DpmSetupPuppetInstallation#OpenID_Connect_and_WLCG_bearer_t)
 
 - [PRAGUE production endpoint](https://golias100.farm.particle.cz:443/dpm/farm.particle.cz/home/wlcg)
+- [Manchester testbed endpoint](https://vm33.in.tier2.hep.manchester.ac.uk:443/dpm/tier2.hep.manchester.ac.uk/home/wlcg)
 
 #### Echo (CEPH)
 
