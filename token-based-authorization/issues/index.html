@@ -527,7 +527,9 @@ STORM_WEBDAV_ENABLE_HTTP2=&quot;false&quot;
 <h2 id="dpm">DPM</h2>
 <ul>
 <li>allows <code>HEAD</code> requests with just <code>scope.create:/</code></li>
+<li>use <code>storage.write</code> scope not defined in WLCG JWT profile</li>
 <li>doesn't reject access tokens with expiration time longer than 6 hours</li>
+<li>files created with OIDC authentication has empty group owner</li>
 </ul>
 <h2 id="eos">EOS</h2>
 <h2 id="rucio">RUCIO</h2>
