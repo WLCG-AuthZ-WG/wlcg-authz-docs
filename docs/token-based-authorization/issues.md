@@ -38,9 +38,11 @@ STORM_WEBDAV_ENABLE_HTTP2="false"
 ## DPM
 
 - allows `HEAD` requests with just `storage.create:/`
-- use `storage.write` scope not defined in WLCG JWT profile
+- supports `storage.write` scope which is not defined in WLCG JWT profile
 - doesn't reject access tokens with expiration time longer than 6 hours
-- files created with OIDC authentication has empty group owner
+- files created with OIDC authentication has empty group owner ([probably fixed](https://gitlab.cern.ch/lcgdm/dmlite/-/merge_requests/18))
+- incorrect implementaion of scope based authorization ([fixed](https://gitlab.cern.ch/lcgdm/dmlite/-/merge_requests/18))
+- insecure token identity mapping to local uid (only "sub" claim considered while only "sub"+"iss" guaranteed to be unique)
 
 ## EOS
 
@@ -58,3 +60,4 @@ STORM_WEBDAV_ENABLE_HTTP2="false"
 
 - tokens can't be passed to `gfal-utils` CLI tools
 - unable to determine which audience and scope `storage.*:/path` should be in used for SRM+HTTP transfers (TURL returned by SRM srmPrepareToGet + srmPrepareToPut not known before calling `copy` function)
+- TPC transfers with StoRM active party fails with gfal2 `KEEP_ALIVE=True` configuration and `davs://` protocol (can be reproduced also by 2x `ctx.stat('davs://storm:8443/non-existing-file')` using gfal python API)
