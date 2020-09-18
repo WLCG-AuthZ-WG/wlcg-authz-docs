@@ -527,9 +527,11 @@ STORM_WEBDAV_ENABLE_HTTP2=&quot;false&quot;
 <h2 id="dpm">DPM</h2>
 <ul>
 <li>allows <code>HEAD</code> requests with just <code>storage.create:/</code></li>
-<li>use <code>storage.write</code> scope not defined in WLCG JWT profile</li>
+<li>supports <code>storage.write</code> scope which is not defined in WLCG JWT profile</li>
 <li>doesn't reject access tokens with expiration time longer than 6 hours</li>
-<li>files created with OIDC authentication has empty group owner</li>
+<li>files created with OIDC authentication has empty group owner (<a href="https://gitlab.cern.ch/lcgdm/dmlite/-/merge_requests/18">probably fixed</a>)</li>
+<li>incorrect implementaion of scope based authorization (<a href="https://gitlab.cern.ch/lcgdm/dmlite/-/merge_requests/18">fixed</a>)</li>
+<li>insecure token identity mapping to local uid (only "sub" claim considered while only "sub"+"iss" guaranteed to be unique)</li>
 </ul>
 <h2 id="eos">EOS</h2>
 <h2 id="rucio">RUCIO</h2>
@@ -545,6 +547,7 @@ STORM_WEBDAV_ENABLE_HTTP2=&quot;false&quot;
 <ul>
 <li>tokens can't be passed to <code>gfal-utils</code> CLI tools</li>
 <li>unable to determine which audience and scope <code>storage.*:/path</code> should be in used for SRM+HTTP transfers (TURL returned by SRM srmPrepareToGet + srmPrepareToPut not known before calling <code>copy</code> function)</li>
+<li>TPC transfers with StoRM active party fails with gfal2 <code>KEEP_ALIVE=True</code> configuration and <code>davs://</code> protocol (can be reproduced also by 2x <code>ctx.stat('davs://storm:8443/non-existing-file')</code> using gfal python API)</li>
 </ul>
                 
               
