@@ -1,6 +1,4 @@
 
-
-
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -13,7 +11,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.0">
     
     
       
@@ -21,19 +19,21 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.4dd2dd8d.min.css">
-      
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.6a5ad368.min.css">
-      
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bc7e593a.min.css">
       
         
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab28b872.min.css">
         
-        <meta name="theme-color" content="#4051b5">
+          
+          
+          <meta name="theme-color" content="#4051b5">
+        
       
     
     
     
       
+        
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
@@ -51,9 +51,11 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="indigo">
-  
     
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="indigo">
+      
+  
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -69,7 +71,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href="../.." title="Token-based AuthN/Z for WLCG" class="md-header-nav__button md-logo" aria-label="Token-based AuthN/Z for WLCG">
       
@@ -131,8 +135,6 @@
     
     <div class="md-container" data-md-component="container">
       
-        
-      
       
         
       
@@ -143,7 +145,9 @@
               <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token-based AuthN/Z for WLCG" class="md-nav__button md-logo" aria-label="Token-based AuthN/Z for WLCG">
       
@@ -162,7 +166,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../.." title="The WLCG Virtual Organization" class="md-nav__link">
+    <a href="../.." class="md-nav__link">
       The WLCG Virtual Organization
     </a>
   </li>
@@ -197,7 +201,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../" title="Token-based authorization" class="md-nav__link">
+    <a href="../" class="md-nav__link">
       Token-based authorization
     </a>
   </li>
@@ -222,7 +226,7 @@
         <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="DOMA Token-based AuthZ Testbed" class="md-nav__link md-nav__link--active">
+    <a href="./" class="md-nav__link md-nav__link--active">
       DOMA Token-based AuthZ Testbed
     </a>
     
@@ -348,7 +352,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../issues/" title="Known issues" class="md-nav__link">
+    <a href="../issues/" class="md-nav__link">
       Known issues
     </a>
   </li>
@@ -360,7 +364,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../oidc-agent/" title="OIDC Agent" class="md-nav__link">
+    <a href="../oidc-agent/" class="md-nav__link">
       OIDC Agent
     </a>
   </li>
@@ -393,7 +397,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../configuration/storm/" title="StoRM" class="md-nav__link">
+    <a href="../configuration/storm/" class="md-nav__link">
       StoRM
     </a>
   </li>
@@ -541,9 +545,6 @@
               
                 
                 
-                  
-                
-                
                 <h1 id="doma-token-based-authz-testbed">DOMA Token-based AuthZ Testbed</h1>
 <h2 id="endpoints">Endpoints</h2>
 <h3 id="iam">IAM</h3>
@@ -554,7 +555,7 @@
 </ul>
 <h3 id="rucio">RUCIO</h3>
 <p>Install Rucio client with one method described in <a href="https://rucio.readthedocs.io/en/latest/installing_clients.html">documentation</a>, e.g.</p>
-<pre><code class="shell"># python2 rucio client
+<pre><code class="language-shell"># python2 rucio client
 virtualenv rucio
 source rucio/bin/activate
 pip install 'pyrsistent&gt;=0.14.0,&lt;=0.17.0' # newer versin requires python3
@@ -564,9 +565,8 @@ virtualenv-3 rucio
 source rucio/bin/activate
 pip3 install rucio-clients
 </code></pre>
-
 <p>and save following configuration file in <code>rucio/etc/rucio.cfg</code> for WLCG DOMA Rucio OIDC tests</p>
-<pre><code class="shell">[client]
+<pre><code class="language-shell">[client]
 rucio_host = https://rucio-doma.cern.ch:443
 auth_host = https://rucio-doma-auth.cern.ch:443
 auth_type = oidc
@@ -575,16 +575,13 @@ oidc_issuer = wlcg
 ca_cert = /etc/grid-security/certificates
 #ca_cert = /etc/pki/tls/certs/CERN-bundle.pem
 </code></pre>
-
 <p>Setup environment for Rucio client installed in virtualenv</p>
-<pre><code class="shell">source rucio/bin/activate
+<pre><code class="language-shell">source rucio/bin/activate
 </code></pre>
-
 <p>or if you use different installation method just set <code>RUCIO_HOME</code> environment
 variable to the base directory with <code>etc/rucio.cfg</code> file</p>
-<pre><code class="shell">export RUCIO_HOME=/base/path/to/rucio
+<pre><code class="language-shell">export RUCIO_HOME=/base/path/to/rucio
 </code></pre>
-
 <p><a href="https://wlcg.cloud.cnaf.infn.it">WLCG IAM account</a> is necessary to
 access <a href="https://rucio-doma-webui.cern.ch">WLCG DOMA Rucio instance</a>
 and user sub claim (WLCG IAM uuid identity) must be associated with
@@ -600,7 +597,6 @@ in <code>rucio.cfg</code> or setting environment variable
 fts-rest-transfer-submit --access-token=&lt;token&gt; -s https://fts3-devel.cern.ch:8446 &lt;src_url&gt; &lt;dst_url&gt;
 fts-rest-transfer-status --access-token=&lt;token&gt; -s https://fts3-devel.cern.ch:8446
 </code></pre>
-
 <p>Be aware that for sucessfull FTS transfer submission with OIDC you also need recent 3.10.x FTS rest client.</p>
 <h3 id="storage">Storage</h3>
 <h4 id="dcache-transfer-documentation"><a href="https://www.dcache.org/manuals/Book-6.2/config-gplazma.shtml#using-openid-connect">dCache</a> (<a href="https://www.dcache.org/manuals/UserGuide-6.2/webdav.shtml#authorising-the-data-transfer">transfer documentation</a>)</h4>
@@ -656,7 +652,7 @@ fts-rest-transfer-status --access-token=&lt;token&gt; -s https://fts3-devel.cern
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../" title="Token-based authorization" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -671,7 +667,7 @@ fts-rest-transfer-status --access-token=&lt;token&gt; -s https://fts3-devel.cern
           </a>
         
         
-          <a href="../issues/" title="Known issues" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../issues/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
@@ -704,15 +700,15 @@ fts-rest-transfer-status --access-token=&lt;token&gt; -s https://fts3-devel.cern
       
     </div>
     
-      <script src="../../assets/javascripts/vendor.3636a4ec.min.js"></script>
-      <script src="../../assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/vendor.6a3d08fc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.71201edf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.5eca75d3.min.js"
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
