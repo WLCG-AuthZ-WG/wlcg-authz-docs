@@ -21,6 +21,7 @@ pip install 'rucio-clients<1.23.0'
 virtualenv-3 rucio
 source rucio/bin/activate
 pip3 install rucio-clients
+pip3 install gfal2-python
 ```
 and save following configuration file in `rucio/etc/rucio.cfg` for WLCG DOMA Rucio OIDC tests
 ```shell

@@ -37,11 +37,8 @@ STORM_WEBDAV_ENABLE_HTTP2="false"
 
 ## DPM
 
-- allows `HEAD` requests with just `storage.create:/`
+- allows `HEAD` requests with just `storage.create:/` (mapping internally capabilities to simple ro/rw activity)
 - supports `storage.write` scope which is not defined in WLCG JWT profile
-- doesn't reject access tokens with expiration time longer than 6 hours
-- files created with OIDC authentication has empty group owner ([probably fixed](https://gitlab.cern.ch/lcgdm/dmlite/-/merge_requests/18))
-- incorrect implementaion of scope based authorization ([fixed](https://gitlab.cern.ch/lcgdm/dmlite/-/merge_requests/18))
 - insecure token identity mapping to local uid (only "sub" claim considered while only "sub"+"iss" guaranteed to be unique)
 
 ## EOS
