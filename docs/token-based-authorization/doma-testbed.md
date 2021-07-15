@@ -147,11 +147,6 @@ Be aware that for sucessfull FTS transfer submission with OIDC you also need rec
 
 Install Rucio client with one method described in [documentation](https://rucio.readthedocs.io/en/latest/installing_clients.html), e.g.
 ```shell
-# python2 rucio client
-virtualenv rucio
-source rucio/bin/activate
-pip install 'pyrsistent>=0.14.0,<=0.17.0' # newer versin requires python3
-pip install 'rucio-clients<1.23.0'
 # latest rucio client works only with python3
 virtualenv-3 rucio
 source rucio/bin/activate
