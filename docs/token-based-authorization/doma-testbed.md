@@ -1,12 +1,18 @@
 # DOMA Token-based AuthZ Testbed 
 
+## Joining testbed
+
+Send mail to [wlcg-doma-tpc e-group](https://e-groups.cern.ch/e-groups/Egroup.do?egroupId=10301575) if you want to join [Rucio DOMA Functional Tests OIDC](https://atlas-kibana.mwt2.org:5601/s/rucio/goto/07442ef87b3ba72bc391edde8770de4b) or advertise your CE that support job submission with tokens. Please include necessary to access your SE/CE endpoint, as an example you can use entries that were already filled in tables with available resources that to some degree already supports tokens.
+
 ## IAM
 
-- [WLCG IAM](https://wlcg.cloud.cnaf.infn.it/)
-- [ATLAS IAM](https://atlas-auth.web.cern.ch/)
-- [CMS IAM](https://cms-auth.web.cern.ch/)
-- [DUNE](https://cilogon.org/dune)
-- [Fermilab](https://cilogon.org/fermilab)
+ VO  | Issuer
+---- | ------
+WLCG IAM | https://wlcg.cloud.cnaf.infn.it/
+ATLAS IAM | https://atlas-auth.web.cern.ch/
+CMS IAM | https://cms-auth.web.cern.ch/
+DUNE | https://cilogon.org/dune
+Fermilab | https://cilogon.org/fermilab
 
 ## CE
 
@@ -130,7 +136,7 @@ CNAF Prod | StoRM | https://xfer.cr.cnaf.infn.it:8443/wlcg | wlcg |
 CNAF Devel | StoRM | https://amnesiac.cloud.cnaf.infn.it:8443/wlcg | wlcg |
 CERN ATLAS | EOS | https://eosatlas.cern.ch:443/eos/atlas/atlasscratchdisk/3rdpartycopy | atlas |
 CERN Devel | EOS | https://eospps.cern.ch:443/eos/opstest/tpc/https | wlcg |
-RAL | Echo | https://ceph-gw8.gridpp.rl.ac.uk:1094/dteam:test/ | wlcg(?) |
+RAL | Echo | https://ceph-gw8.gridpp.rl.ac.uk:1094/dteam:test/ | wlcg |
 Manchester Test | DPM | https://vm33.in.tier2.hep.manchester.ac.uk:443/dpm/tier2.hep.manchester.ac.uk/home/wlcg | wlcg |
 
 ## [FTS](http://fts3-docs.web.cern.ch/fts3-docs/docs/install/fts3.html)
