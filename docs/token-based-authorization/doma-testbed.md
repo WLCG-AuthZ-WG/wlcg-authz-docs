@@ -80,10 +80,12 @@ Site | Host | VO | Audience | Group
 ### [HTCondor-CE](https://htcondor.github.io/htcondor-ce/v5/installation/htcondor-ce/)
 
 It is possible to submit jobs with WLCG JWT token if HTCondor accepts `SCITOKENS`.
-By default HTCondor-CE is configured with non-standard `aud` claim, but this can
+By default HTCondor-CE is configured with [non-standard `aud` claim](https://github.com/WLCG-AuthZ-WG/common-jwt-profile/blob/master/profile.md#common-claims), but this can
 be changed by adding following line in `/etc/condor-ce/config.d/99-local` file
 ```
-SCITOKENS_SERVER_AUDIENCE = $(SCITOKENS_SERVER_AUDIENCE) condor://$(COLLECTOR_HOST) https://wlcg.cern.ch/jwt/v1/any
+SCITOKENS_SERVER_AUDIENCE = $(SCITOKENS_SERVER_AUDIENCE) condor://$(COLLECTOR_HOST)
+# special "any" audience, not recommended for production use
+#SCITOKENS_SERVER_AUDIENCE = $(SCITOKENS_SERVER_AUDIENCE) https://wlcg.cern.ch/jwt/v1/any
 ```
 All other configuration and identity mapping is described in the
 [documentation](https://htcondor.github.io/htcondor-ce/v5/configuration/authentication/).
@@ -101,13 +103,32 @@ log = env.log
 queue
 EOF
 
-oidc-token --aud=condor://osgce3.farm.particle.cz:9619 -s compute.create -s compute.read -s compute.modify -s compute.cancel hackathon > $XDG_RUNTIME_DIR/bt_u$(id -u)
+# get access token, e.g. from oidc-agent (see bellow) and store its
+# content in a file used by WLCG bearer token discovery mechanism
+oidc-token --aud=condor://osgce3.farm.particle.cz:9619 -s compute.create -s compute.read -s compute.modify -s compute.cancel wlcg-compute > $XDG_RUNTIME_DIR/bt_u$(id -u)
+
 export _condor_AUTH_SSL_CLIENT_CADIR=/etc/grid-security/certificates
 export _condor_SEC_CLIENT_AUTHENTICATION_METHODS=SCITOKENS
 
 condor_ce_ping -verbose -pool osgce3.farm.particle.cz:9619 -name osgce3.farm.particle.cz WRITE
 condor_ce_submit -pool osgce3.farm.particle.cz:9619 -remote osgce3.farm.particle.cz test.sub
 condor_ce_q -pool osgce3.farm.particle.cz:9619 -name osgce3.farm.particle.cz
+```
+
+#### Obtain access token with compute.* scopes
+
+* oidc-agent
+```
+# start oidc-agent (if it is not already running)
+eval $(oidc-gen)
+# register new client in oidc-agent with compute.* scopes
+oidc-gen --iss=https://wlcg.cloud.cnaf.infn.it/ --scope="openid offline_access compute.create compute.read compute.modify compute.cancel" wlcg-compute
+# obtain token with all necessary scopes and right audience
+oidc-token --aud=condor://osgce3.farm.particle.cz:9619 --scope "compute.create compute.read compute.modify compute.cancel" wlcg-compute > $XDG_RUNTIME_DIR/bt_u$(id -u)
+```
+* client credentials grant (client registered in IAM with `compute.*` scopes, grant type "client credentials" and response type "token")
+```
+curl -s --data "grant_type=client_credentials&client_id=client_id_from_iam_registration&client_secret=client_secret_from_iam_registration&audience=condor://osgce3.farm.particle.cz:9619" https://wlcg.cloud.cnaf.infn.it/token | jq -r .access_token > $XDG_RUNTIME_DIR/bt_u$(id -u)
 ```
 
 ### Configured endpoints
