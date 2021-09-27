@@ -122,8 +122,7 @@ condor_ce_q -pool osgce3.farm.particle.cz:9619 -name osgce3.farm.particle.cz
 # start oidc-agent (if it is not already running)
 eval $(oidc-gen)
 # register new client in oidc-agent with compute.* scopes (one time
-# action, but not all IAM allows user to apply for compute.* scopes
-# and with WLCG IAM instance you need /wlcg/pilot group)
+# action, but not all IAM allows user to apply for compute.* scopes)
 oidc-gen --iss=https://wlcg.cloud.cnaf.infn.it/ --scope="openid offline_access compute.create compute.read compute.modify compute.cancel" wlcg-compute
 # obtain token with all necessary scopes and right audience
 oidc-token --aud=condor://osgce3.farm.particle.cz:9619 --scope "compute.create compute.read compute.modify compute.cancel" wlcg-compute > $XDG_RUNTIME_DIR/bt_u$(id -u)
