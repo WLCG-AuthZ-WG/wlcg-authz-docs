@@ -19,6 +19,20 @@ certificates can be linked to an account.
 
 ## WLCG VO VOMS configuration
 
+!!! danger "New LSC files will be rolled out on Nov. 22nd, 2021"
+
+      On Monday Nov. 22nd, 2021 at 11 we will update the WLCC VO LSC
+      configuration. The reason for the update is that the current certificate
+      is going to expire and that the Sectigo CA INFN currently uses has
+      changed the structure of the DNs of the issued certificates. 
+
+      The updated configuration that you find here is compliant with the new
+      certificate. 
+
+      **Do not roll out this configuration before Nov. 22nd, or VOMS validation
+      will break at your site**.
+
+
 - [VOMSES](./voms-config/wlcg-voms.cloud.cnaf.infn.it.vomses)
 - [LSC](./voms-config/wlcg-voms.cloud.cnaf.infn.it.lsc)
 
@@ -28,7 +42,18 @@ To have a working VOMS configuration for the WLCG VO:
 2. place the `vomses` file in the `/etc/vomses` directory (only needed if you
    need to do `voms-proxy-init`)
 
-The latest supported VOMS clients are required (i.e., voms-proxy-init v. >=3 ).
+### RPM installation
+
+You can use the following RPM package to enable support for the WLCG VO on your
+RHEL machine:
+
+- [RPM
+  package](https://repo.cloud.cnaf.infn.it/repository/infn-vos/centos7/infn-vo-wlcg-1.1.0-1.el7.noarch.rpm)
+
+### VOMS clients compatibility
+
+The latest supported VOMS clients are required.
+
 Also note that this VO is supported by IAM, i.e. there are no VOMS Admin
 endpoints that can be used to generate Gridmap files.
 
@@ -65,7 +90,7 @@ uri       : wlcg-voms.cloud.cnaf.infn.it:15001
 ```
 
 [wlcg-iam]: https://wlcg.cloud.cnaf.infn.it
-[iam-docs]: https://indigo-iam.github.io/docs
-[client-registration]: https://indigo-iam.github.io/docs/v/current/user-guide/client-registration.html
-[x509-linking]: https://indigo-iam.github.io/docs/v/current/user-guide/account-linking/x509.html
+[iam-docs]: https://indigo-iam.github.io/
+[client-registration]:  https://indigo-iam.github.io/v/current/docs/tasks/user/client-registration/
+[x509-linking]: https://indigo-iam.github.io/v/current/docs/tasks/user/x509-linking/ 
 [oidc-agent]: https://github.com/indigo-dc/oidc-agent
