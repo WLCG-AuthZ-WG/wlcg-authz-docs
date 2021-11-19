@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.0">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.8b42a75e.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.a57b2b03.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.3f5d1f46.min.css">
@@ -205,6 +205,8 @@
       </a>
       
         
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -225,6 +227,20 @@
   
     <nav class="md-nav" aria-label="WLCG VO VOMS configuration">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rpm-installation" class="md-nav__link">
+    RPM installation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voms-clients-compatibility" class="md-nav__link">
+    VOMS clients compatibility
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
@@ -451,6 +467,8 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -471,6 +489,20 @@
   
     <nav class="md-nav" aria-label="WLCG VO VOMS configuration">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rpm-installation" class="md-nav__link">
+    RPM installation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voms-clients-compatibility" class="md-nav__link">
+    VOMS clients compatibility
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
@@ -503,13 +535,24 @@ integration activities in support of the migration to token-based
 authentication and authorization.</p>
 <p>The <a href="https://wlcg.cloud.cnaf.infn.it">WLCG IAM instance</a> is integrated with CERN SSO.</p>
 <p>Registration is active. </p>
-<p>IAM documentation is available <a href="https://indigo-iam.github.io/docs">here</a>.</p>
+<p>IAM documentation is available <a href="https://indigo-iam.github.io/">here</a>.</p>
 <p>Clients applications can be registered following these
-<a href="https://indigo-iam.github.io/docs/v/current/user-guide/client-registration.html">instructions</a>, or using <a href="https://github.com/indigo-dc/oidc-agent">oidc-agent</a>.</p>
+<a href="https://indigo-iam.github.io/v/current/docs/tasks/user/client-registration/">instructions</a>, or using <a href="https://github.com/indigo-dc/oidc-agent">oidc-agent</a>.</p>
 <p>VOMS support is enabled. To link an X.509 certificate to an existing IAM WLCG
-account, follow these <a href="https://indigo-iam.github.io/docs/v/current/user-guide/account-linking/x509.html">instructions</a>. As in VOMS, multiple
+account, follow these <a href="https://indigo-iam.github.io/v/current/docs/tasks/user/x509-linking/">instructions</a>. As in VOMS, multiple
 certificates can be linked to an account.</p>
 <h2 id="wlcg-vo-voms-configuration">WLCG VO VOMS configuration</h2>
+<div class="admonition danger">
+<p class="admonition-title">New LSC files will be rolled out on Nov. 22nd, 2021</p>
+<p>On Monday Nov. 22nd, 2021 at 11 we will update the WLCC VO LSC
+  configuration. The reason for the update is that the current certificate
+  is going to expire and that the Sectigo CA INFN currently uses has
+  changed the structure of the DNs of the issued certificates. </p>
+<p>The updated configuration that you find here is compliant with the new
+  certificate. </p>
+<p><strong>Do not roll out this configuration before Nov. 22nd, or VOMS validation
+  will break at your site</strong>.</p>
+</div>
 <ul>
 <li><a href="voms-config/wlcg-voms.cloud.cnaf.infn.it.vomses">VOMSES</a></li>
 <li><a href="voms-config/wlcg-voms.cloud.cnaf.infn.it.lsc">LSC</a></li>
@@ -520,8 +563,16 @@ certificates can be linked to an account.</p>
 <li>place the <code>vomses</code> file in the <code>/etc/vomses</code> directory (only needed if you
    need to do <code>voms-proxy-init</code>)</li>
 </ol>
-<p>The latest supported VOMS clients are required (i.e., voms-proxy-init v. &gt;=3 ).
-Also note that this VO is supported by IAM, i.e. there are no VOMS Admin
+<h3 id="rpm-installation">RPM installation</h3>
+<p>You can use the following RPM package to enable support for the WLCG VO on your
+RHEL machine:</p>
+<ul>
+<li><a href="https://repo.cloud.cnaf.infn.it/repository/infn-vos/centos7/infn-vo-wlcg-1.1.0-1.el7.noarch.rpm">RPM
+  package</a></li>
+</ul>
+<h3 id="voms-clients-compatibility">VOMS clients compatibility</h3>
+<p>The latest supported VOMS clients are required.</p>
+<p>Also note that this VO is supported by IAM, i.e. there are no VOMS Admin
 endpoints that can be used to generate Gridmap files.</p>
 <h3 id="example">Example</h3>
 <pre><code class="language-console">$ voms-proxy-init -voms wlcg
@@ -609,10 +660,10 @@ uri       : wlcg-voms.cloud.cnaf.infn.it:15001
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.f8263e09.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.4fc53ad4.min.js"></script>
+      <script src="assets/javascripts/bundle.b1047164.min.js"></script>
       
     
   </body>
