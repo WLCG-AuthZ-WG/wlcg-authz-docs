@@ -107,12 +107,14 @@ EOF
 # content in a file used by WLCG bearer token discovery mechanism
 oidc-token --aud=condor://osgce3.farm.particle.cz:9619 -s compute.create -s compute.read -s compute.modify -s compute.cancel wlcg-compute > $XDG_RUNTIME_DIR/bt_u$(id -u)
 
+export CONDOR_CONFIG=/dev/null
+export GSI_AUTHZ_CONF=/dev/null
 export _condor_AUTH_SSL_CLIENT_CADIR=/etc/grid-security/certificates
 export _condor_SEC_CLIENT_AUTHENTICATION_METHODS=SCITOKENS
 
-condor_ce_ping -verbose -pool osgce3.farm.particle.cz:9619 -name osgce3.farm.particle.cz WRITE
-condor_ce_submit -pool osgce3.farm.particle.cz:9619 -remote osgce3.farm.particle.cz test.sub
-condor_ce_q -pool osgce3.farm.particle.cz:9619 -name osgce3.farm.particle.cz
+condor_ping -verbose -pool osgce3.farm.particle.cz:9619 -name osgce3.farm.particle.cz WRITE
+condor_submit -pool osgce3.farm.particle.cz:9619 -remote osgce3.farm.particle.cz test.sub
+condor_q -pool osgce3.farm.particle.cz:9619 -name osgce3.farm.particle.cz
 ```
 
 #### Obtain access token with compute.* scopes
