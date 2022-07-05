@@ -876,6 +876,7 @@ oidc-token --aud=condor://osgce3.farm.particle.cz:9619 --scope &quot;compute.cre
 <pre><code>curl -s --data &quot;grant_type=client_credentials&amp;client_id=client_id_from_iam_registration&amp;client_secret=client_secret_from_iam_registration&amp;audience=condor://osgce3.farm.particle.cz:9619&quot; https://wlcg.cloud.cnaf.infn.it/token | jq -r .access_token &gt; $XDG_RUNTIME_DIR/bt_u$(id -u)
 </code></pre>
 <h3 id="configured-endpoints_1">Configured endpoints</h3>
+<p>All OSG sites should now support job submission with token. You can <a href="http://novastore.farm.particle.cz/cgi-bin/condor.cgi">test your HTCondor-CE</a> configuration with ATLAS jobs submission.</p>
 <table>
 <thead>
 <tr>
@@ -894,9 +895,9 @@ oidc-token --aud=condor://osgce3.farm.particle.cz:9619 --scope &quot;compute.cre
 </tr>
 <tr>
 <td><a href="https://goc.egi.eu/portal/index.php?Page_Type=Site&amp;id=288">praguelcg2</a></td>
-<td>osgce3.farm.particle.cz:9619</td>
+<td>osgce1.farm.particle.cz:9619</td>
 <td>wlcg, atlas, dune</td>
-<td>osgce3.farm.particle.cz:9619, condor://osgce3.farm.particle.cz:9619, https://wlcg.cern.ch/jwt/v1/any</td>
+<td>osgce1.farm.particle.cz:9619, condor://osgce1.farm.particle.cz:9619, https://wlcg.cern.ch/jwt/v1/any</td>
 </tr>
 </tbody>
 </table>
