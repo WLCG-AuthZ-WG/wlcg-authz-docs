@@ -33,12 +33,34 @@ authtokens = * https://wlcg.cloud.cnaf.infn.it/ * compute.read /wlcg/pilots
 authtokens = * https://wlcg.cloud.cnaf.infn.it/ * compute.modify /wlcg/pilots
 authtokens = * https://wlcg.cloud.cnaf.infn.it/ * compute.cancel /wlcg/pilots
 
+# just an example for ARC-CE running on arc1.farm.particle.cz
+# recommendation for ATLAS configuration may change in fugure
+# (this is not the official ATLAS site configuration documentation)
+[authgroup: iam_atlas_group]
+authtokens = * https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.create *
+authtokens = * https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.read *
+authtokens = * https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.modify *
+authtokens = * https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.cancel *
+
+# again, just an example for ARC-CE running on arc1.farm.particle.cz
+# (this is not the official CMS site configuration documentation)
+[authgroup: iam_cms_group]
+authtokens = * https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.create /cms/pilot
+authtokens = * https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.read /cms/pilot
+authtokens = * https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.modify /cms/pilot
+authtokens = * https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.cancel /cms/pilot
+
+# this assumes existence of local users wlcg, atlas and cms with corresponding groups
 [mapping]
 map_to_user = wlcg_iam wlcg:wlcg
+map_to_user = iam_atlas_group atlas:atlas
+map_to_user = iam_cms_group cms:cms
 policy_on_nomap=stop
 
 [arex/ws/jobs]
 allowaccess=wlcg_iam
+allowaccess=atlas_iam
+allowaccess=cms_iam
 # ...
 ```
 
