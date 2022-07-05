@@ -157,10 +157,13 @@ curl -s --data "grant_type=client_credentials&client_id=client_id_from_iam_regis
 ```
 
 ### Configured endpoints
+
+All OSG sites should now support job submission with token. You can [test your HTCondor-CE](http://novastore.farm.particle.cz/cgi-bin/condor.cgi) configuration with ATLAS jobs submission.
+
 Site | Host | VO | Audience
 ---- | ---- | -- | --------
 osg | hosted-ce-chtc-ubuntu.osg.chtc.io:9619 | wlcg | hosted-ce-chtc-ubuntu.osg.chtc.io:9619
-[praguelcg2](https://goc.egi.eu/portal/index.php?Page_Type=Site&id=288) | osgce3.farm.particle.cz:9619 | wlcg, atlas, dune | osgce3.farm.particle.cz:9619, condor://osgce3.farm.particle.cz:9619, https://wlcg.cern.ch/jwt/v1/any
+[praguelcg2](https://goc.egi.eu/portal/index.php?Page_Type=Site&id=288) | osgce1.farm.particle.cz:9619 | wlcg, atlas, dune | osgce1.farm.particle.cz:9619, condor://osgce1.farm.particle.cz:9619, https://wlcg.cern.ch/jwt/v1/any
 
 ## Storage
 
