@@ -14,14 +14,17 @@ deployment, you need to:
 - Add the WLCG issuer to the list of the trusted issuers by the SciTokens
   library. This can be done by creating a configuration file e.g. at
   `/etc/xrootd/scitokens.cfg` with the following content
-  (assuming `xrootd` should act as the `xrootd` user):
+  (assuming `xrootd` should act as the `xrootd` user and files stored
+  in the `/data/grid`):
 ```
 [Global]
 onmissing = passthrough
+# don't use https://wlcg.cern.ch/jwt/v1/any on production instances
+audience = https://xrd.example.com:1094, https://wlcg.cern.ch/jwt/v1/any
 
 [Issuer WLCG IAM]
 issuer = https://wlcg.cloud.cnaf.infn.it/
-base_path = /
+base_path = /data/grid/wlcg
 map_subject = false
 default_user = xrootd
 ```
@@ -55,6 +58,28 @@ x wlcgtknusr /data/grid/wlcg a  /data/grid/srr lr
 This configuration enables flat authorization access on the storage to members
 of the WLCG VO with the `/wlcg` group,, i.e. all users will have read and write
 access to the data at `/data/grid/wlcg`.
+
+- [WLCG JWT compliance testbed](https://github.com/indigo-iam/wlcg-jwt-compliance-tests#storage-area-configuration-pre-requisites)
+  expect also `protected` resource accessible only with optional group
+  `/wlcg/test` and this can be configured by following lines in
+  the `acc.authdb` file
+```
+# support for group based authorization from WLCG JWT token
+= wlcgtknusr_token o: https://wlcg.cloud.cnaf.infn.it/ g: /wlcg
+= wlcgtknprt_token o: https://wlcg.cloud.cnaf.infn.it/ g: /wlcg/test
+# support for mapping X.509 VOMS identity
+= wlcgtknusr_x509 o: wlcg g: /wlcg
+= wlcgtknprt_x509 o: wlcg g: /wlcg r: test
+# templates for accessing normal and protected resources
+t wlcgtknusr /wlcg/protected -a /wlcg a / lr
+t wlcgtknprt /wlcg a / lr
+# configure access for users that comes with X.509 or WLCG JWT token with wlcg.groups
+x wlcgtknusr_token wlcgtknusr
+x wlcgtknprt_token wlcgtknprt
+x wlcgtknusr_x509 wlcgtknusr
+x wlcgtknprt_x509 wlcgtknprt
+# scope based access is not handled in this configuration file
+```
 
 [xrootd]: https://xrootd.slac.stanford.edu/
 [xrootd-scitokens]: https://github.com/xrootd/xrootd-scitokens
