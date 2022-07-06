@@ -555,7 +555,7 @@ access to the data at <code>/data/grid/wlcg</code>.</p>
 = wlcgtknusr_x509 o: wlcg g: /wlcg
 = wlcgtknprt_x509 o: wlcg g: /wlcg r: test
 # templates for accessing normal and protected resources
-t wlcgtknusr /wlcg/protected -a /wlcg a / lr
+t wlcgtknusr /wlcg/protected rl-diknw /wlcg a / lr
 t wlcgtknprt /wlcg a / lr
 # configure access for users that comes with X.509 or WLCG JWT token with wlcg.groups
 x wlcgtknusr_token wlcgtknusr
