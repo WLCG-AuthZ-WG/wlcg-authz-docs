@@ -359,15 +359,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#dcache-72-configuration-for-wlcg-jwt-scitokens" class="md-nav__link">
-    dCache 7.2 configuration for WLCG JWT / SCITOKENS
+  <a href="#dcache-72-configuration" class="md-nav__link">
+    dCache 7.2 configuration
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#dcache-82-configuration-for-wlcg-jwt-scitokens" class="md-nav__link">
-    dCache 8.2 configuration for WLCG JWT / SCITOKENS
+  <a href="#dcache-82-configuration" class="md-nav__link">
+    dCache 8.2 configuration
   </a>
   
 </li>
@@ -463,15 +463,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#dcache-72-configuration-for-wlcg-jwt-scitokens" class="md-nav__link">
-    dCache 7.2 configuration for WLCG JWT / SCITOKENS
+  <a href="#dcache-72-configuration" class="md-nav__link">
+    dCache 7.2 configuration
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#dcache-82-configuration-for-wlcg-jwt-scitokens" class="md-nav__link">
-    dCache 8.2 configuration for WLCG JWT / SCITOKENS
+  <a href="#dcache-82-configuration" class="md-nav__link">
+    dCache 8.2 configuration
   </a>
   
 </li>
@@ -492,7 +492,7 @@
 
 <h1 id="dcache">dCache</h1>
 <p><a href="https://dcache.org/old/manuals/Book-6.2/config-gplazma.shtml#using-openid-connect">Official documentation</a> currently doesn't provide all necessary information how to configured storage to accept and map WLCG JWT tokens (see <a href="https://github.com/dCache/dcache/issues/6607">dCache#6607</a>). dCache provides two different gPlazma plugins to deal with OIDC tokens - <code>oidc</code> and <code>scitoken</code>. With dCache 7.x it is necessary to use <code>scitoken</code> plugin, because this is the only way to deal with WLCG JWT tokens or SCITOKENS. The dCache 8.x comes with more generic <code>oidc</code> plugin that can process also WLCG JWT tokens and SCITOKENS (<code>scitoken</code> plugin is still kept for compatibility reasons, but it is deprecated).</p>
-<h2 id="dcache-72-configuration-for-wlcg-jwt-scitokens">dCache 7.2 configuration for WLCG JWT / SCITOKENS</h2>
+<h2 id="dcache-72-configuration">dCache 7.2 configuration</h2>
 <p>To accept connection authorized with WLCG JWT tokens it is necessary to add <code>scitoken</code> plugin in the chain of gPlazma auth plugins. Just add following line in your <code>/etc/dcache/gplazma.conf</code> configuration</p>
 <pre><code>auth     optional     scitoken
 map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.wlcg_jwt
@@ -516,7 +516,7 @@ group:atlas_oidc              uid:2000, gid:2000,true username:atlas_oidc
 group:cms_oidc                uid:3000, gid:3000,true username:cms_oidc
 </code></pre>
 <p>Be wery careful when you map WLCG JWT token indentity when you decide to use it together with X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories.</p>
-<h2 id="dcache-82-configuration-for-wlcg-jwt-scitokens">dCache 8.2 configuration for WLCG JWT / SCITOKENS</h2>
+<h2 id="dcache-82-configuration">dCache 8.2 configuration</h2>
 
               
             </article>
