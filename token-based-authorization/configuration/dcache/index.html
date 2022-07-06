@@ -511,9 +511,9 @@ gplazma.scitoken.audience-targets = https://dcache.example.com
 # ...
 </code></pre>
 <p>Now it is necessary to map identity extracted from WLCG JWT token to the dCache <code>uid</code>, <code>gid</code> and <code>username</code>, e.g. by using multimap file <code>/etc/dcache/multi-mapfile.wlcg_jwt</code></p>
-<pre><code>group:wlcg_oidc               uid:1100, gid:1100,true username:wlcg_oidc
-group:atlas_oidc              uid:2000, gid:2000,true username:atlas_oidc
-group:cms_oidc                uid:3000, gid:3000,true username:cms_oidc
+<pre><code>group:wlcg_oidc               uid:1100 gid:1100,true username:wlcg_oidc
+group:atlas_oidc              uid:2000 gid:2000,true username:atlas_oidc
+group:cms_oidc                uid:3000 gid:3000,true username:cms_oidc
 </code></pre>
 <p>Be wery careful when you map WLCG JWT token indentity when you decide to use it together with X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories.</p>
 <h2 id="dcache-82-configuration">dCache 8.2 configuration</h2>
