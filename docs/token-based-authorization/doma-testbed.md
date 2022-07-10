@@ -6,6 +6,8 @@ Send mail to [wlcg-doma-tpc e-group](https://e-groups.cern.ch/e-groups/Egroup.do
 
 ## IAM
 
+To be able to use tokens it is necessary to know which token issuer is used by individual VOs. For tests we use WLCG IAM token issuer which provides services for "wlcg" VO, e.g.
+
  VO  | Issuer
 ---- | ------
 WLCG IAM | https://wlcg.cloud.cnaf.infn.it/
@@ -13,6 +15,8 @@ ATLAS IAM | https://atlas-auth.web.cern.ch/
 CMS IAM | https://cms-auth.web.cern.ch/
 DUNE | https://cilogon.org/dune
 Fermilab | https://cilogon.org/fermilab
+
+OSG have token isser details stored with all VO detail in their [virtual-organization topology](https://github.com/opensciencegrid/topology/tree/master/virtual-organizations) files. WLCG/EGI currently doesn't provide common (trusted) place with token isser details, but naturally this could become part of [EGI VO ID Cards](https://operations-portal.egi.eu/vo/view/voname/atlas) (briefly touched this topic [here](https://indico.cern.ch/event/1177943/?note=203576)).
 
 ## CE
 
