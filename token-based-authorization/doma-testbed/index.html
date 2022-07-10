@@ -743,6 +743,11 @@ authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz co
 authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.modify /wlcg/pilots
 authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.cancel /wlcg/pilots
 
+# accept any token issued by EGI Check-in for job submission
+# (very rough configuration - accepting all tokens without restrictions is not very good idea)
+[authgroup: iam_egi_group]
+authtokens = * https://aai.egi.eu/oidc/ * * *
+
 # just an example for ARC-CE running on arc1.farm.particle.cz
 # recommendation for ATLAS configuration may change in fugure
 # (this is not the official ATLAS site configuration documentation)
@@ -760,15 +765,17 @@ authtokens = * https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compu
 authtokens = * https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.modify /cms/pilot
 authtokens = * https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.cancel /cms/pilot
 
-# this assumes existence of local users wlcg, atlas and cms with corresponding groups
+# this assumes existence of local users wlcg, egi, atlas and cms with corresponding groups
 [mapping]
 map_to_user = wlcg_iam wlcg:wlcg
+map_to_user = egi_iam egi:egi
 map_to_user = iam_atlas_group atlas:atlas
 map_to_user = iam_cms_group cms:cms
 policy_on_nomap=stop
 
 [arex/ws/jobs]
 allowaccess=wlcg_iam
+allowaccess=egi_iam
 allowaccess=atlas_iam
 allowaccess=cms_iam
 # ...
