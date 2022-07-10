@@ -696,6 +696,7 @@
 <h2 id="joining-testbed">Joining testbed</h2>
 <p>Send mail to <a href="https://e-groups.cern.ch/e-groups/Egroup.do?egroupId=10301575">wlcg-doma-tpc e-group</a> if you want to join <a href="https://atlas-kibana.mwt2.org:5601/s/rucio/goto/07442ef87b3ba72bc391edde8770de4b">Rucio DOMA Functional Tests OIDC</a> or advertise your CE that support job submission with tokens. Please include necessary to access your SE/CE endpoint, as an example you can use entries that were already filled in tables with available resources that to some degree already supports tokens.</p>
 <h2 id="iam">IAM</h2>
+<p>To be able to use tokens it is necessary to know which token issuer is used by individual VOs. For tests we use WLCG IAM token issuer which provides services for "wlcg" VO, e.g.</p>
 <table>
 <thead>
 <tr>
@@ -726,6 +727,7 @@
 </tr>
 </tbody>
 </table>
+<p>OSG have token isser details stored with all VO detail in their <a href="https://github.com/opensciencegrid/topology/tree/master/virtual-organizations">virtual-organization topology</a> files. WLCG/EGI currently doesn't provide common (trusted) place with token isser details, but naturally this could become part of <a href="https://operations-portal.egi.eu/vo/view/voname/atlas">EGI VO ID Cards</a> (briefly touched this topic <a href="https://indico.cern.ch/event/1177943/?note=203576">here</a>).</p>
 <h2 id="ce">CE</h2>
 <h3 id="arc-ce"><a href="https://www.nordugrid.org/arc/arc6/misc/oidc_tokens.html">ARC-CE</a></h3>
 <p>ARC-CE 6.12 still has limited support for WLCG JWT tokens and they can be only used
