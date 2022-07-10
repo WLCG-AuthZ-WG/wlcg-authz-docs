@@ -18,20 +18,20 @@ Fermilab | https://cilogon.org/fermilab
 
 ### [ARC-CE](https://www.nordugrid.org/arc/arc6/misc/oidc_tokens.html)
 
-ARC-CE 6.12 still has limited support for WLCG JWT tokens and they can be used
-submit jobs with HTTP based protocols (`EMI-ES` and `REST` interface). With current
-limitations configuration that is close to expectation from WLCG JWT profile
-for WLCG IAM could look like
+ARC-CE 6.12 still has limited support for WLCG JWT tokens and they can be only used
+to submit jobs with HTTP based protocols (`EMI-ES` and `REST` interface). With current
+limitations configuration close to expectations from WLCG JWT profile could look like
+(replace `arc1.farm.particle.cz` with your ARC-CE hostname):
 
 ```
 # ...
 [authtokens]
 
 [authgroup: wlcg_iam]
-authtokens = * https://wlcg.cloud.cnaf.infn.it/ * compute.create /wlcg/pilots
-authtokens = * https://wlcg.cloud.cnaf.infn.it/ * compute.read /wlcg/pilots
-authtokens = * https://wlcg.cloud.cnaf.infn.it/ * compute.modify /wlcg/pilots
-authtokens = * https://wlcg.cloud.cnaf.infn.it/ * compute.cancel /wlcg/pilots
+authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.create /wlcg/pilots
+authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.read /wlcg/pilots
+authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.modify /wlcg/pilots
+authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.cancel /wlcg/pilots
 
 # just an example for ARC-CE running on arc1.farm.particle.cz
 # recommendation for ATLAS configuration may change in fugure
@@ -86,8 +86,8 @@ cat > test.xrsl <<EOF
 EOF
 # following line is necessary for ARC-CE 6.7 client
 # newer version use BEARER_TOKEN or token discovery
-#export ARC_OTOKEN=$(oidc-token name)
-export BEARER_TOKEN=$(oidc-token name)
+#export ARC_OTOKEN=$(oidc-token --aud=https://arc1.farm.particle.cz --scope=compute.read --scope=compute.modify --scope=compute.cancel --scope=compute.create --scope=wlcg.groups:/wlcg/pilots OIDC_STORE_NAME)
+export BEARER_OTOKEN=$(oidc-token --aud=https://arc1.farm.particle.cz --scope=compute.read --scope=compute.modify --scope=compute.cancel --scope=compute.create --scope=wlcg.groups:/wlcg/pilots OIDC_STORE_NAME)
 arcsub --debug=DEBUG --info-endpoint-type arcrest --submission-endpoint-type arcrest --computing-element arc1.farm.particle.cz test.xrsl
 ```
 ARC-CE support token discovery as described in [WLCG Bearer Token Discovery](https://zenodo.org/record/3937438)
