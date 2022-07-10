@@ -151,7 +151,7 @@ condor_q -pool osgce3.farm.particle.cz:9619 -name osgce3.farm.particle.cz
 eval $(oidc-gen)
 # register new client in oidc-agent with compute.* scopes (one time
 # action, but not all IAM allows user to apply for compute.* scopes)
-oidc-gen --iss=https://wlcg.cloud.cnaf.infn.it/ --scope="openid offline_access compute.create compute.read compute.modify compute.cancel" wlcg-compute
+oidc-gen --iss=https://wlcg.cloud.cnaf.infn.it/ --scope="openid offline_access wlcg.groups compute.create compute.read compute.modify compute.cancel" wlcg-compute
 # obtain token with all necessary scopes and right audience
 oidc-token --aud=condor://osgce3.farm.particle.cz:9619 --scope "compute.create compute.read compute.modify compute.cancel" wlcg-compute > $XDG_RUNTIME_DIR/bt_u$(id -u)
 ```
@@ -162,7 +162,7 @@ curl -s --data "grant_type=client_credentials&client_id=client_id_from_iam_regis
 
 ### Configured endpoints
 
-All OSG sites should now support job submission with token. You can [test your HTCondor-CE](http://novastore.farm.particle.cz/cgi-bin/condor.cgi) configuration with ATLAS jobs submission.
+All [OSG sites](http://novastore.farm.particle.cz/ce/condor-ce/#osg_htcondor-ce_sites) should now support job submission with token. You can [test your HTCondor-CE](http://novastore.farm.particle.cz/cgi-bin/condor.cgi) configuration with ATLAS jobs submission.
 
 Site | Host | VO | Audience
 ---- | ---- | -- | --------
