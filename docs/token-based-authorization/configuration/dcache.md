@@ -27,9 +27,9 @@ gplazma.scitoken.audience-targets = https://dcache.example.com
 
 Now it is necessary to map identity extracted from WLCG JWT token to the dCache `uid`, `gid` and `username`, e.g. by using multimap file `/etc/dcache/multi-mapfile.wlcg_jwt`
 ```
-group:wlcg_oidc               uid:1100 gid:1100,true username:wlcg_oidc
-group:atlas_oidc              uid:2000 gid:2000,true username:atlas_oidc
-group:cms_oidc                uid:3000 gid:3000,true username:cms_oidc
+group:wlcg_oidc               uid:1999 gid:1999,true username:wlcg_oidc
+group:atlas_oidc              uid:2999 gid:2999,true username:atlas_oidc
+group:cms_oidc                uid:3999 gid:3999,true username:cms_oidc
 ```
 
 Be wery careful when you map WLCG JWT token indentity when you decide to use it together with X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories.
@@ -55,21 +55,21 @@ Storage [configuration](https://github.com/indigo-iam/wlcg-jwt-compliance-tests)
 /basepath/atlas/atlasdatadisk ... inheritable read for /atlas and write for /atlas/Role=production
 /basepath/atlas/atlaslocalgroupdisk ... inheritable read for /atlas and write for /atlas/country_code
 ```
-Example for following X.509 identity mapping `/atlas` gid 3000, `/atlas/Role=production` gid 3001, `/atlas/cz` gid 3002
+Example for following X.509 identity mapping `/atlas` gid 2000, `/atlas/Role=production` gid 2001, `/atlas/cz` gid 2002
 ```
 $ chimera ls /dpm/farm.particle.cz/home 
-dr-xr-x---  19  3000  3000 512 May 10 00:00 atlas
+dr-xr-x---   19 2000 2000        512 May 10 00:00 atlas
 $ chimera ls /dpm/farm.particle.cz/home/atlas 
-drwxr-xr-x   10 3001 3001        512 Jun 01  2020 atlasdatadisk
-drwxr-xr-x    5 3001 3001        512 Jan 18  2020 atlaslocalgroupdisk
-drwxr-xr-x   60 3001 3001        512 Aug 19  2021 atlasscratchdisk
+drwxr-xr-x   10 2001 2001        512 Jun 01  2020 atlasdatadisk
+drwxr-xr-x    5 2001 2001        512 Jan 18  2020 atlaslocalgroupdisk
+drwxr-xr-x   60 2001 2001        512 Aug 19  2021 atlasscratchdisk
 $ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlasscratchdisk 
-GROUP:3000:+lfsxDd:fdg
+GROUP:2000:+lfsxDd:fdg
 $ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlasdatadisk 
-GROUP:3001:+lfsxDd:fdg
-GROUP:3000:+lx:fdg
+GROUP:2001:+lfsxDd:fdg
+GROUP:2000:+lx:fdg
 $ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlaslocalgroupdisk 
-GROUP:3002:+lfsxDd:fdg
-GROUP:3001:+lfsxDd:fdg
-GROUP:3000:+lx:fdg
+GROUP:2002:+lfsxDd:fdg
+GROUP:2001:+lfsxDd:fdg
+GROUP:2000:+lx:fdg
 ```
