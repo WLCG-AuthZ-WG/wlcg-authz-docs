@@ -372,6 +372,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#acl-configuration" class="md-nav__link">
+    ACL configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="ACL configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wlcg-compliance-testbed" class="md-nav__link">
+    WLCG compliance testbed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atlas" class="md-nav__link">
+    ATLAS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -476,6 +503,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#acl-configuration" class="md-nav__link">
+    ACL configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="ACL configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wlcg-compliance-testbed" class="md-nav__link">
+    WLCG compliance testbed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atlas" class="md-nav__link">
+    ATLAS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -517,6 +571,36 @@ group:cms_oidc                uid:3000 gid:3000,true username:cms_oidc
 </code></pre>
 <p>Be wery careful when you map WLCG JWT token indentity when you decide to use it together with X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories.</p>
 <h2 id="dcache-82-configuration">dCache 8.2 configuration</h2>
+<h2 id="acl-configuration">ACL configuration</h2>
+<p>To be able to use ACLs with dCache it is necessary to enable them in the <code>dcache.conf</code></p>
+<pre><code># enable ACL support
+pnfsmanager.enable.acl = true
+</code></pre>
+<h3 id="wlcg-compliance-testbed">WLCG compliance testbed</h3>
+<p>Storage <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests">configuration</a> for compliance tests.</p>
+<h3 id="atlas">ATLAS</h3>
+<pre><code>/basepath/atlas ... read only for /atlas group
+/basepath/atlas/atlasscratchdisk ... inheritable read for /atlas and write for /atlas
+/basepath/atlas/atlasdatadisk ... inheritable read for /atlas and write for /atlas/Role=production
+/basepath/atlas/atlaslocalgroupdisk ... inheritable read for /atlas and write for /atlas/country_code
+</code></pre>
+<p>Example for following X.509 identity mapping <code>/atlas</code> gid 3000, <code>/atlas/Role=production</code> gid 3001, <code>/atlas/cz</code> gid 3002</p>
+<pre><code>$ chimera ls /dpm/farm.particle.cz/home 
+dr-xr-x---  19  3000  3000 512 May 10 00:00 atlas
+$ chimera ls /dpm/farm.particle.cz/home/atlas 
+drwxr-xr-x   10 3001 3001        512 Jun 01  2020 atlasdatadisk
+drwxr-xr-x    5 3001 3001        512 Jan 18  2020 atlaslocalgroupdisk
+drwxr-xr-x   60 3001 3001        512 Aug 19  2021 atlasscratchdisk
+$ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlasscratchdisk 
+GROUP:3000:+lfsxDd:fdg
+$ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlasdatadisk 
+GROUP:3001:+lfsxDd:fdg
+GROUP:3000:+lx:fdg
+$ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlaslocalgroupdisk 
+GROUP:3002:+lfsxDd:fdg
+GROUP:3001:+lfsxDd:fdg
+GROUP:3000:+lx:fdg
+</code></pre>
 
               
             </article>
