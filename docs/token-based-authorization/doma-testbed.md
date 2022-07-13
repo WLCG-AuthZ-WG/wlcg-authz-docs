@@ -37,11 +37,14 @@ authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz co
 authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.modify /wlcg/pilots
 authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.cancel /wlcg/pilots
 
-# accept any token issued by EGI Check-in for job submission (both old MitreID and new Keycloak issuer)
-# (very rough configuration - accepting all tokens without restrictions is not very good idea)
+# accept token issued by EGI Check-in for job submission (both old MitreID and new Keycloak issuer)
 [authgroup: iam_egi_group]
-authtokens = * https://aai.egi.eu/oidc/ * * *
-authtokens = * https://aai.egi.eu/auth/realms/egi * * *
+# very rough / DANGEROUS configuration - accepting all tokens without restrictions
+#authtokens = * https://aai.egi.eu/oidc/ * * *
+#authtokens = * https://aai.egi.eu/auth/realms/egi * * *
+# it is possible to restrict job submission to the specific EGI user
+authtokens = 85ff127e07ea6660c727831b99e18e4e96b319283f8d2cc8113f405bad2ba261@egi.eu https://aai.egi.eu/oidc/ * * *
+authtokens = 85ff127e07ea6660c727831b99e18e4e96b319283f8d2cc8113f405bad2ba261@egi.eu https://aai.egi.eu/auth/realms/egi * * *
 
 # just an example for ARC-CE running on arc1.farm.particle.cz
 # recommendation for ATLAS configuration may change in fugure
