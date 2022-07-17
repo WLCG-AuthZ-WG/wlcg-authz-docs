@@ -64,21 +64,22 @@ access to the data at `/data/grid/wlcg`.
   `/wlcg/test` and this can be configured by following lines in
   the `acc.authdb` file
 ```
-# support for group based authorization from WLCG JWT token
-= wlcgtknusr_token o: https://wlcg.cloud.cnaf.infn.it/ g: /wlcg
+# compound identity to support for group based authorization from WLCG JWT token
 = wlcgtknprt_token o: https://wlcg.cloud.cnaf.infn.it/ g: /wlcg/test
-# support for mapping X.509 VOMS identity
-= wlcgtknusr_x509 o: wlcg g: /wlcg
+= wlcgtknusr_token o: https://wlcg.cloud.cnaf.infn.it/ g: /wlcg
+# compound identity to support for mapping X.509 VOMS identity
 = wlcgtknprt_x509 o: wlcg g: /wlcg r: test
+= wlcgtknusr_x509 o: wlcg g: /wlcg
 # templates for accessing normal and protected resources
-t wlcgtknusr /wlcg/protected rl-diknw /wlcg a / lr
 t wlcgtknprt /wlcg a / lr
+t wlcgtknusr /wlcg/protected rl-diknw /wlcg a / lr
 # configure access for users that comes with X.509 or WLCG JWT token with wlcg.groups
-x wlcgtknusr_token wlcgtknusr
+# (with "x" first matching compound identity is used to grant privileges)
 x wlcgtknprt_token wlcgtknprt
-x wlcgtknusr_x509 wlcgtknusr
+x wlcgtknusr_token wlcgtknusr
 x wlcgtknprt_x509 wlcgtknprt
-# scope based access is not handled in this configuration file
+x wlcgtknusr_x509 wlcgtknusr
+# WLCG JWT token scope based access is not handled in this configuration file
 ```
 
 [xrootd]: https://xrootd.slac.stanford.edu/
