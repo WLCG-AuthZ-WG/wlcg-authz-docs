@@ -19,9 +19,10 @@ gplazma.scitoken.issuer!wlcg = https://wlcg.cloud.cnaf.infn.it/ /wlcg org.dcache
 gplazma.scitoken.issuer!altas = https://atlas-auth.web.cern.ch/ /atlas org.dcache.auth.GroupNamePrincipal:atlas_oidc
 gplazma.scitoken.issuer!cms = https://cms-auth.web.cern.ch/ /atlas org.dcache.auth.GroupNamePrincipal:cms_oidc
 # assuming that dCache WebDAV service runs on default HTTPS port 443 for doors dcache.example.com
-gplazma.scitoken.audience-targets = https://dcache.example.com
+#gplazma.scitoken.audience-targets = https://dcache.example.com
 # you can specify multiple audiences, but avoid using generic https://wlcg.cern.ch/jwt/v1/any on production instances
-#gplazma.scitoken.audience-targets = https://wlcg.cern.ch/jwt/v1/any https://dcache.example.com https://dcache.example.com:1443 https://alias.example.com
+# (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
+gplazma.scitoken.audience-targets = https://wlcg.cern.ch/jwt/v1/any https://dcache.example.com https://dcache.example.com:2880 https://alias.example.com
 # ...
 ```
 
