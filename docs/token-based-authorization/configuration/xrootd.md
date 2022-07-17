@@ -62,7 +62,9 @@ access to the data at `/data/grid/wlcg`.
 - [WLCG JWT compliance testbed](https://github.com/indigo-iam/wlcg-jwt-compliance-tests#storage-area-configuration-pre-requisites)
   expect also `protected` resource accessible only with optional group
   `/wlcg/test` and this can be configured by following lines in
-  the `acc.authdb` file
+  the `acc.authdb` file for WLCG VO data at `/data/grid/wlcg`
+  (it is also possible to specify `oss.localroot /data/grid`
+  and than everything can be configured and used without this prefix)
 ```
 # compound identity to support for group based authorization from WLCG JWT token
 = wlcgtknprt_token o: https://wlcg.cloud.cnaf.infn.it/ g: /wlcg/test
@@ -71,8 +73,8 @@ access to the data at `/data/grid/wlcg`.
 = wlcgtknprt_x509 o: wlcg g: /wlcg r: test
 = wlcgtknusr_x509 o: wlcg g: /wlcg
 # templates for accessing normal and protected resources
-t wlcgtknprt /wlcg a / lr
-t wlcgtknusr /wlcg/protected rl-diknw /wlcg a / lr
+t wlcgtknprt /data/grid/wlcg a /data/grid lr
+t wlcgtknusr /data/grid/wlcg/protected rl-diknw /data/grid/wlcg a /data/grid lr
 # configure access for users that comes with X.509 or WLCG JWT token with wlcg.groups
 # (with "x" first matching compound identity is used to grant privileges)
 x wlcgtknprt_token wlcgtknprt
