@@ -572,6 +572,9 @@ group:cms_oidc                uid:3999 gid:3999,true username:cms_oidc
 </code></pre>
 <p>Be wery careful when you map WLCG JWT token indentity when you decide to use it together with X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories.</p>
 <h2 id="dcache-82-configuration">dCache 8.2 configuration</h2>
+<pre><code>auth     optional     oidc profile=wlcg
+map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.wlcg_jwt
+</code></pre>
 <h2 id="acl-configuration">ACL configuration</h2>
 <p>To be able to use ACLs with dCache it is necessary to enable them in the <code>dcache.conf</code></p>
 <pre><code># enable ACL support
