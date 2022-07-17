@@ -37,6 +37,11 @@ Be wery careful when you map WLCG JWT token indentity when you decide to use it 
 
 ## dCache 8.2 configuration
 
+```
+auth     optional     oidc profile=wlcg
+map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.wlcg_jwt
+```
+
 ## ACL configuration
 
 To be able to use ACLs with dCache it is necessary to enable them in the `dcache.conf`
