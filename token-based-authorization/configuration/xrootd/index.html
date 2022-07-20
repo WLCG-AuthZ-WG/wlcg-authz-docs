@@ -11,7 +11,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.2.11">
     
     
       
@@ -407,6 +407,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#enabling-tokens-for-atlas" class="md-nav__link">
+    Enabling tokens for ATLAS
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -458,6 +465,13 @@
         <li class="md-nav__item">
   <a href="#enabling-token-based-authnz-for-the-wlcg-iam-instance" class="md-nav__link">
     Enabling token-based authN/Z for the WLCG IAM instance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-tokens-for-atlas" class="md-nav__link">
+    Enabling tokens for ATLAS
   </a>
   
 </li>
@@ -566,6 +580,22 @@ x wlcgtknusr_token wlcgtknusr
 x wlcgtknprt_x509 wlcgtknprt
 x wlcgtknusr_x509 wlcgtknusr
 # WLCG JWT token scope based access is not handled in this configuration file
+</code></pre>
+<h2 id="enabling-tokens-for-atlas">Enabling tokens for ATLAS</h2>
+<p>If you use very simple XRootD configuration with posix backend and <code>acc.authdb</code>
+to specify permission for clients using X.509 VOMS proxy certificate than it
+should be sufficient to add following configuration files for <code>xrd.example.com:1094</code>
+and top level VO directory <code>/your/base/path/for/atlas</code></p>
+<pre><code># /etc/xrootd/scitokens.cfg
+[Global]
+onmissing = passthrough
+audience = https://xrd.example.com:1094
+
+[Issuer ATLAS]
+issuer = https://atlas-auth.web.cern.ch/
+base_path = /your/base/path/for/atlas
+map_subject = False
+default_user = xrootd
 </code></pre>
 
               
