@@ -83,6 +83,24 @@ x wlcgtknprt_x509 wlcgtknprt
 x wlcgtknusr_x509 wlcgtknusr
 # WLCG JWT token scope based access is not handled in this configuration file
 ```
+## Enabling tokens for ATLAS
+
+If you use very simple XRootD configuration with posix backend and `acc.authdb`
+to specify permission for clients using X.509 VOMS proxy certificate than it
+should be sufficient to add following configuration files for `xrd.example.com:1094`
+and top level VO directory `/your/base/path/for/atlas`
+```
+# /etc/xrootd/scitokens.cfg
+[Global]
+onmissing = passthrough
+audience = https://xrd.example.com:1094
+
+[Issuer ATLAS]
+issuer = https://atlas-auth.web.cern.ch/
+base_path = /your/base/path/for/atlas
+map_subject = False
+default_user = xrootd
+```
 
 [xrootd]: https://xrootd.slac.stanford.edu/
 [xrootd-scitokens]: https://github.com/xrootd/xrootd-scitokens
