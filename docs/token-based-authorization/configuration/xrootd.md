@@ -87,8 +87,8 @@ x wlcgtknusr_x509 wlcgtknusr
 
 If you use very simple XRootD configuration with posix backend and `acc.authdb`
 to specify permission for clients using X.509 VOMS proxy certificate than it
-should be sufficient to add following configuration files for `xrd.example.com:1094`
-and top level VO directory `/your/base/path/for/atlas`
+should be sufficient to add `/etc/xrootd/scitokens.cfg` configuration file
+for `xrd.example.com:1094` and top level VO directory `/your/base/path/for/atlas`
 ```
 # /etc/xrootd/scitokens.cfg
 [Global]
@@ -101,6 +101,8 @@ base_path = /your/base/path/for/atlas
 map_subject = False
 default_user = xrootd
 ```
+plus update `ofs.authlib` in your XRootD configuration file with `libXrdAccSciTokens.so`
+as mentioned in section with WLCG compliance testbed configuration.
 
 [xrootd]: https://xrootd.slac.stanford.edu/
 [xrootd-scitokens]: https://github.com/xrootd/xrootd-scitokens
