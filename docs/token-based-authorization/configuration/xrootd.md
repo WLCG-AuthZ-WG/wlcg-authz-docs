@@ -101,8 +101,13 @@ base_path = /your/base/path/for/atlas
 map_subject = False
 default_user = xrootd
 ```
-plus update `ofs.authlib` in your XRootD configuration file with `libXrdAccSciTokens.so`
+Plus update `ofs.authlib` in your XRootD configuration file with `libXrdAccSciTokens.so`
 as mentioned in section with WLCG compliance testbed configuration.
+
+ATLAS plans to rely exclusively on storage scopes in the tokens and that's why
+your production `acc.authdb` configuration should not contain any mapping for
+`wlcg.groups` that can be present in the token. All accesses to the storage with
+tokens that doesn't contain relevant storage scopes should be rejected.
 
 [xrootd]: https://xrootd.slac.stanford.edu/
 [xrootd-scitokens]: https://github.com/xrootd/xrootd-scitokens
