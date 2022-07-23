@@ -85,6 +85,8 @@ x wlcgtknusr_x509 wlcgtknusr
 ```
 ## Enabling tokens for ATLAS
 
+### Simple native XRootD configuration
+
 If you use very simple XRootD configuration with posix backend and `acc.authdb`
 to specify permission for clients using X.509 VOMS proxy certificate than it
 should be sufficient to add `/etc/xrootd/scitokens.cfg` configuration file
@@ -108,6 +110,51 @@ ATLAS plans to rely exclusively on storage scopes in the tokens and that's why
 your production `acc.authdb` configuration should not contain any mapping for
 `wlcg.groups` that can be present in the token. All accesses to the storage with
 tokens that doesn't contain relevant storage scopes should be rejected.
+
+### EOS mapping with directories using different identity
+
+EOS migrated from CASTOR and configured with full compatibility
+with original CASTOR storage rely only on certificate subject
+/ grid-mapfiles for identity mapping. This configuration could
+be equally translated for clients that comes with tokens, e.g.
+
+* /etc/xrootd/scitokens.cfg
+```
+# /etc/xrootd/scitokens.cfg
+[Global]
+onmissing = passthrough
+audience = https://eosatlas.cern.ch
+
+[Issuer ATLAS]
+issuer = https://atlas-auth.web.cern.ch/
+base_path = /eos/atlas
+map_subject = False
+name_mapfile = /etc/xrootd/scitokens.map
+default_user = user001
+```
+* /etc/xrootd/scitokens.map (map all non-default users with different privileges)
+```
+[
+  {"sub": "00000000-0000-0000-0000-000000000002", "result": "atlas002", "comment": "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=user002/CN=000002/CN=Robot: ATLAS User 2"},
+  {"sub": "00000000-0000-0000-0000-000000000003", "result": "atlas003", "comment": "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=user003/CN=000003/CN=Robot: ATLAS User 3"},
+  ...
+]
+```
+
+This kind of mapping assumes that directory owners on EOS
+match exactly storage scope path restriction defined in IAM.
+May be it is even better to rely primarily on storage scope
+path policies defined directly in IAM and than just map paths
+to the identity that match owner it the EOS namespace, e.g.
+
+```
+[
+  {"path": "/eos/atlas/atlasscratchdisk", "result": "atlas001", "comment": "Owner of the ATLASSCRATCHDISK area"},
+  {"path": "/eos/atlas/atlasdatadisk", "result": "atlas003", "comment": "Owner of the ATLASDATADISK area"},
+  ...
+]
+```
+
 
 [xrootd]: https://xrootd.slac.stanford.edu/
 [xrootd-scitokens]: https://github.com/xrootd/xrootd-scitokens
