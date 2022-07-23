@@ -412,6 +412,26 @@
     Enabling tokens for ATLAS
   </a>
   
+    <nav class="md-nav" aria-label="Enabling tokens for ATLAS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-native-xrootd-configuration" class="md-nav__link">
+    Simple native XRootD configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eos-mapping-with-directories-using-different-identity" class="md-nav__link">
+    EOS mapping with directories using different identity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -473,6 +493,26 @@
   <a href="#enabling-tokens-for-atlas" class="md-nav__link">
     Enabling tokens for ATLAS
   </a>
+  
+    <nav class="md-nav" aria-label="Enabling tokens for ATLAS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-native-xrootd-configuration" class="md-nav__link">
+    Simple native XRootD configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eos-mapping-with-directories-using-different-identity" class="md-nav__link">
+    EOS mapping with directories using different identity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -582,6 +622,7 @@ x wlcgtknusr_x509 wlcgtknusr
 # WLCG JWT token scope based access is not handled in this configuration file
 </code></pre>
 <h2 id="enabling-tokens-for-atlas">Enabling tokens for ATLAS</h2>
+<h3 id="simple-native-xrootd-configuration">Simple native XRootD configuration</h3>
 <p>If you use very simple XRootD configuration with posix backend and <code>acc.authdb</code>
 to specify permission for clients using X.509 VOMS proxy certificate than it
 should be sufficient to add <code>/etc/xrootd/scitokens.cfg</code> configuration file
@@ -603,6 +644,46 @@ as mentioned in section with WLCG compliance testbed configuration.</p>
 your production <code>acc.authdb</code> configuration should not contain any mapping for
 <code>wlcg.groups</code> that can be present in the token. All accesses to the storage with
 tokens that doesn't contain relevant storage scopes should be rejected.</p>
+<h3 id="eos-mapping-with-directories-using-different-identity">EOS mapping with directories using different identity</h3>
+<p>EOS migrated from CASTOR and configured with full compatibility
+with original CASTOR storage rely only on certificate subject
+/ grid-mapfiles for identity mapping. This configuration could
+be equally translated for clients that comes with tokens, e.g.</p>
+<ul>
+<li>/etc/xrootd/scitokens.cfg</li>
+</ul>
+<pre><code># /etc/xrootd/scitokens.cfg
+[Global]
+onmissing = passthrough
+audience = https://eosatlas.cern.ch
+
+[Issuer ATLAS]
+issuer = https://atlas-auth.web.cern.ch/
+base_path = /eos/atlas
+map_subject = False
+name_mapfile = /etc/xrootd/scitokens.map
+default_user = user001
+</code></pre>
+<ul>
+<li>/etc/xrootd/scitokens.map (map all non-default users with different privileges)</li>
+</ul>
+<pre><code>[
+  {&quot;sub&quot;: &quot;00000000-0000-0000-0000-000000000002&quot;, &quot;result&quot;: &quot;atlas002&quot;, &quot;comment&quot;: &quot;/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=user002/CN=000002/CN=Robot: ATLAS User 2&quot;},
+  {&quot;sub&quot;: &quot;00000000-0000-0000-0000-000000000003&quot;, &quot;result&quot;: &quot;atlas003&quot;, &quot;comment&quot;: &quot;/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=user003/CN=000003/CN=Robot: ATLAS User 3&quot;},
+  ...
+]
+</code></pre>
+<p>This kind of mapping assumes that directory owners on EOS
+match exactly storage scope path restriction defined in IAM.
+May be it is even better to rely primarily on storage scope
+path policies defined directly in IAM and than just map paths
+to the identity that match owner it the EOS namespace, e.g.</p>
+<pre><code>[
+  {&quot;path&quot;: &quot;/eos/atlas/atlasscratchdisk&quot;, &quot;result&quot;: &quot;atlas001&quot;, &quot;comment&quot;: &quot;Owner of the ATLASSCRATCHDISK area&quot;},
+  {&quot;path&quot;: &quot;/eos/atlas/atlasdatadisk&quot;, &quot;result&quot;: &quot;atlas003&quot;, &quot;comment&quot;: &quot;Owner of the ATLASDATADISK area&quot;},
+  ...
+]
+</code></pre>
 
               
             </article>
