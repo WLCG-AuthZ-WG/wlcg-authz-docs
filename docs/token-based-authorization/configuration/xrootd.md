@@ -130,7 +130,7 @@ issuer = https://atlas-auth.web.cern.ch/
 base_path = /eos/atlas
 map_subject = False
 name_mapfile = /etc/xrootd/scitokens.map
-default_user = user001
+default_user = atlas001
 ```
 * /etc/xrootd/scitokens.map (map all non-default users with different privileges)
 ```
