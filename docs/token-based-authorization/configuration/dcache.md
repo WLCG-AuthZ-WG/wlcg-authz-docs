@@ -15,9 +15,9 @@ This line alone is not sufficient for gPlazma service configuration, because it 
 # ...
 [centralDomain/gplazma]
 # assuming that VO starts in top level directory
-gplazma.scitoken.issuer!wlcg = https://wlcg.cloud.cnaf.infn.it/ /wlcg org.dcache.auth.GroupNamePrincipal:wlcg_oidc
-gplazma.scitoken.issuer!altas = https://atlas-auth.web.cern.ch/ /atlas org.dcache.auth.GroupNamePrincipal:atlas_oidc
-gplazma.scitoken.issuer!cms = https://cms-auth.web.cern.ch/ /atlas org.dcache.auth.GroupNamePrincipal:cms_oidc
+gplazma.scitoken.issuer!wlcg = https://wlcg.cloud.cnaf.infn.it/ /wlcg
+gplazma.scitoken.issuer!altas = https://atlas-auth.web.cern.ch/ /atlas
+gplazma.scitoken.issuer!cms = https://cms-auth.web.cern.ch/ /cms
 # assuming that dCache WebDAV service runs on default HTTPS port 443 for doors dcache.example.com
 #gplazma.scitoken.audience-targets = https://dcache.example.com
 # you can specify multiple audiences, but avoid using generic https://wlcg.cern.ch/jwt/v1/any on production instances
@@ -26,14 +26,14 @@ gplazma.scitoken.audience-targets = https://wlcg.cern.ch/jwt/v1/any https://dcac
 # ...
 ```
 
-Now it is necessary to map identity extracted from WLCG JWT token to the dCache `uid`, `gid` and `username`, e.g. by using multimap file `/etc/dcache/multi-mapfile.wlcg_jwt`
+It is necessary to map identity extracted from WLCG JWT token (in this case we rely on multimap "`op`" that gives us access to the token issuer mapped to our name configured in the layout file) to the dCache `uid`, `gid` and `username`, e.g. by using multimap file `/etc/dcache/multi-mapfile.wlcg_jwt`
 ```
-group:wlcg_oidc               uid:1999 gid:1999,true username:wlcg_oidc
-group:atlas_oidc              uid:2999 gid:2999,true username:atlas_oidc
-group:cms_oidc                uid:3999 gid:3999,true username:cms_oidc
+op:wlcg               uid:1999 gid:1999,true username:wlcg_oidc
+op:atlas              uid:2999 gid:2999,true username:atlas_oidc
+op:cms                uid:3999 gid:3999,true username:cms_oidc
 ```
 
-Be wery careful when you map WLCG JWT token indentity when you decide to use it together with X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories.
+Be wery careful how you map WLCG JWT token indentity and when you support also X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories.
 
 ## dCache 8.2 configuration
 
