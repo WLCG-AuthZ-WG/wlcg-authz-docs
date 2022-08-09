@@ -744,7 +744,7 @@ authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz co
 authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.cancel /wlcg/pilots
 
 # accept token issued by EGI Check-in for job submission (both old MitreID and new Keycloak issuer)
-[authgroup: iam_egi_group]
+[authgroup: egi_aai]
 # very rough / DANGEROUS configuration - accepting all tokens without restrictions
 #authtokens = * https://aai.egi.eu/oidc/ * * *
 #authtokens = * https://aai.egi.eu/auth/realms/egi * * *
@@ -755,33 +755,61 @@ authtokens = 85ff127e07ea6660c727831b99e18e4e96b319283f8d2cc8113f405bad2ba261@eg
 # just an example for ARC-CE running on arc1.farm.particle.cz
 # recommendation for ATLAS configuration may change in fugure
 # (this is not the official ATLAS site configuration documentation)
-[authgroup: iam_atlas_group]
-authtokens = * https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.create *
-authtokens = * https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.read *
-authtokens = * https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.modify *
-authtokens = * https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.cancel *
+[authgroup: atlas_iam_prd]
+authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.create *
+authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.read *
+authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.modify *
+authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.cancel *
+[authgroup: atlas_iam_plt]
+authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.create *
+authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.read *
+authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.modify *
+authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.cancel *
+[authgroup: atlas_iam_sgm]
+authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.create *
+authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.read *
+authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.modify *
+authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.cancel *
 
 # again, just an example for ARC-CE running on arc1.farm.particle.cz
 # (this is not the official CMS site configuration documentation)
-[authgroup: iam_cms_group]
-authtokens = * https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.create /cms/pilot
-authtokens = * https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.read /cms/pilot
-authtokens = * https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.modify /cms/pilot
-authtokens = * https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.cancel /cms/pilot
+[authgroup: cms_iam_pilot]
+authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.create *
+authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.read *
+authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.modify *
+authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.cancel *
+[authgroup: cms_iam_test]
+authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.create *
+authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.read *
+authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.modify *
+authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.cancel *
+[authgroup: cms_iam_itb]
+authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.create *
+authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.read *
+authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.modify *
+authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.web.cern.ch/ https://arc1.farm.particle.cz compute.cancel *
 
-# this assumes existence of local users wlcg, egi, atlas and cms with corresponding groups
+# this assumes existence of local users wlcg, egi, atlasprd, atlasplt, atlassgm, cmsplt, cmstest and cmsitb with corresponding groups
 [mapping]
 map_to_user = wlcg_iam wlcg:wlcg
-map_to_user = egi_iam egi:egi
-map_to_user = iam_atlas_group atlas:atlas
-map_to_user = iam_cms_group cms:cms
+map_to_user = egi_aai egi:egi
+map_to_user = atlas_iam_prd atlasprd:atlasprd
+map_to_user = atlas_iam_plt atlasplt:atlasplt
+map_to_user = atlas_iam_sgm atlassgm:atlassgm
+map_to_user = cms_iam_pilot cmsplt:cmsplt
+map_to_user = cms_iam_test cmstest:cmstest
+map_to_user = cms_iam_itb cmsitb:cmsitb
 policy_on_nomap=stop
 
 [arex/ws/jobs]
 allowaccess=wlcg_iam
-allowaccess=egi_iam
-allowaccess=atlas_iam
-allowaccess=cms_iam
+allowaccess=egi_aai
+allowaccess=atlas_iam_prd
+allowaccess=atlas_iam_plt
+allowaccess=atlas_iam_sgm
+allowaccess=cms_iam_pilot
+allowaccess=cms_iam_test
+allowaccess=cms_iam_itb
 # ...
 </code></pre>
 <p>Token implementation in ARC-CE is still preliminary and it seems possible there
