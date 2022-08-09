@@ -614,13 +614,9 @@
 <p><a href="https://github.com/indigo-dc/oidc-agent">oidc-agent</a> is a set of tools to get and manage OpenID Connect tokens and make them easily usable from the command line. It follows the <code>ssh-agent</code> design, so users can handle OIDC tokens in a similar way as they do with ssh keys.</p>
 <h2 id="installation-instructions"><strong>Installation instructions</strong></h2>
 <h3 id="quick-centos7-installation-recipe"><strong>Quick CENTOS7 installation recipe</strong></h3>
-<p>Current releases are available at <a href="https://github.com/indigo-dc/oidc-agent/releases">GitHub</a></p>
-<p>This recipe shows how to quickly install <code>oidc-agent</code> on CENTOS 7.</p>
-<pre><code>$ VERSION=$(curl --silent &quot;https://api.github.com/repos/indigo-dc/oidc-agent/releases/latest&quot; | grep -Po '&quot;tag_name&quot;: &quot;v\K.*?(?=&quot;)') '&quot;tag_name&quot;: &quot;v\K.*?(?=&quot;)'
-
-$ yum -y install epel-release
-
-$ yum -y install https://github.com/indigo-dc/oidc-agent/releases/download/v$VERSION/oidc-agent-$VERSION-1.el7.x86_64.rpm
+<p>Current releases are available at <a href="https://github.com/indigo-dc/oidc-agent/releases">GitHub</a> with <a href="https://repo.data.kit.edu/">official documentation</a> where to find latest packages and installation instructions.</p>
+<p>This recipe shows how to quickly install <code>oidc-agent</code> on <a href="https://repo.data.kit.edu/centos/centos7">CENTOS 7</a>.</p>
+<pre><code>yum install --repofrompath oidc,https://repo.data.kit.edu/centos/centos7 oidc-agent
 </code></pre>
 <h3 id="bootstrapping-oidc-agent"><strong>Bootstrapping oidc-agent</strong></h3>
 <p>The first thing to do is to start oidc-agent. This can be done issuing the following command:</p>
