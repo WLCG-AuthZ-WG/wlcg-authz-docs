@@ -18,6 +18,8 @@ $ yum -y install epel-release
 $ yum -y install https://repo.data.kit.edu/centos/centos7/oidc-agent-$VERSION.el7.x86_64.rpm
 ```
 
+Note: oidc-agent is supported on other OSes, including Debian/Ubuntu, SuSE, MacOS and Windows.
+
 ### **Bootstrapping oidc-agent**
 
 The first thing to do is to start oidc-agent. This can be done issuing the following command:
