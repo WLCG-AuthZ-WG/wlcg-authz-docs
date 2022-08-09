@@ -738,10 +738,14 @@ limitations configuration close to expectations from WLCG JWT profile could look
 [authtokens]
 
 [authgroup: wlcg_iam]
-authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.create /wlcg/pilots
-authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.read /wlcg/pilots
-authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.modify /wlcg/pilots
-authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.farm.particle.cz compute.cancel /wlcg/pilots
+# capability based authorization that use compute.* scopes
+authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.example.com compute.create *
+authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.example.com compute.read *
+authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.example.com compute.modify *
+authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.example.com compute.cancel *
+# group based authorization that use /wlcg/pilots group
+# (LHC experiments prefer capabilities and that's why this is commented out)
+authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.example.com * /wlcg/pilots
 
 # accept token issued by EGI Check-in for job submission (both old MitreID and new Keycloak issuer)
 [authgroup: egi_aai]
