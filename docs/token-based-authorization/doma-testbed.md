@@ -37,8 +37,7 @@ authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.example.com compute
 authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.example.com compute.read *
 authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.example.com compute.modify *
 authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.example.com compute.cancel *
-# group based authorization that use /wlcg/pilots group
-# (LHC experiments prefer capabilities and that's why this is commented out)
+# group based authorization that use /wlcg/pilots group (LHC experiments prefer capabilities)
 authtokens = * https://wlcg.cloud.cnaf.infn.it/ https://arc1.example.com * /wlcg/pilots
 
 # accept token issued by EGI Check-in for job submission (both old MitreID and new Keycloak issuer)
