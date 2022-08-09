@@ -6,16 +6,12 @@
 
 ### **Quick CENTOS7 installation recipe**
 
-Current releases are available at [GitHub](https://github.com/indigo-dc/oidc-agent/releases)
+Current releases are available at [GitHub](https://github.com/indigo-dc/oidc-agent/releases) with [official documentation](https://repo.data.kit.edu/) where to find latest packages and installation instructions.
 
-This recipe shows how to quickly install ```oidc-agent``` on CENTOS 7.
+This recipe shows how to quickly install ```oidc-agent``` on [CENTOS 7](https://repo.data.kit.edu/centos/centos7).
 
 ```
-$ VERSION=$(curl --silent "https://api.github.com/repos/indigo-dc/oidc-agent/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")') '"tag_name": "v\K.*?(?=")'
-
-$ yum -y install epel-release
-
-$ yum -y install https://github.com/indigo-dc/oidc-agent/releases/download/v$VERSION/oidc-agent-$VERSION-1.el7.x86_64.rpm
+yum install --repofrompath oidc,https://repo.data.kit.edu/centos/centos7 oidc-agent
 ```
 
 ### **Bootstrapping oidc-agent**
