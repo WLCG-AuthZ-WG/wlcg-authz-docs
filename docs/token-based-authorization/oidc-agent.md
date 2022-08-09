@@ -27,7 +27,7 @@ $ eval $(oidc-agent)
 Agent pid 62088
 ```
 
-* ***To install OIDC Agent from source or in a Debian/Ubuntu distro, please refer to oidc-agent [instalation documentation](https://indigo-dc.gitbook.io/oidc-agent/installation/install)***
+* ***To install OIDC Agent from source or in a Debian/Ubuntu distro, please refer to oidc-agent [installation documentation](https://indigo-dc.gitbook.io/oidc-agent/installation/install)***
 
 ## **How to register a client** 
 
