@@ -8,18 +8,9 @@ Releases are available for several RPM and DEB based distribution, plus MacOS an
 [The KIT Repo Server](https://repo.data.kit.edu) shows installation
 instructions for each release
 
-### **Example: Quick CENTOS7 installation recipe**
-
-This example shows how to quickly install ```oidc-agent``` on CENTOS 7.
-
-
-
+This recipe shows how to quickly install ```oidc-agent``` on [CENTOS 7](https://repo.data.kit.edu/centos/centos7).
 ```
-$ yum -y install epel-release
-
-$ cd /etc/yum.repos.d; wget https://repo.data.kit.edu/data-kit-edu-centos7.repo
-
-$ yum -y install oidc-agent
+yum install --repofrompath oidc,https://repo.data.kit.edu/centos/centos7 oidc-agent
 ```
 
 
