@@ -325,13 +325,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#quick-centos7-installation-recipe" class="md-nav__link">
-    Quick CENTOS7 installation recipe
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#bootstrapping-oidc-agent" class="md-nav__link">
     Bootstrapping oidc-agent
   </a>
@@ -351,8 +344,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-print-a-list-of-all-configured-account" class="md-nav__link">
-    How to print a list of all configured account
+  <a href="#how-to-print-a-list-of-all-configured-accounts" class="md-nav__link">
+    How to print a list of all configured accounts
   </a>
   
 </li>
@@ -530,13 +523,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#quick-centos7-installation-recipe" class="md-nav__link">
-    Quick CENTOS7 installation recipe
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#bootstrapping-oidc-agent" class="md-nav__link">
     Bootstrapping oidc-agent
   </a>
@@ -556,8 +542,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-to-print-a-list-of-all-configured-account" class="md-nav__link">
-    How to print a list of all configured account
+  <a href="#how-to-print-a-list-of-all-configured-accounts" class="md-nav__link">
+    How to print a list of all configured accounts
   </a>
   
 </li>
@@ -613,8 +599,9 @@
 <h1 id="oidc-agent">OIDC Agent</h1>
 <p><a href="https://github.com/indigo-dc/oidc-agent">oidc-agent</a> is a set of tools to get and manage OpenID Connect tokens and make them easily usable from the command line. It follows the <code>ssh-agent</code> design, so users can handle OIDC tokens in a similar way as they do with ssh keys.</p>
 <h2 id="installation-instructions"><strong>Installation instructions</strong></h2>
-<h3 id="quick-centos7-installation-recipe"><strong>Quick CENTOS7 installation recipe</strong></h3>
-<p>Current releases are available at <a href="https://github.com/indigo-dc/oidc-agent/releases">GitHub</a> with <a href="https://repo.data.kit.edu/">official documentation</a> where to find latest packages and installation instructions.</p>
+<p>Releases are available for several RPM and DEB based distribution, plus MacOS and Windows.
+<a href="https://repo.data.kit.edu">The KIT Repo Server</a> shows installation
+instructions for each release</p>
 <p>This recipe shows how to quickly install <code>oidc-agent</code> on <a href="https://repo.data.kit.edu/centos/centos7">CENTOS 7</a>.</p>
 <pre><code>yum install --repofrompath oidc,https://repo.data.kit.edu/centos/centos7 oidc-agent
 </code></pre>
@@ -624,25 +611,19 @@
 Agent pid 62088
 </code></pre>
 <ul>
-<li><strong><em>To install OIDC Agent from source or in a Debian/Ubuntu distro, please refer to oidc-agent <a href="https://indigo-dc.gitbook.io/oidc-agent/installation/install">instalation documentation</a></em></strong></li>
+<li><strong><em>To install OIDC Agent from source or in a Debian/Ubuntu distro, please refer to the <a href="https://repo.data.kit.edu">KIT Repo Server</a> and to the oidc-agent <a href="https://indigo-dc.gitbook.io/oidc-agent/installation/install">installation documentation in gitbook</a></em></strong></li>
 </ul>
 <h2 id="how-to-register-a-client"><strong>How to register a client</strong></h2>
-<p>In order to obtain a token out of IAM, a user needs a client registered. oidc-agent can automate this step and store client credentials securely on the user machine.</p>
-<p>A new client can be registered using the <code>oidc-gen</code> command, as follows:</p>
-<pre><code>$ oidc-gen -w device wlcg
+<p>In order to obtain a token out of an OP such as IAM, a user needs a client registered. oidc-agent can automate this step and store client credentials securely on the user machine.</p>
+<p>A new client is registered using the <code>oidc-gen</code> command, as follows:</p>
+<pre><code>$ oidc-gen --iss https://wlcg.cloud.cnaf.infn.it --scope max --flow=device  wlcg
 </code></pre>
-<p>The <code>-w device</code> instructs <code>oidc-agent</code> to use the device code flow for the authentication, which is the recommended way with IAM.</p>
-<p>oidc-agent will display a list of different providers that can be used for registration:</p>
-<pre><code>[1] https://iam-test.indigo-datacloud.eu/
-[2] https://iam.deep-hybrid-datacloud.eu/
-...
-[16] https://wlcg.cloud.cnaf.infn.it/
-Issuer [https://wlcg.cloud.cnaf.infn.it/]:_
-</code></pre>
-<p>Select one of the registered providers, or type a custom issuer (for IAM, the last character of the issuer string is always a /, e.g. https://wlcg.cloud.cnaf.infn.it/).</p>
-<p>Then oidc-agent asks for the scopes, typing max (without quotes) allows to get all the allowed scopes, or, one or more can be defined using spaces between them.</p>
-<p>oidc-agent will register a new client and store the client credentials and a refresh token locally in encrypted form (the agent will ask for a password from the user).</p>
-<h2 id="how-to-print-a-list-of-all-configured-account"><strong>How to print a list of all configured account</strong></h2>
+<p>The <code>--flow=device</code> instructs <code>oidc-agent</code> to use the device code flow for the authentication, which is the recommended way with IAM.</p>
+<p>oidc-agent will use "dynamic client registration" to register a new client and store the client credentials and a refresh token locally in encrypted form (the agent will ask for a password from the user).</p>
+<p>Some IAM instance may not have "dynamic client registration" enabled. In this
+case you may try <code>oidc-gen</code> with the <code>--pub</code> parameter.
+This makes use of a pre-registered "public client", which may be available for that IAM instance.</p>
+<h2 id="how-to-print-a-list-of-all-configured-accounts"><strong>How to print a list of all configured accounts</strong></h2>
 <p>To obtain a list of all configured accounts configured, either <code>oidc-gen --accounts</code> or <code>oidc-add --list</code> can be used. Both of them can use the same flag <code>-l</code></p>
 <pre><code>$ oidc-gen -l
 The following account configurations are usable: 
