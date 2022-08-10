@@ -4,21 +4,24 @@
 
 ## **Installation instructions**
 
-### **Quick CENTOS7 installation recipe**
+Releases are available for several RPM and DEB based distribution, plus MacOS and Windows.
+[The KIT Repo Server](https://repo.data.kit.edu) shows installation
+instructions for each release
 
-Current releases are available at [the KIT Repo Server](https://repo.data.kit.edu)
+### **Example: Quick CENTOS7 installation recipe**
 
-This recipe shows how to quickly install ```oidc-agent``` on CENTOS 7.
+This example shows how to quickly install ```oidc-agent``` on CENTOS 7.
+
+
 
 ```
-$ VERSION=$(curl --silent "https://api.github.com/repos/indigo-dc/oidc-agent/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")') '"tag_name": "v\K.*?(?=")'
-
 $ yum -y install epel-release
 
-$ yum -y install https://repo.data.kit.edu/centos/centos7/oidc-agent-$VERSION.el7.x86_64.rpm
+$ cd /etc/yum.repos.d; wget https://repo.data.kit.edu/data-kit-edu-centos7.repo
+
+$ yum -y install oidc-agent
 ```
 
-Note: oidc-agent is supported on other OSes, including Debian/Ubuntu, SuSE, MacOS and Windows.
 
 ### **Bootstrapping oidc-agent**
 
@@ -29,22 +32,26 @@ $ eval $(oidc-agent)
 Agent pid 62088
 ```
 
-* ***To install OIDC Agent from source or in a Debian/Ubuntu distro, please refer to oidc-agent [installation documentation](https://indigo-dc.gitbook.io/oidc-agent/installation/install)***
+* ***To install OIDC Agent from source or in a Debian/Ubuntu distro, please refer to the [KIT Repo Server](https://repo.data.kit.edu) and to the oidc-agent [installation documentation in gitbook](https://indigo-dc.gitbook.io/oidc-agent/installation/install)***
 
 ## **How to register a client** 
 
-In order to obtain a token out of IAM, a user needs a client registered. oidc-agent can automate this step and store client credentials securely on the user machine.
+In order to obtain a token out of an OP such as IAM, a user needs a client registered. oidc-agent can automate this step and store client credentials securely on the user machine.
 
-A new client can be registered using the ```oidc-gen``` command, as follows:
+A new client is registered using the ```oidc-gen``` command, as follows:
 
 ```
-$ oidc-gen --pub --iss https://wlcg.cloud.cnaf.infn.it --scope max --flow=device  wlcg
+$ oidc-gen --iss https://wlcg.cloud.cnaf.infn.it --scope max --flow=device  wlcg
 ```
 The ```--flow=device``` instructs ```oidc-agent``` to use the device code flow for the authentication, which is the recommended way with IAM.
 
-oidc-agent will register a new client and store the client credentials and a refresh token locally in encrypted form (the agent will ask for a password from the user).
+oidc-agent will use "dynamic client registration" to register a new client and store the client credentials and a refresh token locally in encrypted form (the agent will ask for a password from the user).
 
-## **How to print a list of all configured account** 
+Some IAM instance may not have "dynamic client registration" enabled. In this
+case you may try `oidc-gen` with the `--pub` parameter.
+This makes use of a pre-registered "public client", which may be available for that IAM instance.
+
+## **How to print a list of all configured accounts** 
 
 To obtain a list of all configured accounts configured, either ```oidc-gen --accounts``` or ```oidc-add --list``` can be used. Both of them can use the same flag ```-l```
 
