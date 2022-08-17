@@ -220,7 +220,7 @@ osg | hosted-ce-chtc-ubuntu.osg.chtc.io:9619 | wlcg | hosted-ce-chtc-ubuntu.osg.
 * Echo (CEPH + XRootD plugin)
 * EOS
 * StoRM ([configuration instructions](./configuration/storm.md))
-* XRootD
+* XRootD ([configuration instructions](./configuration/xrootd.md))
 
 ### Configured endpoints:
 Site | Implementation | Host | VO | Audience
