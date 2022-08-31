@@ -4,6 +4,10 @@
 
 Described in details in the WLCG JWT compliance testsuite [README](https://github.com/indigo-iam/wlcg-jwt-compliance-tests/blob/master/README.md)
 
+## Alice Storage
+
+Already use their own proprietary tokens (not these WLCG JWT tokens) and that means everything is mapped to one storage identity, because their security model already rely on capabilities.
+
 ## ATLAS Storage
 
 Rucio file replication with FTS always use production role when writing files in the "rucio" subdirectory
@@ -27,3 +31,10 @@ All files can be read with basic `/atlas` VO identity.
 * `/basepath/group` - write for role `/cms/Role=priorityuser`
 * `/basepath/group/rucio` - write for role `/cms/Role=production`
 * `/basepath/user` - only for local users from same home institute (may even provide per-user access permissions)
+
+## LHCb Storage
+
+Distinguish two VOMS roles: user and production.
+
+* `production` - read/write everywhere
+* `user` - read everything but write only in the basepath for user
