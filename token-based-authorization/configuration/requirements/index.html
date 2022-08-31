@@ -394,6 +394,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#alice-storage" class="md-nav__link">
+    Alice Storage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#atlas-storage" class="md-nav__link">
     ATLAS Storage
   </a>
@@ -403,6 +410,13 @@
         <li class="md-nav__item">
   <a href="#cms-storage" class="md-nav__link">
     CMS Storage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lhcb-storage" class="md-nav__link">
+    LHCb Storage
   </a>
   
 </li>
@@ -491,6 +505,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#alice-storage" class="md-nav__link">
+    Alice Storage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#atlas-storage" class="md-nav__link">
     ATLAS Storage
   </a>
@@ -500,6 +521,13 @@
         <li class="md-nav__item">
   <a href="#cms-storage" class="md-nav__link">
     CMS Storage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lhcb-storage" class="md-nav__link">
+    LHCb Storage
   </a>
   
 </li>
@@ -521,6 +549,8 @@
 <h1 id="requirements">Requirements</h1>
 <h2 id="wlcg-compliance-testsuite-storage-configuration">WLCG Compliance testsuite storage configuration</h2>
 <p>Described in details in the WLCG JWT compliance testsuite <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests/blob/master/README.md">README</a></p>
+<h2 id="alice-storage">Alice Storage</h2>
+<p>Already use their own proprietary tokens (not these WLCG JWT tokens) and that means everything is mapped to one storage identity, because their security model already rely on capabilities.</p>
 <h2 id="atlas-storage">ATLAS Storage</h2>
 <p>Rucio file replication with FTS always use production role when writing files in the "rucio" subdirectory
 and while deleting files. For jobs using rucio upload the identity used while writing files differs
@@ -541,6 +571,12 @@ can store own files with rucio upload and normal <code>/atlas</code> identity.</
 <li><code>/basepath/group</code> - write for role <code>/cms/Role=priorityuser</code></li>
 <li><code>/basepath/group/rucio</code> - write for role <code>/cms/Role=production</code></li>
 <li><code>/basepath/user</code> - only for local users from same home institute (may even provide per-user access permissions)</li>
+</ul>
+<h2 id="lhcb-storage">LHCb Storage</h2>
+<p>Distinguish two VOMS roles: user and production.</p>
+<ul>
+<li><code>production</code> - read/write everywhere</li>
+<li><code>user</code> - read everything but write only in the basepath for user</li>
 </ul>
 
               
