@@ -15,7 +15,7 @@
     
     
       
-        <title>DPM - Token-based AuthN/Z for WLCG</title>
+        <title>Requirements - Token-based AuthN/Z for WLCG</title>
       
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dpm" class="md-skip">
+        <a href="#requirements" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              DPM
+              Requirements
             
           </span>
         </div>
@@ -337,6 +337,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../dpm/" class="md-nav__link">
+        DPM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -348,24 +362,55 @@
         
       
       
-      <a href="./" class="md-nav__link md-nav__link--active">
-        DPM
-      </a>
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Requirements
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../requirements/" class="md-nav__link">
+      <a href="./" class="md-nav__link md-nav__link--active">
         Requirements
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wlcg-compliance-testsuite-storage-configuration" class="md-nav__link">
+    WLCG Compliance testsuite storage configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atlas-storage" class="md-nav__link">
+    ATLAS Storage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cms-storage" class="md-nav__link">
+    CMS Storage
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -432,6 +477,35 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wlcg-compliance-testsuite-storage-configuration" class="md-nav__link">
+    WLCG Compliance testsuite storage configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atlas-storage" class="md-nav__link">
+    ATLAS Storage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cms-storage" class="md-nav__link">
+    CMS Storage
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -444,9 +518,26 @@
                 
 
 
-<h1 id="dpm">DPM</h1>
-<p>Currently supports only very <a href="https://twiki.cern.ch/twiki/bin/view/DPM/DpmSetupManualInstallation#Note_on_OpenID_Connect_and_WLCG">basic configuration described in documentation</a></p>
-<p>:exclamation: <a href="https://indico.cern.ch/event/813745/contributions/3766117/note/">DPM EOL / end of support</a> comes in summer 2024 (CentOS7/CentOS8 EOL) and it was decided not to fix issues with current WLCG JWT token implementation. If you would like to use WLCG JWT tokens with your production DPM storage than there is a quick, easy and transparent way how to <a href="https://twiki.cern.ch/twiki/bin/view/DPM/DpmDCache">migrate to dCache</a> (several production storages already successfully used this method with less than 48 hours downtime).</p>
+<h1 id="requirements">Requirements</h1>
+<h2 id="wlcg-compliance-testsuite-storage-configuration">WLCG Compliance testsuite storage configuration</h2>
+<p>Described in details in the WLCG JWT compliance testsuite <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests/blob/master/README.md">README</a></p>
+<h2 id="atlas-storage">ATLAS Storage</h2>
+<p>Rucio file replication with FTS always use production role when writing files in the "rucio" subdirectory
+and while deleting files. For jobs using rucio upload the identity used while writing files differs
+for production (<code>/atlas/Role=production</code> identity) and analysis jobs (<code>/atlas</code> identity). Also user
+can store own files with rucio upload and normal <code>/atlas</code> identity.</p>
+<p>Usual namespace organization with access permission:
+* <code>/basepath</code> - read only for <code>/atlas</code> group
+* <code>/basepath/atlasscratchdisk</code> - inheritable read for <code>/atlas</code> and write for <code>/atlas</code> + <code>/atlas/Role=production</code>
+* <code>/basepath/atlasdatadisk</code> - inheritable read for <code>/atlas</code> and write for role <code>/atlas/Role=production</code>
+* <code>/basepath/atlaslocalgroupdisk</code> - inheritable read for <code>/atlas</code> and write for group <code>/atlas/country_code</code> + <code>/atlas/Role=production</code></p>
+<p>All files can be read with basic <code>/atlas</code> VO identity.</p>
+<h2 id="cms-storage">CMS Storage</h2>
+<p><code>/basepath</code> - everything readable by <code>/cms</code> identity
+<code>/basepath/{data,mc,...}</code> - write for role <code>/cms/Role=production</code>
+<code>/basepath/group</code> - write for role <code>/cms/Role=priorityuser</code>
+<code>/basepath/group/rucio</code> - write for role <code>/cms/Role=production</code>
+<code>/basepath/user</code> - only for local users from same home institute (may even provide per-user access permissions)</p>
 
               
             </article>
@@ -460,7 +551,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../dcache/" class="md-footer__link md-footer__link--prev" aria-label="Previous: dCache" rel="prev">
+        <a href="../dpm/" class="md-footer__link md-footer__link--prev" aria-label="Previous: DPM" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -469,20 +560,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              dCache
+              DPM
             </div>
           </div>
         </a>
       
       
         
-        <a href="../requirements/" class="md-footer__link md-footer__link--next" aria-label="Next: Requirements" rel="next">
+        <a href="../storm/" class="md-footer__link md-footer__link--next" aria-label="Next: StoRM" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Requirements
+              StoRM
             </div>
           </div>
           <div class="md-footer__button md-icon">
