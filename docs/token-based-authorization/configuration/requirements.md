@@ -12,6 +12,7 @@ for production (`/atlas/Role=production` identity) and analysis jobs (`/atlas` i
 can store own files with rucio upload and normal `/atlas` identity.
 
 Usual namespace organization with access permission:
+
 * `/basepath` - read only for `/atlas` group
 * `/basepath/atlasscratchdisk` - inheritable read for `/atlas` and write for `/atlas` + `/atlas/Role=production`
 * `/basepath/atlasdatadisk` - inheritable read for `/atlas` and write for role `/atlas/Role=production`
@@ -21,8 +22,8 @@ All files can be read with basic `/atlas` VO identity.
 
 ## CMS Storage
 
-`/basepath` - everything readable by `/cms` identity
-`/basepath/{data,mc,...}` - write for role `/cms/Role=production`
-`/basepath/group` - write for role `/cms/Role=priorityuser`
-`/basepath/group/rucio` - write for role `/cms/Role=production`
-`/basepath/user` - only for local users from same home institute (may even provide per-user access permissions)
+* `/basepath` - everything readable by `/cms` identity
+* `/basepath/{data,mc,...}` - write for role `/cms/Role=production`
+* `/basepath/group` - write for role `/cms/Role=priorityuser`
+* `/basepath/group/rucio` - write for role `/cms/Role=production`
+* `/basepath/user` - only for local users from same home institute (may even provide per-user access permissions)
