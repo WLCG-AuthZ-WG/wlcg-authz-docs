@@ -24,6 +24,8 @@ Usual namespace organization with access permission:
 
 All files can be read with basic `/atlas` VO identity.
 
+Rely exclusively on capabilities that comes with token `storage.*` scopes and completely ignore `wlcg.groups` in the token for storage access.
+
 ## CMS Storage
 
 * `/basepath/cms` - everything readable by `/cms` identity
@@ -32,9 +34,13 @@ All files can be read with basic `/atlas` VO identity.
 * `/basepath/cms/group/rucio` - write for role `/cms/Role=production`
 * `/basepath/cms/user` - only for local users from same home institute (may even provide per-user access permissions)
 
+Rely exclusively on capabilities that comes with token `storage.*` scopes and completely ignore `wlcg.groups` in the token for storage access.
+
 ## LHCb Storage
 
 Distinguish two VOMS roles: user and production.
 
 * `/basepath/lhcb` - read/write everywhere with production role
 * `/basepath/lhcb/user` - normal user read everything but write only in a specific subdirectory
+
+Prefer capabilities that comes with token `storage.*` scopes (depends on Dirac development and may still consider `wlcg.groups` when it turns out it is too difficult to use capabilities within Dirac framework).
