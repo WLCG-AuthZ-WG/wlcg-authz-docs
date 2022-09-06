@@ -564,6 +564,7 @@ can store own files with rucio upload and normal <code>/atlas</code> identity.</
 <li><code>/basepath/atlas/atlaslocalgroupdisk</code> - inheritable read for <code>/atlas</code> and write for group <code>/atlas/country_code</code> + <code>/atlas/Role=production</code></li>
 </ul>
 <p>All files can be read with basic <code>/atlas</code> VO identity.</p>
+<p>Rely exclusively on capabilities that comes with token <code>storage.*</code> scopes and completely ignore <code>wlcg.groups</code> in the token for storage access.</p>
 <h2 id="cms-storage">CMS Storage</h2>
 <ul>
 <li><code>/basepath/cms</code> - everything readable by <code>/cms</code> identity</li>
@@ -572,12 +573,14 @@ can store own files with rucio upload and normal <code>/atlas</code> identity.</
 <li><code>/basepath/cms/group/rucio</code> - write for role <code>/cms/Role=production</code></li>
 <li><code>/basepath/cms/user</code> - only for local users from same home institute (may even provide per-user access permissions)</li>
 </ul>
+<p>Rely exclusively on capabilities that comes with token <code>storage.*</code> scopes and completely ignore <code>wlcg.groups</code> in the token for storage access.</p>
 <h2 id="lhcb-storage">LHCb Storage</h2>
 <p>Distinguish two VOMS roles: user and production.</p>
 <ul>
 <li><code>/basepath/lhcb</code> - read/write everywhere with production role</li>
 <li><code>/basepath/lhcb/user</code> - normal user read everything but write only in a specific subdirectory</li>
 </ul>
+<p>Prefer capabilities that comes with token <code>storage.*</code> scopes (depends on Dirac development and may still consider <code>wlcg.groups</code> when it turns out it is too difficult to use capabilities within Dirac framework).</p>
 
               
             </article>
