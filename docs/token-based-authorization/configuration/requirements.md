@@ -6,7 +6,7 @@ Described in details in the WLCG JWT compliance testsuite [README](https://githu
 
 ## Alice Storage
 
-Already use their own proprietary tokens (not these WLCG JWT tokens) and that means everything is mapped to one storage identity, because their security model already rely on capabilities.
+Already use their own proprietary tokens (not WLCG JWT tokens) and that means everything is mapped to one storage identity, because their security model already rely on capabilities.
 
 ## ATLAS Storage
 
@@ -17,24 +17,24 @@ can store own files with rucio upload and normal `/atlas` identity.
 
 Usual namespace organization with access permission:
 
-* `/basepath` - read only for `/atlas` group
-* `/basepath/atlasscratchdisk` - inheritable read for `/atlas` and write for `/atlas` + `/atlas/Role=production`
-* `/basepath/atlasdatadisk` - inheritable read for `/atlas` and write for role `/atlas/Role=production`
-* `/basepath/atlaslocalgroupdisk` - inheritable read for `/atlas` and write for group `/atlas/country_code` + `/atlas/Role=production`
+* `/basepath/atlas` - read only for `/atlas` group
+* `/basepath/atlas/atlasscratchdisk` - inheritable read for `/atlas` and write for `/atlas` + `/atlas/Role=production`
+* `/basepath/atlas/atlasdatadisk` - inheritable read for `/atlas` and write for role `/atlas/Role=production`
+* `/basepath/atlas/atlaslocalgroupdisk` - inheritable read for `/atlas` and write for group `/atlas/country_code` + `/atlas/Role=production`
 
 All files can be read with basic `/atlas` VO identity.
 
 ## CMS Storage
 
-* `/basepath` - everything readable by `/cms` identity
-* `/basepath/{data,mc,...}` - write for role `/cms/Role=production`
-* `/basepath/group` - write for role `/cms/Role=priorityuser`
-* `/basepath/group/rucio` - write for role `/cms/Role=production`
-* `/basepath/user` - only for local users from same home institute (may even provide per-user access permissions)
+* `/basepath/cms` - everything readable by `/cms` identity
+* `/basepath/cms/{data,mc,...}` - write for role `/cms/Role=production`
+* `/basepath/cms/group` - write for role `/cms/Role=priorityuser`
+* `/basepath/cms/group/rucio` - write for role `/cms/Role=production`
+* `/basepath/cms/user` - only for local users from same home institute (may even provide per-user access permissions)
 
 ## LHCb Storage
 
 Distinguish two VOMS roles: user and production.
 
-* `production` - read/write everywhere
-* `user` - read everything but write only in the basepath for user
+* `/basepath/lhcb` - read/write everywhere with production role
+* `/basepath/lhcb/user` - normal user read everything but write only in a specific subdirectory
