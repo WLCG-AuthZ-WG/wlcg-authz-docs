@@ -12,8 +12,8 @@ Already use their own proprietary tokens (not WLCG JWT tokens) and that means ev
 
 Rucio file replication with FTS always use production role when writing files in the "rucio" subdirectory
 and while deleting files. For jobs using rucio upload the identity used while writing files differs
-for production (`/atlas/Role=production` identity) and analysis jobs (`/atlas` identity). Also user
-can store own files with rucio upload and normal `/atlas` identity.
+for production (`FQAN:/atlas/Role=production` identity) and analysis jobs (`FQAN:/atlas` identity). Also user
+can store own files with rucio upload and normal `FQAN:/atlas` identity.
 
 Usual namespace organization with access permission:
 
