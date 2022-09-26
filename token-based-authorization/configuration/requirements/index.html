@@ -554,8 +554,8 @@
 <h2 id="atlas-storage">ATLAS Storage</h2>
 <p>Rucio file replication with FTS always use production role when writing files in the "rucio" subdirectory
 and while deleting files. For jobs using rucio upload the identity used while writing files differs
-for production (<code>/atlas/Role=production</code> identity) and analysis jobs (<code>/atlas</code> identity). Also user
-can store own files with rucio upload and normal <code>/atlas</code> identity.</p>
+for production (<code>FQAN:/atlas/Role=production</code> identity) and analysis jobs (<code>FQAN:/atlas</code> identity). Also user
+can store own files with rucio upload and normal <code>FQAN:/atlas</code> identity.</p>
 <p>Usual namespace organization with access permission:</p>
 <ul>
 <li><code>/basepath/atlas</code> - read only for <code>FQAN:/atlas</code> group</li>
