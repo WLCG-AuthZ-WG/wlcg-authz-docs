@@ -17,21 +17,21 @@ can store own files with rucio upload and normal `/atlas` identity.
 
 Usual namespace organization with access permission:
 
-* `/basepath/atlas` - read only for `/atlas` group
-* `/basepath/atlas/atlasscratchdisk` - inheritable read for `/atlas` and write for `/atlas` + `/atlas/Role=production`
-* `/basepath/atlas/atlasdatadisk` - inheritable read for `/atlas` and write for role `/atlas/Role=production`
-* `/basepath/atlas/atlaslocalgroupdisk` - inheritable read for `/atlas` and write for group `/atlas/country_code` + `/atlas/Role=production`
+* `/basepath/atlas` - read only for `FQAN:/atlas` group
+* `/basepath/atlas/atlasscratchdisk` - inheritable read for `FQAN:/atlas` and write for `FQAN:/atlas` + `FQAN:/atlas/Role=production`
+* `/basepath/atlas/atlasdatadisk` - inheritable read for `FQAN:/atlas` and write for role `FQAN:/atlas/Role=production`
+* `/basepath/atlas/atlaslocalgroupdisk` - inheritable read for `FQAN:/atlas` and write for group `FQAN:/atlas/country_code` + `FQAN:/atlas/Role=production`
 
-All files can be read with basic `/atlas` VO identity.
+All files can be read with basic `FQAN:/atlas` VO identity.
 
 Rely exclusively on capabilities that comes with token `storage.*` scopes and completely ignore `wlcg.groups` in the token for storage access.
 
 ## CMS Storage
 
-* `/basepath/cms` - everything readable by `/cms` identity
-* `/basepath/cms/{data,mc,...}` - write for role `/cms/Role=production`
-* `/basepath/cms/group` - write for role `/cms/Role=priorityuser`
-* `/basepath/cms/group/rucio` - write for role `/cms/Role=production`
+* `/basepath/cms` - everything readable by `FQAN:/cms` identity
+* `/basepath/cms/{data,mc,...}` - write for role `FQAN:/cms/Role=production`
+* `/basepath/cms/group` - write for role `FQAN:/cms/Role=priorityuser`
+* `/basepath/cms/group/rucio` - write for role `FQAN:/cms/Role=production`
 * `/basepath/cms/user` - only for local users from same home institute (may even provide per-user access permissions)
 
 Rely exclusively on capabilities that comes with token `storage.*` scopes and completely ignore `wlcg.groups` in the token for storage access.
@@ -40,7 +40,7 @@ Rely exclusively on capabilities that comes with token `storage.*` scopes and co
 
 Distinguish two VOMS roles: user and production.
 
-* `/basepath/lhcb` - read/write everywhere with production role
+* `/basepath/lhcb` - read/write everywhere with production role FQAN:/lhcb/Role=production
 * `/basepath/lhcb/user` - normal user read everything but write only in a specific subdirectory
 
 Prefer capabilities that comes with token `storage.*` scopes (depends on Dirac development and may still consider `wlcg.groups` when it turns out it is too difficult to use capabilities within Dirac framework).
