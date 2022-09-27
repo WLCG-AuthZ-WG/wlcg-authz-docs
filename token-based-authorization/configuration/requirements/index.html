@@ -566,14 +566,7 @@ can store own files with rucio upload and normal <code>FQAN:/atlas</code> identi
 <p>All files can be read with basic <code>FQAN:/atlas</code> VO identity.</p>
 <p>Rely exclusively on capabilities that comes with token <code>storage.*</code> scopes and completely ignore <code>wlcg.groups</code> in the token for storage access.</p>
 <h2 id="cms-storage">CMS Storage</h2>
-<ul>
-<li><code>/cms-root</code> - everything readable by <code>FQAN:/cms</code> identity</li>
-<li><code>/cms-root/{data,mc,...}</code> - write for role <code>FQAN:/cms/Role=production</code></li>
-<li><code>/cms-root/group</code> - write for role <code>FQAN:/cms/Role=priorityuser</code></li>
-<li><code>/cms-root/group/rucio</code> - write for role <code>FQAN:/cms/Role=production</code></li>
-<li><code>/cms-root/user</code> - only for local users from same home institute (may even provide per-user access permissions)</li>
-</ul>
-<p>Rely exclusively on capabilities that comes with token <code>storage.*</code> scopes and completely ignore <code>wlcg.groups</code> in the token for storage access.</p>
+<p>CMS is going to discuss their requirements individually with each storage technology provider.</p>
 <h2 id="lhcb-storage">LHCb Storage</h2>
 <p>Distinguish two VOMS roles: user and production.</p>
 <ul>
