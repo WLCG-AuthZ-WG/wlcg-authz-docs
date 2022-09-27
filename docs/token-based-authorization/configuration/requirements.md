@@ -28,13 +28,7 @@ Rely exclusively on capabilities that comes with token `storage.*` scopes and co
 
 ## CMS Storage
 
-* `/cms-root` - everything readable by `FQAN:/cms` identity
-* `/cms-root/{data,mc,...}` - write for role `FQAN:/cms/Role=production`
-* `/cms-root/group` - write for role `FQAN:/cms/Role=priorityuser`
-* `/cms-root/group/rucio` - write for role `FQAN:/cms/Role=production`
-* `/cms-root/user` - only for local users from same home institute (may even provide per-user access permissions)
-
-Rely exclusively on capabilities that comes with token `storage.*` scopes and completely ignore `wlcg.groups` in the token for storage access.
+CMS is going to discuss their requirements individually with each storage technology provider.
 
 ## LHCb Storage
 
