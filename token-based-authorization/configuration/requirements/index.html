@@ -577,8 +577,8 @@ can store own files with rucio upload and normal <code>FQAN:/atlas</code> identi
 <h2 id="lhcb-storage">LHCb Storage</h2>
 <p>Distinguish two VOMS roles: user and production.</p>
 <ul>
-<li><code>/basepath/lhcb</code> - read/write everywhere with production role FQAN:/lhcb/Role=production</li>
-<li><code>/basepath/lhcb/user</code> - normal user read everything but write only in a specific subdirectory</li>
+<li><code>/basepath/lhcb</code> - read/write everywhere with production role <code>FQAN:/lhcb/Role=production</code>, everything readable by <code>FQAN:/lhcb</code></li>
+<li><code>/basepath/lhcb/user</code> - the only directory writeable to the users <code>FQAN:/lhcb</code></li>
 </ul>
 <p>Prefer capabilities that comes with token <code>storage.*</code> scopes (depends on Dirac development and may still consider <code>wlcg.groups</code> when it turns out it is too difficult to use capabilities within Dirac framework).</p>
 
