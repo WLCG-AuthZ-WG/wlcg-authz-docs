@@ -40,7 +40,7 @@ Rely exclusively on capabilities that comes with token `storage.*` scopes and co
 
 Distinguish two VOMS roles: user and production.
 
-* `/basepath/lhcb` - read/write everywhere with production role FQAN:/lhcb/Role=production
-* `/basepath/lhcb/user` - normal user read everything but write only in a specific subdirectory
+* `/basepath/lhcb` - read/write everywhere with production role `FQAN:/lhcb/Role=production`, everything readable by `FQAN:/lhcb`
+* `/basepath/lhcb/user` - the only directory writeable to the users `FQAN:/lhcb`
 
 Prefer capabilities that comes with token `storage.*` scopes (depends on Dirac development and may still consider `wlcg.groups` when it turns out it is too difficult to use capabilities within Dirac framework).
