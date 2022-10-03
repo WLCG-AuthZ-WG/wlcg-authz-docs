@@ -38,3 +38,13 @@ Distinguish two VOMS roles: user and production.
 * `/lhcb-root/user` - the only directory writeable by normal users with just basic `FQAN:/lhcb`
 
 Prefer capabilities that comes with token `storage.*` scopes (depends on Dirac development and may still consider `wlcg.groups` when it turns out it is too difficult to use capabilities within Dirac framework).
+
+## Belle II Storage
+
+Distinguish two VOMS roles: user and production.
+
+* `/belle-root` - read/write everywhere with production role `FQAN:/belle/Role=production`, everything readable by `FQAN:/belle` except `/belle-root/TAPE`
+* `/belle-root/TAPE` - read/write everywhere with production role `FQAN:/belle/Role=production`, no access by `FQAN:/belle`
+* `/belle-root/TMP` - the only directory writeable by normal users with just basic `FQAN:/belle`
+
+Prefer capabilities that comes with token `storage.*` scopes (depends on Dirac development and may still consider `wlcg.groups` when it turns out it is too difficult to use capabilities within Dirac framework).
