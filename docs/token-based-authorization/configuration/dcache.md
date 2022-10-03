@@ -71,25 +71,25 @@ Storage [configuration](https://github.com/indigo-iam/wlcg-jwt-compliance-tests)
 
 ### ATLAS
 ```
-/basepath/atlas ... read only for /atlas group
-/basepath/atlas/atlasscratchdisk ... inheritable read for /atlas and write for /atlas
-/basepath/atlas/atlasdatadisk ... inheritable read for /atlas and write for /atlas/Role=production
-/basepath/atlas/atlaslocalgroupdisk ... inheritable read for /atlas and write for /atlas/country_code
+/atlas-root ... read only for /atlas group
+/atlas-root/atlasscratchdisk ... inheritable read for FQAN:/atlas and write for FQAN:/atlas
+/atlas-root/atlasdatadisk ... inheritable read for FQAN:/atlas and write for FQAN:/atlas/Role=production
+/atlas-root/atlaslocalgroupdisk ... inheritable read for FQAN:/atlas and write for FQAN:/atlas/country_code
 ```
-Example for following X.509 identity mapping `/atlas` gid 2000, `/atlas/Role=production` gid 2001, `/atlas/cz` gid 2002
+Example for following X.509 identity mapping `FQAN:/atlas` gid 2000, `FQAN:/atlas/Role=production` gid 2001, `FQAN:/atlas/cz` gid 2002
 ```
-$ chimera ls /dpm/farm.particle.cz/home 
-dr-xr-x---   19 2000 2000        512 May 10 00:00 atlas
-$ chimera ls /dpm/farm.particle.cz/home/atlas 
+$ chimera ls /
+dr-xr-x---   19 2000 2000        512 May 10 00:00 atlas-root
+$ chimera ls /atlas-root
 drwxr-xr-x   10 2001 2001        512 Jun 01  2020 atlasdatadisk
 drwxr-xr-x    5 2001 2001        512 Jan 18  2020 atlaslocalgroupdisk
 drwxr-xr-x   60 2001 2001        512 Aug 19  2021 atlasscratchdisk
-$ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlasscratchdisk 
+$ chimera getfacl /atlas-root/atlasscratchdisk
 GROUP:2000:+lfsxDd:fdg
-$ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlasdatadisk 
+$ chimera getfacl /atlas-root/atlasdatadisk
 GROUP:2001:+lfsxDd:fdg
 GROUP:2000:+lx:fdg
-$ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlaslocalgroupdisk 
+$ chimera getfacl /atlas-root/atlaslocalgroupdisk
 GROUP:2002:+lfsxDd:fdg
 GROUP:2001:+lfsxDd:fdg
 GROUP:2000:+lx:fdg
