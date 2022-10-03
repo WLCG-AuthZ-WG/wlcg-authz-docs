@@ -611,24 +611,24 @@ pnfsmanager.enable.acl = true
 <h3 id="wlcg-compliance-testbed">WLCG compliance testbed</h3>
 <p>Storage <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests">configuration</a> for compliance tests.</p>
 <h3 id="atlas">ATLAS</h3>
-<pre><code>/basepath/atlas ... read only for /atlas group
-/basepath/atlas/atlasscratchdisk ... inheritable read for /atlas and write for /atlas
-/basepath/atlas/atlasdatadisk ... inheritable read for /atlas and write for /atlas/Role=production
-/basepath/atlas/atlaslocalgroupdisk ... inheritable read for /atlas and write for /atlas/country_code
+<pre><code>/atlas-root ... read only for /atlas group
+/atlas-root/atlasscratchdisk ... inheritable read for FQAN:/atlas and write for FQAN:/atlas
+/atlas-root/atlasdatadisk ... inheritable read for FQAN:/atlas and write for FQAN:/atlas/Role=production
+/atlas-root/atlaslocalgroupdisk ... inheritable read for FQAN:/atlas and write for FQAN:/atlas/country_code
 </code></pre>
-<p>Example for following X.509 identity mapping <code>/atlas</code> gid 2000, <code>/atlas/Role=production</code> gid 2001, <code>/atlas/cz</code> gid 2002</p>
-<pre><code>$ chimera ls /dpm/farm.particle.cz/home 
-dr-xr-x---   19 2000 2000        512 May 10 00:00 atlas
-$ chimera ls /dpm/farm.particle.cz/home/atlas 
+<p>Example for following X.509 identity mapping <code>FQAN:/atlas</code> gid 2000, <code>FQAN:/atlas/Role=production</code> gid 2001, <code>FQAN:/atlas/cz</code> gid 2002</p>
+<pre><code>$ chimera ls /
+dr-xr-x---   19 2000 2000        512 May 10 00:00 atlas-root
+$ chimera ls /atlas-root
 drwxr-xr-x   10 2001 2001        512 Jun 01  2020 atlasdatadisk
 drwxr-xr-x    5 2001 2001        512 Jan 18  2020 atlaslocalgroupdisk
 drwxr-xr-x   60 2001 2001        512 Aug 19  2021 atlasscratchdisk
-$ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlasscratchdisk 
+$ chimera getfacl /atlas-root/atlasscratchdisk
 GROUP:2000:+lfsxDd:fdg
-$ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlasdatadisk 
+$ chimera getfacl /atlas-root/atlasdatadisk
 GROUP:2001:+lfsxDd:fdg
 GROUP:2000:+lx:fdg
-$ chimera getfacl /dpm/farm.particle.cz/home/atlas/atlaslocalgroupdisk 
+$ chimera getfacl /atlas-root/atlaslocalgroupdisk
 GROUP:2002:+lfsxDd:fdg
 GROUP:2001:+lfsxDd:fdg
 GROUP:2000:+lx:fdg
