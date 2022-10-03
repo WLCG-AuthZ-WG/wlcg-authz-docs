@@ -37,9 +37,24 @@ Be wery careful how you map WLCG JWT token indentity and when you support also X
 
 ## dCache 8.2 configuration
 
+FIXME: this configuration was not yet tested
 ```
-auth     optional     oidc profile=wlcg
+auth     optional     oidc
 map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.wlcg_jwt
+```
+```
+# ...
+[centralDomain/gplazma]
+# assuming that VO starts in top level directory
+gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg
+gplazma.oidc.provider!altas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas
+gplazma.oidc.provider!cms = https://cms-auth.web.cern.ch/ -profile=wlcg -prefix=/cms
+# assuming that dCache WebDAV service runs on default HTTPS port 443 for doors dcache.example.com
+#gplazma.oidc.audience-targets = https://dcache.example.com
+# you can specify multiple audiences, but avoid using generic https://wlcg.cern.ch/jwt/v1/any on production instances
+# (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
+gplazma.oidc.audience-targets = https://wlcg.cern.ch/jwt/v1/any https://dcache.example.com https://dcache.example.com:2880 https://alias.example.com
+# ...
 ```
 
 ## ACL configuration
