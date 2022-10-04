@@ -26,9 +26,13 @@ All files can be read with basic `FQAN:/atlas` VO identity.
 
 Rely exclusively on capabilities that comes with token `storage.*` scopes and completely ignore `wlcg.groups` in the token for storage access.
 
+Contact: Petr
+
 ## CMS Storage
 
 CMS is going to discuss their requirements individually with each storage technology provider.
+
+Contact: Stephan
 
 ## LHCb Storage
 
@@ -39,6 +43,8 @@ Distinguish two VOMS roles: user and production.
 
 Prefer capabilities that comes with token `storage.*` scopes (depends on Dirac development and may still consider `wlcg.groups` when it turns out it is too difficult to use capabilities within Dirac framework).
 
+Contact: Christophe
+
 ## Belle II Storage
 
 Distinguish two VOMS roles: user and production.
@@ -48,3 +54,5 @@ Distinguish two VOMS roles: user and production.
 * `/belle-root/TMP` - the only directory writeable by normal users with just basic `FQAN:/belle`
 
 Prefer capabilities that comes with token `storage.*` scopes (depends on Dirac development and may still consider `wlcg.groups` when it turns out it is too difficult to use capabilities within Dirac framework).
+
+Contact: Silvio
