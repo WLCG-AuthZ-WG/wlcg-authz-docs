@@ -421,6 +421,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#belle-ii-storage" class="md-nav__link">
+    Belle II Storage
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -532,6 +539,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#belle-ii-storage" class="md-nav__link">
+    Belle II Storage
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -572,6 +586,14 @@ can store own files with rucio upload and normal <code>FQAN:/atlas</code> identi
 <ul>
 <li><code>/lhcb-root</code> - read/write everywhere with production role <code>FQAN:/lhcb/Role=production</code>, everything readable by <code>FQAN:/lhcb</code></li>
 <li><code>/lhcb-root/user</code> - the only directory writeable by normal users with just basic <code>FQAN:/lhcb</code></li>
+</ul>
+<p>Prefer capabilities that comes with token <code>storage.*</code> scopes (depends on Dirac development and may still consider <code>wlcg.groups</code> when it turns out it is too difficult to use capabilities within Dirac framework).</p>
+<h2 id="belle-ii-storage">Belle II Storage</h2>
+<p>Distinguish two VOMS roles: user and production.</p>
+<ul>
+<li><code>/belle-root</code> - read/write everywhere with production role <code>FQAN:/belle/Role=production</code>, everything readable by <code>FQAN:/belle</code> except <code>/belle-root/TAPE</code></li>
+<li><code>/belle-root/TAPE</code> - read/write everywhere with production role <code>FQAN:/belle/Role=production</code>, no access by <code>FQAN:/belle</code></li>
+<li><code>/belle-root/TMP</code> - the only directory writeable by normal users with just basic <code>FQAN:/belle</code></li>
 </ul>
 <p>Prefer capabilities that comes with token <code>storage.*</code> scopes (depends on Dirac development and may still consider <code>wlcg.groups</code> when it turns out it is too difficult to use capabilities within Dirac framework).</p>
 
