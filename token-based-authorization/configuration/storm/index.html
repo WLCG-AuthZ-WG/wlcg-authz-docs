@@ -505,35 +505,127 @@
 
 
 <h1 id="storm">StoRM</h1>
-<p>Token-based authentication and authorization is supported by the latest <a href="http://italiangrid.github.io/storm/release-notes/storm-webdav/1.2.1/">StoRM WebDAV</a> release.</p>
+<p>Token-based authentication and authorization is supported by the StoRM WebDAV <a href="http://italiangrid.github.io/storm/release-notes/storm-webdav/1.2.1/">version 1.2.1</a>.</p>
 <h2 id="enabling-token-based-authnz-for-the-wlcg-iam-instance">Enabling token-based authN/Z for the WLCG IAM instance</h2>
-<p>In order to enable token-based AuthN/Z for the WLCG IAM instance on a StoRM
-WebDAV deployment, you need to:</p>
+<p>The following StoRM WebDAV configuration is based on the requirements for the <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests#storage-area-configuration-pre-requisites">WLCG JWT compliance testsuite</a>.</p>
+<p>In order to enable the token-based AuthN/Z for the WLCG IAM instance on a StoRM WebDAV deployment, you need to:</p>
 <ul>
-<li>Add the WLCG issuer to the list of the trusted issuers by the StoRM WebDAV
-  instance. This is done by modifying the
-  <code>/etc/storm/webdav/config/application.yml</code> as follows:</li>
+<li>Add the following properties for the wlcg storage area in the <code>/etc/storm/webdav/sa.d/wlcg.properties</code> configuration file:</li>
 </ul>
-<pre><code>oauth:
+<pre><code class="language-bash"># Name of the storage area
+name=wlcg
+
+# Root path for the storage area. Files will be served from this path, which must exist and
+# must be accessible from the user that runs the storm webdav service
+rootPath=/storage/wlcg
+
+# Comma-separated list of storage area access points
+accessPoints=/wlcg
+
+# Comma-separated list of VOMS VOs supported in this storage area
+vos=wlcg
+
+# Comma-separated list of OAuth/OpenID Connect token issuers trusted in this storage area. 
+# Such organizations must be included also in the list of trusted
+# issuers specified in /etc/storm/webdav/config/application.yml
+orgs=https://wlcg.cloud.cnaf.infn.it/
+
+# Enables read access to storage area files to users authenticated using OAuth/OIDC. Defaults to true
+orgsGrantReadPermission=false
+
+# Enables scope-based authorization following the rules imposed by the WLCG JWT profile. Defaults to false
+wlcgScopeAuthzEnabled=true
+
+# Enables fine-grained authorization engine. Defaults to false
+fineGrainedAuthzEnabled=true
+</code></pre>
+<ul>
+<li>Add the following properties to the common
+  <code>/etc/storm/webdav/config/application.yml</code> configuration file:</li>
+</ul>
+<pre><code class="language-yml"># Comma-separated list of OAuth/OpenID Connect token issuers trusted in this storage area. 
+# Such issuers must be included also in the list of trusted
+# organizations specified in /etc/storm/webdav/sa.d/wlcg.properties
+oauth:
   issuers:
   - name: iam-wlcg
     issuer: https://wlcg.cloud.cnaf.infn.it/
+
+# Check the audience claim as specified in the WLCG Common JWT Profiles
+    enforce-audience-checks: true
+    audiences:
+        - https://wlcg.cern.ch/jwt/v1/any
+        - https://&lt;webdav-hostname&gt;:&lt;webdav-port&gt;
+
+# List of authorization policies which are applied when the 'fineGrainedAuthzEnabled' 
+# property is set to true in /etc/storm/webdav/sa.d/wlcg.properties.
+# The first policy that matches an incoming request will be applied
+storm:
+  authz:
+    policies:
+
+    - sa: wlcg
+      description: Grant all access to /wlcg/protected to /wlcg/test members
+      actions:
+        - all
+      paths:
+        - /protected/**
+      effect: permit
+      principals:
+        - type: fqan
+          params:
+            fqan: /wlcg/Role=test
+        - type: jwt-group
+          params:
+            iss: https://wlcg.cloud.cnaf.infn.it/
+            group: /wlcg/test
+
+    - sa: wlcg
+      description: Allow read access to /wlcg/protected area to wlcg members
+      actions:
+        - read
+        - list
+      paths:
+        - /protected/**
+      effect: permit
+      principals:
+        - type: vo
+          params:
+            vo: wlcg
+        - type: jwt-group
+          params:
+            iss: https://wlcg.cloud.cnaf.infn.it/
+            group: /wlcg
+
+    - sa: wlcg
+      description: Deny write access to /wlcg/protected area
+      actions:
+        - write
+        - delete
+      paths:
+        - /protected/**
+      effect: deny
+      principals:
+        - type: anyone
+
+    - sa: wlcg
+      description: Grant all access to the SA to wlcg members
+      actions:
+        - all
+      effect: permit
+      principals:
+        - type: vo
+          params:
+            vo: wlcg
+        - type: jwt-group
+          params:
+            iss: https://wlcg.cloud.cnaf.infn.it/
+            group: /wlcg
 </code></pre>
-<ul>
-<li>Enable the issuer for wlcg the storage area, by changing the <code>wlcg</code> storage
-  area configuration <code>/etc/storm/webdav/sa.d/wlcg.properties</code> like in the
-  following example:</li>
-</ul>
-<pre><code>name=wlcg
-rootPath=/your/storage/path/
-accessPoints=/wlcg
-vos=wlcg
-orgs=https://wlcg.cloud.cnaf.infn.it/
-authenticatedReadEnabled=false
-anonymousReadEnabled=false
-</code></pre>
-<p>This configuration enables flat authorization access on the storage to members
-of the WLCG VO, i.e. all users will have read and write access to the data.</p>
+<p>This configuration enables a fine grained authorization access on the storage to members
+of the WLCG VO, <em>i.e.</em> users presenting a valid X.509 VOMS proxy and/or a WLCG JWT token issued by the WLCG IAM instance.</p>
+<p>The list of policies described by the <code>storm.authz.policies.description</code> property are applied to an authorization request when the <code>fineGrainedAuthzEnabled</code> property is set to true. Those rules follows a first-applicable principle, meaning that the first policy found in the list that matches an incoming request will be applied when rendering an authorization decision.
+Further policies can be added following the StoRM WebDAV  <a href="http://italiangrid.github.io/storm/documentation/sysadmin-guide/1.11.21/installation-guides/webdav/storage-area-configuration/index.html">documentation</a>.</p>
 <h2 id="http-tpc-support-configuration">HTTP TPC support configuration</h2>
 <p>To configure support for HTTP TPC, follow the instructions in the <a href="https://github.com/italiangrid/storm-webdav/blob/master/doc/tpc.md">StoRM WebDAV
 documentation</a>.</p>
