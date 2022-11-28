@@ -359,6 +359,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#wlcg-jwt-compliance-testbed" class="md-nav__link">
+    WLCG JWT compliance testbed
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#dcache-72-configuration" class="md-nav__link">
     dCache 7.2 configuration
   </a>
@@ -504,6 +511,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#wlcg-jwt-compliance-testbed" class="md-nav__link">
+    WLCG JWT compliance testbed
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#dcache-72-configuration" class="md-nav__link">
     dCache 7.2 configuration
   </a>
@@ -560,6 +574,8 @@
 
 <h1 id="dcache">dCache</h1>
 <p><a href="https://dcache.org/old/manuals/Book-6.2/config-gplazma.shtml#using-openid-connect">Official documentation</a> currently doesn't provide all necessary information how to configured storage to accept and map WLCG JWT tokens (see <a href="https://github.com/dCache/dcache/issues/6607">dCache#6607</a>). dCache provides two different gPlazma plugins to deal with OIDC tokens - <code>oidc</code> and <code>scitoken</code>. With dCache 7.x it is necessary to use <code>scitoken</code> plugin, because this is the only way to deal with WLCG JWT tokens or SCITOKENS. The dCache 8.x comes with more generic <code>oidc</code> plugin that can process also WLCG JWT tokens and SCITOKENS (<code>scitoken</code> plugin is still kept for compatibility reasons, but it is deprecated).</p>
+<h2 id="wlcg-jwt-compliance-testbed">WLCG JWT compliance testbed</h2>
+<p>There are several dCache instances already included in the <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests#storage-area-configuration-pre-requisites">testbed</a> including <a href="https://confluence.desy.de/pages/viewpage.action?pageId=228761933"><code>prometheus.desy.de</code></a>, which is maitained by dCache developers and it is running <code>master</code> branch.</p>
 <h2 id="dcache-72-configuration">dCache 7.2 configuration</h2>
 <p>To accept connection authorized with WLCG JWT tokens it is necessary to add <code>scitoken</code> plugin in the chain of gPlazma auth plugins. Just add following line in your <code>/etc/dcache/gplazma.conf</code> configuration</p>
 <pre><code>auth     optional     scitoken
