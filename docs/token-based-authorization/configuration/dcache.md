@@ -2,6 +2,10 @@
 
 [Official documentation](https://dcache.org/old/manuals/Book-6.2/config-gplazma.shtml#using-openid-connect) currently doesn't provide all necessary information how to configured storage to accept and map WLCG JWT tokens (see [dCache#6607](https://github.com/dCache/dcache/issues/6607)). dCache provides two different gPlazma plugins to deal with OIDC tokens - `oidc` and `scitoken`. With dCache 7.x it is necessary to use `scitoken` plugin, because this is the only way to deal with WLCG JWT tokens or SCITOKENS. The dCache 8.x comes with more generic `oidc` plugin that can process also WLCG JWT tokens and SCITOKENS (`scitoken` plugin is still kept for compatibility reasons, but it is deprecated).
 
+## WLCG JWT compliance testbed
+
+There are several dCache instances already included in the [testbed](https://github.com/indigo-iam/wlcg-jwt-compliance-tests#storage-area-configuration-pre-requisites) including [`prometheus.desy.de`](https://confluence.desy.de/pages/viewpage.action?pageId=228761933), which is maitained by dCache developers and it is running `master` branch.
+
 ## dCache 7.2 configuration
 
 To accept connection authorized with WLCG JWT tokens it is necessary to add `scitoken` plugin in the chain of gPlazma auth plugins. Just add following line in your `/etc/dcache/gplazma.conf` configuration
