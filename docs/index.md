@@ -19,9 +19,9 @@ certificates can be linked to an account.
 
 ## WLCG VO VOMS configuration
 
-!!! danger "New LSC files will be rolled out on Nov. 22nd, 2021"
+!!! danger "New LSC files will be rolled out on Dec. 16th, 2022"
 
-      On Monday Nov. 22nd, 2021 at 11 we will update the WLCC VO LSC
+      On Friday Dec. 16th, 2022 at 11 we will update the WLCC VO LSC
       configuration. The reason for the update is that the current certificate
       is going to expire and that the Sectigo CA INFN currently uses has
       changed the structure of the DNs of the issued certificates. 
@@ -29,7 +29,7 @@ certificates can be linked to an account.
       The updated configuration that you find here is compliant with the new
       certificate. 
 
-      **Do not roll out this configuration before Nov. 22nd, or VOMS validation
+      **Do not roll out this configuration before Dec. 16th, or VOMS validation
       will break at your site**.
 
 
@@ -43,6 +43,8 @@ To have a working VOMS configuration for the WLCG VO:
    need to do `voms-proxy-init`)
 
 ### RPM installation
+
+**Outdated starting from Dec. 16th at 11**
 
 You can use the following RPM package to enable support for the WLCG VO on your
 RHEL machine:
@@ -62,30 +64,31 @@ endpoints that can be used to generate Gridmap files.
 ```console
 $ voms-proxy-init -voms wlcg
 Enter GRID pass phrase for this identity:
-Contacting wlcg-voms.cloud.cnaf.infn.it:15001 [/DC=org/DC=terena/DC=tcs/C=IT/L=Frascati/O=Istituto Nazionale di Fisica Nucleare/CN=voms-wlcg.cloud.cnaf.infn.it] "wlcg"...
+Contacting  wlcg-voms.cloud.cnaf.infn.it:15001 [/DC=org/DC=terena/DC=tcs/C=IT/ST=Roma/O=Istituto Nazionale di Fisica Nucleare - INFN/OU=CNAF/CN=wlcg-voms.cloud.cnaf.infn.it] "wlcg"....
 Remote VOMS server contacted succesfully.
 
 
-Created proxy in /tmp/x509up_u501.
+Created proxy in /tmp/x509up_u1000.
 
-Your proxy is valid until Thu Jan 30 03:47:58 CET 2020
+Your proxy is valid until Tue Nov 29 23:38:44 CET 2022
 
 $ voms-proxy-info -all
-subject   : /DC=org/DC=terena/DC=tcs/C=IT/O=Istituto Nazionale di Fisica Nucleare/CN=Andrea Ceccanti aceccant@infn.it/CN=743668640
-issuer    : /DC=org/DC=terena/DC=tcs/C=IT/O=Istituto Nazionale di Fisica Nucleare/CN=Andrea Ceccanti aceccant@infn.it
-identity  : /DC=org/DC=terena/DC=tcs/C=IT/O=Istituto Nazionale di Fisica Nucleare/CN=Andrea Ceccanti aceccant@infn.it
+subject   : /DC=org/DC=terena/DC=tcs/C=IT/O=Istituto Nazionale di Fisica Nucleare - INFN/CN=Federica Agostini fagostin@infn.it/CN=1645960321
+issuer    : /DC=org/DC=terena/DC=tcs/C=IT/O=Istituto Nazionale di Fisica Nucleare - INFN/CN=Federica Agostini fagostin@infn.it
+identity  : /DC=org/DC=terena/DC=tcs/C=IT/O=Istituto Nazionale di Fisica Nucleare - INFN/CN=Federica Agostini fagostin@infn.it
 type      : RFC3820 compliant impersonation proxy
-strength  : 1024
-path      : /tmp/x509up_u501
-timeleft  : 11:59:55
-key usage : Digital Signature, Key Encipherment, Data Encipherment
+strength  : 2048
+path      : /tmp/x509up_u1000
+timeleft  : 11:59:43
+key usage : Digital Signature, Key Encipherment
 === VO wlcg extension information ===
 VO        : wlcg
-subject   : /DC=org/DC=terena/DC=tcs/C=IT/O=Istituto Nazionale di Fisica Nucleare/CN=Andrea Ceccanti aceccant@infn.it
-issuer    : /DC=org/DC=terena/DC=tcs/C=IT/L=Frascati/O=Istituto Nazionale di Fisica Nucleare/CN=wlcg-voms.cloud.cnaf.infn.it
+subject   : /DC=org/DC=terena/DC=tcs/C=IT/O=Istituto Nazionale di Fisica Nucleare - INFN/CN=Federica Agostini fagostin@infn.it
+issuer    : /DC=org/DC=terena/DC=tcs/C=IT/ST=Roma/O=Istituto Nazionale di Fisica Nucleare - INFN/CN=wlcg-voms.cloud.cnaf.infn.it
 attribute : /wlcg
+attribute : /wlcg/pilots
 attribute : /wlcg/xfers
-timeleft  : 11:59:55
+timeleft  : 11:59:43
 uri       : wlcg-voms.cloud.cnaf.infn.it:15001
 ```
 
