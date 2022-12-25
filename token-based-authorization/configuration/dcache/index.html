@@ -624,6 +624,18 @@ gplazma.oidc.audience-targets = https://wlcg.cern.ch/jwt/v1/any https://dcache.e
 <pre><code># enable ACL support
 pnfsmanager.enable.acl = true
 </code></pre>
+<p>Currently it is not possible to modify ACL recursively using <code>chimera</code> interface (<a href="https://github.com/dCache/dcache/issues/6844">dCache#6844</a>), but you can use <a href="https://dcache.org/old/manuals/Book-8.2/config-nfs.shtml">NFS mounted dCache</a> and <code>nfs4_setfacl</code>, e.g.
+1. enable NFS doors service by updating layout configuration file, e.g.</p>
+<pre><code>[doorsDomain/nfs]
+nfs.version = 4.1
+</code></pre>
+<ol>
+<li>export NFS filesystem: <code>echo "/ 127.0.0.1(rw,no_root_squash)" &gt;&gt; /etc/exports</code></li>
+<li>restart dCache: <code>systemctl restart dcache.target</code></li>
+<li>mount dCache: <code>mount -o acl,rw 127.0.0.1:/ /mnt</code></li>
+<li>list current ACL configuration: <code>nfs4_getfacl /mnt/atlas</code></li>
+<li>use listed ACI to recursively update ACL: <code>nfs4_setfacl -R -P -s A:fdg:3000:rx,A:fdg:3003:rwaDdx,A:fdg:3004:rwaDdx,A:fdg:3099:rwaDdx /mnt/atlas</code></li>
+</ol>
 <h3 id="wlcg-compliance-testbed">WLCG compliance testbed</h3>
 <p>Storage <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests">configuration</a> for compliance tests.</p>
 <h3 id="atlas">ATLAS</h3>
