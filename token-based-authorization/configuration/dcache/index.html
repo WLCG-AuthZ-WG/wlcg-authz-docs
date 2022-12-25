@@ -633,8 +633,8 @@ nfs.version = 4.1
 <li>export NFS filesystem: <code>echo "/ 127.0.0.1(rw,no_root_squash)" &gt;&gt; /etc/exports</code></li>
 <li>restart dCache: <code>systemctl restart dcache.target</code></li>
 <li>mount dCache: <code>mount -o acl,rw 127.0.0.1:/ /mnt</code></li>
-<li>list current ACL configuration: <code>nfs4_getfacl /mnt/atlas</code></li>
-<li>use listed ACI to recursively update ACL: <code>nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:2099:rwaDdx /mnt/atlas</code></li>
+<li>list current ACL configuration: <code>nfs4_getfacl /mnt/atlas/atlaslocalgroupdisk</code></li>
+<li>use listed ACI to recursively update ACL: <code>nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:2099:rwaDdx /mnt/atlas/atlaslocalgroupdisk</code></li>
 </ol>
 <h3 id="wlcg-compliance-testbed">WLCG compliance testbed</h3>
 <p>Storage <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests">configuration</a> for compliance tests.</p>
