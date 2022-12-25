@@ -78,7 +78,7 @@ nfs.version = 4.1
 3. restart dCache: `systemctl restart dcache.target`
 4. mount dCache: `mount -o acl,rw 127.0.0.1:/ /mnt`
 5. list current ACL configuration: `nfs4_getfacl /mnt/atlas`
-6. use listed ACI to recursively update ACL: `nfs4_setfacl -R -P -s A:fdg:3000:rx,A:fdg:3003:rwaDdx,A:fdg:3004:rwaDdx,A:fdg:3099:rwaDdx /mnt/atlas`
+6. use listed ACI to recursively update ACL: `nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:2099:rwaDdx /mnt/atlas`
 
 ### WLCG compliance testbed
 
