@@ -77,8 +77,8 @@ nfs.version = 4.1
 2. export NFS filesystem: `echo "/ 127.0.0.1(rw,no_root_squash)" >> /etc/exports`
 3. restart dCache: `systemctl restart dcache.target`
 4. mount dCache: `mount -o acl,rw 127.0.0.1:/ /mnt`
-5. list current ACL configuration: `nfs4_getfacl /mnt/atlas`
-6. use listed ACI to recursively update ACL: `nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:2099:rwaDdx /mnt/atlas`
+5. list current ACL configuration: `nfs4_getfacl /mnt/atlas/atlaslocalgroupdisk`
+6. use listed ACI to recursively update ACL: `nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:2099:rwaDdx /mnt/atlas/atlaslocalgroupdisk`
 
 ### WLCG compliance testbed
 
