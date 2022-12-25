@@ -68,6 +68,17 @@ To be able to use ACLs with dCache it is necessary to enable them in the `dcache
 # enable ACL support
 pnfsmanager.enable.acl = true
 ```
+Currently it is not possible to modify ACL recursively using `chimera` interface ([dCache#6844](https://github.com/dCache/dcache/issues/6844)), but you can use [NFS mounted dCache](https://dcache.org/old/manuals/Book-8.2/config-nfs.shtml) and `nfs4_setfacl`, e.g.
+1. enable NFS doors service by updating layout configuration file, e.g.
+```
+[doorsDomain/nfs]
+nfs.version = 4.1
+```
+2. export NFS filesystem: `echo "/ 127.0.0.1(rw,no_root_squash)" >> /etc/exports`
+3. restart dCache: `systemctl restart dcache.target`
+4. mount dCache: `mount -o acl,rw 127.0.0.1:/ /mnt`
+5. list current ACL configuration: `nfs4_getfacl /mnt/atlas`
+6. use listed ACI to recursively update ACL: `nfs4_setfacl -R -P -s A:fdg:3000:rx,A:fdg:3003:rwaDdx,A:fdg:3004:rwaDdx,A:fdg:3099:rwaDdx /mnt/atlas`
 
 ### WLCG compliance testbed
 
