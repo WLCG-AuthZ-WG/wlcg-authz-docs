@@ -95,7 +95,10 @@ A::OWNER@:rwaDxtTcC
 A::GROUP@:rxtc
 A::EVERYONE@:rxtc
 ```
-6. use listed ACI to recursively update ACL: `nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:2099:rwaDdx /mnt/atlas/atlaslocalgroupdisk`
+6. use listed ACI to recursively update ACL:
+```
+nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:2099:rwaDdx /mnt/atlas/atlaslocalgroupdisk
+```
 7. unmount dCache: `umount /mnt`
 
 ### WLCG compliance testbed
