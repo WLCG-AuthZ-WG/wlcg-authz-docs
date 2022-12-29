@@ -24,8 +24,7 @@ gplazma.scitoken.issuer!altas = https://atlas-auth.web.cern.ch/ /atlas
 gplazma.scitoken.issuer!cms = https://cms-auth.web.cern.ch/ /cms
 # assuming that dCache WebDAV service runs on default HTTPS port 443 for doors dcache.example.com
 #gplazma.scitoken.audience-targets = https://dcache.example.com
-# you can specify multiple audiences, but avoid using generic https://wlcg.cern.ch/jwt/v1/any on production instances
-# (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
+# you can specify multiple audiences (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
 gplazma.scitoken.audience-targets = https://wlcg.cern.ch/jwt/v1/any https://dcache.example.com https://dcache.example.com:2880 https://alias.example.com
 # ...
 ```
@@ -43,10 +42,14 @@ Be wery careful how you map WLCG JWT token indentity and when you support also X
 
 FIXME: this configuration was not yet tested
 ```
+# /etc/dcache/gplazma.conf
+...
 auth     optional     oidc
 map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.wlcg_jwt
+...
 ```
 ```
+# /etc/dcache/layouts/your_layout_file.conf
 # ...
 [centralDomain/gplazma]
 # assuming that VO starts in top level directory
@@ -55,10 +58,15 @@ gplazma.oidc.provider!altas = https://atlas-auth.web.cern.ch/ -profile=wlcg -pre
 gplazma.oidc.provider!cms = https://cms-auth.web.cern.ch/ -profile=wlcg -prefix=/cms
 # assuming that dCache WebDAV service runs on default HTTPS port 443 for doors dcache.example.com
 #gplazma.oidc.audience-targets = https://dcache.example.com
-# you can specify multiple audiences, but avoid using generic https://wlcg.cern.ch/jwt/v1/any on production instances
-# (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
+# you can specify multiple audiences (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
 gplazma.oidc.audience-targets = https://wlcg.cern.ch/jwt/v1/any https://dcache.example.com https://dcache.example.com:2880 https://alias.example.com
 # ...
+```
+```
+# /etc/dcache/multi-mapfile.wlcg_jwt
+op:wlcg               uid:1999 gid:1999,true username:wlcg_oidc
+op:atlas              uid:2999 gid:2999,true username:atlas_oidc
+op:cms                uid:3999 gid:3999,true username:cms_oidc
 ```
 
 ## ACL configuration
@@ -77,9 +85,18 @@ nfs.version = 4.1
 2. export NFS filesystem: `echo "/ 127.0.0.1(rw,no_root_squash)" >> /etc/exports`
 3. restart dCache: `systemctl restart dcache.target`
 4. mount dCache: `mount -o acl,rw 127.0.0.1:/ /mnt`
-5. list current ACL configuration: `nfs4_getfacl /mnt/atlas/atlaslocalgroupdisk`
-6. use listed ACI to recursively update ACL: `nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:2099:rwaDdx /mnt/atlas/atlaslocalgroupdisk`
-7. unmount dCache: `umount /mnt`
+5. list current ACL configuration:
+```
+nfs4_getfacl /mnt/atlas/atlaslocalgroupdisk
+A:fdg:2000:rx
+A:fdg:2001:rwaDdx
+A:fdg:2002:rwaDdx
+A::OWNER@:rwaDxtTcC
+A::GROUP@:rxtc
+A::EVERYONE@:rxtc
+```
+9. use listed ACI to recursively update ACL: `nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:2099:rwaDdx /mnt/atlas/atlaslocalgroupdisk`
+10. unmount dCache: `umount /mnt`
 
 ### WLCG compliance testbed
 
