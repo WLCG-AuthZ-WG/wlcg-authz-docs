@@ -384,7 +384,14 @@
     ACL configuration
   </a>
   
-    <nav class="md-nav" aria-label="ACL configuration">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mappings-and-storage-permissions" class="md-nav__link">
+    Mappings and storage permissions
+  </a>
+  
+    <nav class="md-nav" aria-label="Mappings and storage permissions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -536,7 +543,14 @@
     ACL configuration
   </a>
   
-    <nav class="md-nav" aria-label="ACL configuration">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mappings-and-storage-permissions" class="md-nav__link">
+    Mappings and storage permissions
+  </a>
+  
+    <nav class="md-nav" aria-label="Mappings and storage permissions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -634,6 +648,8 @@ op:cms                uid:3999 gid:3999,true username:cms_oidc
 <p>To be able to use ACLs with dCache it is necessary to enable them in the <code>dcache.conf</code></p>
 <pre><code># enable ACL support
 pnfsmanager.enable.acl = true
+
+### Recursive ACL updates
 </code></pre>
 <p>Currently it is not possible to modify ACL recursively using <code>chimera</code> interface (<a href="https://github.com/dCache/dcache/issues/6844">dCache#6844</a>), but you can use <a href="https://dcache.org/old/manuals/Book-8.2/config-nfs.shtml">NFS mounted dCache</a> and <code>nfs4_setfacl</code>, e.g.
 1. enable NFS doors service by updating layout configuration file, e.g.</p>
@@ -662,6 +678,7 @@ A::EVERYONE@:rxtc
 <ol>
 <li>unmount dCache: <code>umount /mnt</code></li>
 </ol>
+<h2 id="mappings-and-storage-permissions">Mappings and storage permissions</h2>
 <h3 id="wlcg-compliance-testbed">WLCG compliance testbed</h3>
 <p>Storage <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests">configuration</a> for compliance tests.</p>
 <h3 id="atlas">ATLAS</h3>
