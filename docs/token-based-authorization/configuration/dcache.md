@@ -40,6 +40,7 @@ Be wery careful how you map WLCG JWT token indentity and when you support also X
 
 ## dCache 8.2 configuration
 This version comes with
+
 1. WLCG JWT profile support integrated in "oidc" gPlazma plugin
 2. Support for access with tokens with roots:// protocol on same port 1094
 3. Starting with 8.2.7 preferred authorization plugin is set to ZTN and we can simply rely on BEARER_TOKEN variable
@@ -79,9 +80,10 @@ To be able to use ACLs with dCache it is necessary to enable them in the `dcache
 ```
 # enable ACL support
 pnfsmanager.enable.acl = true
+```
 
 ### Recursive ACL updates
-```
+
 Currently it is not possible to modify ACL recursively using `chimera` interface ([dCache#6844](https://github.com/dCache/dcache/issues/6844)), but you can use [NFS mounted dCache](https://dcache.org/old/manuals/Book-8.2/config-nfs.shtml) and `nfs4_setfacl`, e.g.
 1. enable NFS doors service by updating layout configuration file, e.g.
 ```
