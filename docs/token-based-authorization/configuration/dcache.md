@@ -39,8 +39,12 @@ op:cms                uid:3999 gid:3999,true username:cms_oidc
 Be wery careful how you map WLCG JWT token indentity and when you support also X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories.
 
 ## dCache 8.2 configuration
+This version comes with
+1. WLCG JWT profile support integrated in "oidc" gPlazma plugin
+2. Support for access with tokens with roots:// protocol on same port 1094
+3. Starting with 8.2.7 preferred authorization plugin is set to ZTN and we can simply rely on BEARER_TOKEN variable
 
-FIXME: this configuration was not yet tested
+Following configuration updates should add support for token access
 ```
 # /etc/dcache/gplazma.conf
 ...
