@@ -400,6 +400,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dcache-ownership-inheritance" class="md-nav__link">
+    dCache ownership inheritance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mappings-and-storage-permissions" class="md-nav__link">
     Mappings and storage permissions
   </a>
@@ -572,6 +579,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dcache-ownership-inheritance" class="md-nav__link">
+    dCache ownership inheritance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mappings-and-storage-permissions" class="md-nav__link">
     Mappings and storage permissions
   </a>
@@ -639,7 +653,7 @@ gplazma.scitoken.audience-targets = https://wlcg.cern.ch/jwt/v1/any https://dcac
 op:atlas              uid:2999 gid:2999,true username:atlas_oidc
 op:cms                uid:3999 gid:3999,true username:cms_oidc
 </code></pre>
-<p>Be wery careful how you map WLCG JWT token indentity and when you support also X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories.</p>
+<p>Be wery careful how you map WLCG JWT token indentity and when you support also X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories or rely on dCache ownership inheritance from the parent directory.</p>
 <h2 id="dcache-82-configuration">dCache 8.2 configuration</h2>
 <p>This version comes with</p>
 <ol>
@@ -705,6 +719,8 @@ A::EVERYONE@:rxtc
 <ol>
 <li>unmount dCache: <code>umount /mnt</code></li>
 </ol>
+<h2 id="dcache-ownership-inheritance">dCache ownership inheritance</h2>
+<p>Alternatively to the ACL configuration it is also possible to rely on simple dCache ownership inheritance. Configuration option <a href="https://github.com/dCache/dcache/blob/8.2.11/skel/share/defaults/pnfsmanager.properties#L136-L149"><code>pnfsmanager.enable.inherit-file-ownership</code></a> can be used to force dCache to assign parent directory owner and group to all new files and subdirectories. This means objects get same owner and groups regardless of client authorization method (access with X.509 VOMS proxy or tokens).</p>
 <h2 id="mappings-and-storage-permissions">Mappings and storage permissions</h2>
 <h3 id="wlcg-compliance-testbed">WLCG compliance testbed</h3>
 <p>Storage <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests">configuration</a> for compliance tests.</p>
