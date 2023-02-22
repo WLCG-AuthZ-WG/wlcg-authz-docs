@@ -2,7 +2,7 @@
 
 ## Joining compliance tests
 
-By sending mail to [wlcg-doma-tpc e-group](https://e-groups.cern.ch/e-groups/Egroup.do?egroupId=10301575) with details how to access your storage endpoint.
+Create pull request in the [wlcg-jwt-compliance-tests](https://github.com/indigo-iam/wlcg-jwt-compliance-tests/) repository with your [storage configuration](https://github.com/indigo-iam/wlcg-jwt-compliance-tests/blob/master/test/variables.yaml) or by sending mail to [wlcg-doma-tpc e-group](https://e-groups.cern.ch/e-groups/Egroup.do?egroupId=10301575) with details how to access your storage endpoint.
 
 ## Storage pre-requirements
 
