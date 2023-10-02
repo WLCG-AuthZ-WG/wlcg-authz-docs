@@ -77,6 +77,11 @@ op:cms                uid:3999 gid:3999,true username:cms_oidc
 ```
 
 ## Supporting X.509 and token access at same time
+
+### dCache ownership inheritance
+
+Alternatively to the ACL configuration it is also possible to rely on simple dCache ownership inheritance. Configuration option [`pnfsmanager.enable.inherit-file-ownership`](https://github.com/dCache/dcache/blob/8.2.11/skel/share/defaults/pnfsmanager.properties#L136-L149) can be used to force dCache to assign parent directory owner and group to all new files and subdirectories. This means objects get same owner and groups regardless of client authorization method (access with X.509 VOMS proxy or tokens).
+
 ### ACL configuration
 
 To be able to use ACLs with dCache it is necessary to enable them in the `dcache.conf`
@@ -111,10 +116,6 @@ A::EVERYONE@:rxtc
 nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:2099:rwaDdx /mnt/atlas/atlaslocalgroupdisk
 ```
 7. unmount dCache: `umount /mnt`
-
-### dCache ownership inheritance
-
-Alternatively to the ACL configuration it is also possible to rely on simple dCache ownership inheritance. Configuration option [`pnfsmanager.enable.inherit-file-ownership`](https://github.com/dCache/dcache/blob/8.2.11/skel/share/defaults/pnfsmanager.properties#L136-L149) can be used to force dCache to assign parent directory owner and group to all new files and subdirectories. This means objects get same owner and groups regardless of client authorization method (access with X.509 VOMS proxy or tokens).
 
 ## Supported authorizations
 
