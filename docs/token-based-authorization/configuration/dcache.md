@@ -234,9 +234,9 @@ session  sufficient omnisession
 # This mapping applies to the tokens that came with explicit AuthZ
 # statements in the scope claim (storage.*:/ scopes in case of
 # WLCG/SciTokens).
-username:atlas_oidc_with_storage_scope     uid:1999 gid:1999,true
+username:atlas_oidc_with_storage_scope     uid:2000 gid:2001,true
 # sites that used DPM to dCache migration tools should add group:writer
-#username:atlas_oidc_with_storage_scope    uid:1999 gid:1999,true group:writer
+#username:atlas_oidc_with_storage_scope    uid:2000 gid:2001,true group:writer
 ```
 ```
 # /etc/dcache/multi-mapfile.oidc-noop
