@@ -179,12 +179,11 @@ Storage [configuration](https://github.com/indigo-iam/wlcg-jwt-compliance-tests)
 ### ATLAS
 
 With ***dCache ownership inheritance*** the configuration is straightforward and it is sufficient to set [right ownership](https://twiki.cern.ch/twiki/bin/viewauth/AtlasComputing/StorageSetUp#Recommendation) only to the top level directories in the root of ATLAS namespace. Most common configuration can be very simple
-```
-/atlas-root ... read only for /atlas group
-/atlas-root/atlasscratchdisk ... inheritable read for FQAN:/atlas and write for FQAN:/atlas
-/atlas-root/atlasdatadisk ... inheritable read for FQAN:/atlas and write for FQAN:/atlas/Role=production
-/atlas-root/atlaslocalgroupdisk ... inheritable read for FQAN:/atlas and write for FQAN:/atlas/country_code
-```
+* `/atlas-root` - read only for /atlas group
+* `/atlas-root/atlasscratchdisk` - inheritable read for `FQAN:/atlas` and write for `FQAN:/atlas`
+* `/atlas-root/atlasdatadisk` - inheritable read for `FQAN:/atlas` and write for `FQAN:/atlas/Role=production`
+* `/atlas-root/atlaslocalgroupdisk` - inheritable read for `FQAN:/atlas` and write for `FQAN:/atlas/country_code`
+
 When dCache rely just on ***ACLs the configuration*** can be slightly more complex, for example following X.509 identity mapping `FQAN:/atlas` gid 2000, `FQAN:/atlas/Role=production` gid 2001, `FQAN:/atlas/cz` gid 2002 could be used to achieve behavior expected from ATLAS storage
 ```
 $ chimera ls /
