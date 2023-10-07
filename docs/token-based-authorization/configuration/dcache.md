@@ -146,10 +146,11 @@ auth     optional     oidc
 map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.oidc
 map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.oidc-noop
 ...
-session  sufficient omnisession
+session  sufficient   omnisession
+#session optional     authzdb
 ...
 ```
-* different content of multimap files
+* content of multimap files ensure access only to the clients that use tokens with explicit `storage.*` authorization
 ```
 # /etc/dcache/multi-mapfile.oidc
 username:wlcg_oidc_with_storage_scope     uid:1999 gid:1999,true group:writer
@@ -226,8 +227,8 @@ map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.o
 map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.oidc-noop
 ...
 # this depends if your dCache still rely on storage-authzdb or omnisession as described in earlier sections
-session  sufficient omnisession
-#session optional authzdb
+session  sufficient   omnisession
+#session optional     authzdb
 ...
 ```
 ```
