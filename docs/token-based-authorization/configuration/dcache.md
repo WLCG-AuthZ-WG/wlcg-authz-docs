@@ -1,6 +1,6 @@
 # dCache
 
-[Official documentation](https://dcache.org/old/manuals/Book-6.2/config-gplazma.shtml#using-openid-connect) currently doesn't provide all necessary information how to configured storage to accept and map WLCG JWT tokens (see [dCache#6607](https://github.com/dCache/dcache/issues/6607)). dCache provides two different gPlazma plugins to deal with OIDC tokens - `oidc` and `scitoken`. With dCache 7.x it is necessary to use `scitoken` plugin, because this is the only way to deal with WLCG JWT tokens or SCITOKENS. The dCache 8.x comes with more generic `oidc` plugin that can process also WLCG JWT tokens and SCITOKENS (`scitoken` plugin is still kept for compatibility reasons, but it is deprecated).
+[OIDC plugin reference](https://www.dcache.org/manuals/Book-9.2/config-gplazma.shtml#oidc) describes parameters and configuration options that can be used to deal with clients authorized with tokens. dCache supports several token profiles including WLCG/SciToken profiles. dCache provides two different gPlazma plugins to deal with OIDC tokens that follow WLCG profile - `oidc` and `scitoken`. With dCache 7.x it is necessary to use `scitoken` plugin, because this is the only way to deal with WLCG JWT tokens or SciTokens. The dCache 8.x comes with more generic `oidc` plugin that can process also WLCG JWT tokens and SciTokens (`scitoken` plugin is still kept for compatibility reasons, but it is deprecated).
 
 ## WLCG JWT compliance testbed
 
@@ -81,15 +81,16 @@ op:cms                uid:3999 gid:3999,true username:cms_oidc
 
 ### dCache ownership inheritance
 
-Alternatively to the ACL configuration it is also possible to rely on simple dCache ownership inheritance. Configuration option [`pnfsmanager.enable.inherit-file-ownership`](https://github.com/dCache/dcache/blob/8.2.11/skel/share/defaults/pnfsmanager.properties#L136-L149) can be used to force dCache to assign parent directory owner and group to all new files and subdirectories. This means objects get same owner and groups regardless of client authorization method (access with X.509 VOMS proxy or tokens).
+Configuration option [`pnfsmanager.enable.inherit-file-ownership`](https://github.com/dCache/dcache/blob/8.2.11/skel/share/defaults/pnfsmanager.properties#L136-L149) can be used to force dCache to assign parent directory owner and group to all new files and subdirectories. This means objects get same owner and groups regardless of client authorization method (access with X.509 VOMS proxy or tokens).
 
 ### ACL configuration
 
-To be able to use ACLs with dCache it is necessary to enable them in the `dcache.conf`
+Alternatively to the dCache ownership inheritance it is also possible to rely on ACLs. ACL support must be first enabled in the `dcache.conf`
 ```
 # enable ACL support
 pnfsmanager.enable.acl = true
 ```
+Default ACLs are also automatically inherited by newly created objects and this functionality is essential for ensuring consistent access for clients authorized with X.509 certificates or tokens.
 
 #### Recursive ACL updates
 
