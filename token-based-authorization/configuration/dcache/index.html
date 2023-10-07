@@ -828,7 +828,7 @@
 
 
 <h1 id="dcache">dCache</h1>
-<p><a href="https://dcache.org/old/manuals/Book-6.2/config-gplazma.shtml#using-openid-connect">Official documentation</a> currently doesn't provide all necessary information how to configured storage to accept and map WLCG JWT tokens (see <a href="https://github.com/dCache/dcache/issues/6607">dCache#6607</a>). dCache provides two different gPlazma plugins to deal with OIDC tokens - <code>oidc</code> and <code>scitoken</code>. With dCache 7.x it is necessary to use <code>scitoken</code> plugin, because this is the only way to deal with WLCG JWT tokens or SCITOKENS. The dCache 8.x comes with more generic <code>oidc</code> plugin that can process also WLCG JWT tokens and SCITOKENS (<code>scitoken</code> plugin is still kept for compatibility reasons, but it is deprecated).</p>
+<p><a href="https://www.dcache.org/manuals/Book-9.2/config-gplazma.shtml#oidc">OIDC plugin reference</a> describes parameters and configuration options that can be used to deal with clients authorized with tokens. dCache supports several token profiles including WLCG/SciToken profiles. dCache provides two different gPlazma plugins to deal with OIDC tokens that follow WLCG profile - <code>oidc</code> and <code>scitoken</code>. With dCache 7.x it is necessary to use <code>scitoken</code> plugin, because this is the only way to deal with WLCG JWT tokens or SciTokens. The dCache 8.x comes with more generic <code>oidc</code> plugin that can process also WLCG JWT tokens and SciTokens (<code>scitoken</code> plugin is still kept for compatibility reasons, but it is deprecated).</p>
 <h2 id="wlcg-jwt-compliance-testbed">WLCG JWT compliance testbed</h2>
 <p>There are several dCache instances already included in the <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests#storage-area-configuration-pre-requisites">testbed</a> including <a href="https://confluence.desy.de/pages/viewpage.action?pageId=228761933"><code>prometheus.desy.de</code></a>, which is maitained by dCache developers and it is running <code>master</code> branch.</p>
 <h2 id="dcache-plugins-for-wlcgscitoken-profile">dCache plugins for WLCG/SciToken profile</h2>
@@ -891,12 +891,13 @@ op:cms                uid:3999 gid:3999,true username:cms_oidc
 </code></pre>
 <h2 id="supporting-x509-and-token-access-at-same-time">Supporting X.509 and token access at same time</h2>
 <h3 id="dcache-ownership-inheritance">dCache ownership inheritance</h3>
-<p>Alternatively to the ACL configuration it is also possible to rely on simple dCache ownership inheritance. Configuration option <a href="https://github.com/dCache/dcache/blob/8.2.11/skel/share/defaults/pnfsmanager.properties#L136-L149"><code>pnfsmanager.enable.inherit-file-ownership</code></a> can be used to force dCache to assign parent directory owner and group to all new files and subdirectories. This means objects get same owner and groups regardless of client authorization method (access with X.509 VOMS proxy or tokens).</p>
+<p>Configuration option <a href="https://github.com/dCache/dcache/blob/8.2.11/skel/share/defaults/pnfsmanager.properties#L136-L149"><code>pnfsmanager.enable.inherit-file-ownership</code></a> can be used to force dCache to assign parent directory owner and group to all new files and subdirectories. This means objects get same owner and groups regardless of client authorization method (access with X.509 VOMS proxy or tokens).</p>
 <h3 id="acl-configuration">ACL configuration</h3>
-<p>To be able to use ACLs with dCache it is necessary to enable them in the <code>dcache.conf</code></p>
+<p>Alternatively to the dCache ownership inheritance it is also possible to rely on ACLs. ACL support must be first enabled in the <code>dcache.conf</code></p>
 <pre><code># enable ACL support
 pnfsmanager.enable.acl = true
 </code></pre>
+<p>Default ACLs are also automatically inherited by newly created objects and this functionality is essential for ensuring consistent access for clients authorized with X.509 certificates or tokens.</p>
 <h4 id="recursive-acl-updates">Recursive ACL updates</h4>
 <p>Currently it is not possible to modify ACL recursively using <code>chimera</code> interface (<a href="https://github.com/dCache/dcache/issues/6844">dCache#6844</a>), but you can use <a href="https://dcache.org/old/manuals/Book-8.2/config-nfs.shtml">NFS mounted dCache</a> and <code>nfs4_setfacl</code>, e.g.
 1. enable NFS doors service by updating layout configuration file, e.g.</p>
