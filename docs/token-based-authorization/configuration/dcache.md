@@ -181,6 +181,7 @@ Storage [configuration](https://github.com/indigo-iam/wlcg-jwt-compliance-tests)
 ### ATLAS
 
 With ***dCache ownership inheritance*** the configuration is straightforward and it is sufficient to set [right ownership](https://twiki.cern.ch/twiki/bin/viewauth/AtlasComputing/StorageSetUp#Recommendation) only to the top level directories in the root of ATLAS namespace. Most common configuration can be very simple
+
 * `/atlas-root` - read only for /atlas group
 * `/atlas-root/atlasscratchdisk` - inheritable read for `FQAN:/atlas` and write for `FQAN:/atlas`
 * `/atlas-root/atlasdatadisk` - inheritable read for `FQAN:/atlas` and write for `FQAN:/atlas/Role=production`
