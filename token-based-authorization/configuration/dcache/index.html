@@ -980,11 +980,13 @@ authorize noop read-only 1999 1999 / /noop /
 <h3 id="wlcg-compliance-testbed">WLCG compliance testbed</h3>
 <p>Storage <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests">configuration</a> for compliance tests.</p>
 <h3 id="atlas">ATLAS</h3>
-<p>With <strong><em>dCache ownership inheritance</em></strong> the configuration is straightforward and it is sufficient to set <a href="https://twiki.cern.ch/twiki/bin/viewauth/AtlasComputing/StorageSetUp#Recommendation">right ownership</a> only to the top level directories in the root of ATLAS namespace. Most common configuration can be very simple
-* <code>/atlas-root</code> - read only for /atlas group
-* <code>/atlas-root/atlasscratchdisk</code> - inheritable read for <code>FQAN:/atlas</code> and write for <code>FQAN:/atlas</code>
-* <code>/atlas-root/atlasdatadisk</code> - inheritable read for <code>FQAN:/atlas</code> and write for <code>FQAN:/atlas/Role=production</code>
-* <code>/atlas-root/atlaslocalgroupdisk</code> - inheritable read for <code>FQAN:/atlas</code> and write for <code>FQAN:/atlas/country_code</code></p>
+<p>With <strong><em>dCache ownership inheritance</em></strong> the configuration is straightforward and it is sufficient to set <a href="https://twiki.cern.ch/twiki/bin/viewauth/AtlasComputing/StorageSetUp#Recommendation">right ownership</a> only to the top level directories in the root of ATLAS namespace. Most common configuration can be very simple</p>
+<ul>
+<li><code>/atlas-root</code> - read only for /atlas group</li>
+<li><code>/atlas-root/atlasscratchdisk</code> - inheritable read for <code>FQAN:/atlas</code> and write for <code>FQAN:/atlas</code></li>
+<li><code>/atlas-root/atlasdatadisk</code> - inheritable read for <code>FQAN:/atlas</code> and write for <code>FQAN:/atlas/Role=production</code></li>
+<li><code>/atlas-root/atlaslocalgroupdisk</code> - inheritable read for <code>FQAN:/atlas</code> and write for <code>FQAN:/atlas/country_code</code></li>
+</ul>
 <p>When dCache rely just on <strong><em>ACLs the configuration</em></strong> can be slightly more complex, for example following X.509 identity mapping <code>FQAN:/atlas</code> gid 2000, <code>FQAN:/atlas/Role=production</code> gid 2001, <code>FQAN:/atlas/cz</code> gid 2002 could be used to achieve behavior expected from ATLAS storage</p>
 <pre><code>$ chimera ls /
 dr-xr-x---   19 2000 2000        512 May 10 00:00 atlas-root
