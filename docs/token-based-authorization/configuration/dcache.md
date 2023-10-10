@@ -187,7 +187,7 @@ With ***dCache ownership inheritance*** the configuration is straightforward and
 * `/atlas-root/atlasdatadisk` - inheritable read for `FQAN:/atlas` and write for `FQAN:/atlas/Role=production`
 * `/atlas-root/atlaslocalgroupdisk` - inheritable read for `FQAN:/atlas` and write for `FQAN:/atlas/country_code`
 
-When dCache rely just on ***ACLs the configuration*** can be slightly more complex, for example following X.509 identity mapping `FQAN:/atlas` gid 2000, `FQAN:/atlas/Role=production` gid 2001, `FQAN:/atlas/cz` gid 2002 could be used to achieve behavior expected from ATLAS storage
+The configuration can be slightly more complex when dCache rely just on ***ACLs***, because then it is necessary to set directory permissions that will be inherited by new directories and files. For example following X.509 identity mapping `FQAN:/atlas` gid 2000, `FQAN:/atlas/Role=production` gid 2001, `FQAN:/atlas/cz` gid 2002 could be used to achieve behavior expected from ATLAS storage
 ```
 $ chimera ls /
 dr-xr-x---   19 2000 2000        512 May 10 00:00 atlas-root
