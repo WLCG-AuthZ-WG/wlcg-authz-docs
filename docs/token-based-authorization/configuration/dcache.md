@@ -40,7 +40,7 @@ op:cms                uid:3999 gid:3999,true username:cms_oidc
 
 Be wery careful how you map WLCG JWT token indentity and when you support also X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories or rely on dCache ownership inheritance from the parent directory.
 
-### dCache 8.2 configuration
+### dCache 8.2/9.2 configuration
 This version comes with
 
 1. WLCG JWT profile support integrated in "oidc" gPlazma plugin
