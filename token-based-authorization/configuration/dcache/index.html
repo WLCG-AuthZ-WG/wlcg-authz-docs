@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.bd3936ea.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6a10b989.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.356b1318.min.css">
@@ -987,7 +987,7 @@ authorize noop read-only 1999 1999 / /noop /
 <li><code>/atlas-root/atlasdatadisk</code> - inheritable read for <code>FQAN:/atlas</code> and write for <code>FQAN:/atlas/Role=production</code></li>
 <li><code>/atlas-root/atlaslocalgroupdisk</code> - inheritable read for <code>FQAN:/atlas</code> and write for <code>FQAN:/atlas/country_code</code></li>
 </ul>
-<p>When dCache rely just on <strong><em>ACLs the configuration</em></strong> can be slightly more complex, for example following X.509 identity mapping <code>FQAN:/atlas</code> gid 2000, <code>FQAN:/atlas/Role=production</code> gid 2001, <code>FQAN:/atlas/cz</code> gid 2002 could be used to achieve behavior expected from ATLAS storage</p>
+<p>The configuration can be slightly more complex when dCache rely just on <strong><em>ACLs</em></strong>, because then it is necessary to set directory permissions that will be inherited by new directories and files. For example following X.509 identity mapping <code>FQAN:/atlas</code> gid 2000, <code>FQAN:/atlas/Role=production</code> gid 2001, <code>FQAN:/atlas/cz</code> gid 2002 could be used to achieve behavior expected from ATLAS storage</p>
 <pre><code>$ chimera ls /
 dr-xr-x---   19 2000 2000        512 May 10 00:00 atlas-root
 $ chimera ls /atlas-root
@@ -1098,7 +1098,7 @@ group:noop            read-only root:/noop home:/
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.94c44541.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.aecac24b.min.js"></script>
       
     
   </body>
