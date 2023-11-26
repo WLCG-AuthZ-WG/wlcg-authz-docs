@@ -46,7 +46,9 @@ This version comes with
 1. WLCG JWT profile support integrated in "oidc" gPlazma plugin
 2. Support for access with tokens with roots:// protocol on same port 1094
 3. Starting with 8.2.7 preferred authorization plugin is set to ZTN and we can simply rely on BEARER_TOKEN variable
-4. Symlinks properly handled since 8.2.22
+4. Symlinks properly handled since 8.2.22 (the minimal secure version that can be used by LHC experiments with special configuration for tokens)
+5. WLCG JWT explicit authorization implemented in 8.2.33 and 9.2.0
+6. Fixed storage scopes without path 8.2.35 and 9.2.3, otherwise special workaround needs to be applied on IAM token issuer side (available for ATLAS)
 
 Following configuration updates should add support for token access
 ```
@@ -67,7 +69,7 @@ gplazma.oidc.provider!cms = https://cms-auth.web.cern.ch/ -profile=wlcg -prefix=
 # assuming that dCache WebDAV service runs on default HTTPS port 443 for doors dcache.example.com
 #gplazma.oidc.audience-targets = https://dcache.example.com
 # you can specify multiple audiences (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
-gplazma.oidc.audience-targets = https://wlcg.cern.ch/jwt/v1/any https://dcache.example.com https://dcache.example.com:2880 https://alias.example.com
+gplazma.oidc.audience-targets = https://wlcg.cern.ch/jwt/v1/any dcache.example.com https://dcache.example.com https://dcache.example.com:2880 https://alias.example.com roots://dcache.example.com:1094
 # ...
 ```
 ```
@@ -81,7 +83,7 @@ op:cms                uid:3999 gid:3999,true username:cms_oidc
 
 ### dCache ownership inheritance
 
-Configuration option [`pnfsmanager.enable.inherit-file-ownership`](https://github.com/dCache/dcache/blob/8.2.11/skel/share/defaults/pnfsmanager.properties#L136-L149) can be used to force dCache to assign parent directory owner and group to all new files and subdirectories. This means objects get same owner and groups regardless of client authorization method (access with X.509 VOMS proxy or tokens).
+Configuration option [`pnfsmanager.enable.inherit-file-ownership`](https://github.com/dCache/dcache/blob/8.2.36/skel/share/defaults/pnfsmanager.properties#L159-L172) can be used to force dCache to assign parent directory owner and group to all new files and subdirectories. This means objects get same owner and groups regardless of client authorization method (access with X.509 VOMS proxy or tokens).
 
 ### ACL configuration
 
