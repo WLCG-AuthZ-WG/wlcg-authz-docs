@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.12">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.14">
     
     
       
@@ -199,6 +199,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../.." class="md-nav__link">
         
@@ -218,6 +219,7 @@
   
   
     
+  
   
   
     
@@ -256,6 +258,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../" class="md-nav__link">
         
@@ -273,6 +276,7 @@
             
               
                 
+  
   
   
   
@@ -296,6 +300,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../doma-testbed/" class="md-nav__link">
         
@@ -313,6 +318,7 @@
             
               
                 
+  
   
   
   
@@ -336,6 +342,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../oidc-agent/" class="md-nav__link">
         
@@ -356,6 +363,7 @@
   
   
     
+  
   
   
     
@@ -394,6 +402,7 @@
   
   
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
@@ -601,6 +610,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dpm/" class="md-nav__link">
         
@@ -618,6 +628,7 @@
             
               
                 
+  
   
   
   
@@ -641,6 +652,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../storm/" class="md-nav__link">
         
@@ -658,6 +670,7 @@
             
               
                 
+  
   
   
   
@@ -885,6 +898,7 @@
 <p>There are several dCache instances already included in the <a href="https://github.com/indigo-iam/wlcg-jwt-compliance-tests#storage-area-configuration-pre-requisites">testbed</a> including <a href="https://confluence.desy.de/pages/viewpage.action?pageId=228761933"><code>prometheus.desy.de</code></a>, which is maitained by dCache developers and it is running <code>master</code> branch.</p>
 <h2 id="dcache-plugins-for-wlcgscitoken-profile">dCache plugins for WLCG/SciToken profile</h2>
 <h3 id="dcache-72-configuration">dCache 7.2 configuration</h3>
+<p><strong>WARNING</strong>: LHC experiments don't consider dCache 7.x for transfers with tokens.</p>
 <p>To accept connection authorized with WLCG JWT tokens it is necessary to add <code>scitoken</code> plugin in the chain of gPlazma auth plugins. Just add following line in your <code>/etc/dcache/gplazma.conf</code> configuration</p>
 <pre><code>auth     optional     scitoken
 map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.wlcg_jwt
@@ -909,39 +923,33 @@ op:cms                uid:3999 gid:3999,true username:cms_oidc
 </code></pre>
 <p>Be wery careful how you map WLCG JWT token indentity and when you support also X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories or rely on dCache ownership inheritance from the parent directory.</p>
 <h3 id="dcache-8292-configuration">dCache 8.2/9.2 configuration</h3>
-<p>This version comes with</p>
+<p>These dCache versions comes with important updates.</p>
 <ol>
 <li>WLCG JWT profile support integrated in "oidc" gPlazma plugin</li>
 <li>Support for access with tokens with roots:// protocol on same port 1094</li>
 <li>Starting with 8.2.7 preferred authorization plugin is set to ZTN and we can simply rely on BEARER_TOKEN variable</li>
-<li>Symlinks properly handled since 8.2.22 (the minimal secure version that can be used by LHC experiments with special configuration for tokens)</li>
-<li>WLCG JWT explicit authorization implemented in 8.2.33 and 9.2.0</li>
-<li>Fixed storage scopes without path 8.2.35 and 9.2.3, otherwise special workaround needs to be applied on IAM token issuer side (available for ATLAS)</li>
+<li>Symlinks properly handled since 8.2.22 (minimal version usable by LHC experiments, but with special configuration for tokens)</li>
+<li>WLCG JWT explicit authorization implemented in 8.2.33 and 9.2.0 (needs special workaround in IAM token issuer configuration - available e.g. in ATLAS IAM)</li>
+<li>Recommended for WLCG experiments are 8.2.35+ and 9.2.3+</li>
 </ol>
-<p>Following configuration updates should add support for token access</p>
+<p>Following minimal configuration adds support to access files with WLCG JWL tokens</p>
 <pre><code># /etc/dcache/gplazma.conf
 ...
 auth     optional     oidc
-map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.oidc
 ...
 </code></pre>
 <pre><code># /etc/dcache/layouts/your_layout_file.conf
 # ...
 [centralDomain/gplazma]
 # assuming that VO starts in top level directory
-gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg
-gplazma.oidc.provider!altas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas
-gplazma.oidc.provider!cms = https://cms-auth.web.cern.ch/ -profile=wlcg -prefix=/cms
+gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg -authz-id=&quot;uid:1999 gid:1999,true username:wlcg_oidc&quot;
+gplazma.oidc.provider!altas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id=&quot;uid:2999 gid:2999,true username:atlas_oidc&quot;
+gplazma.oidc.provider!cms = https://cms-auth.web.cern.ch/ -profile=wlcg -prefix=/cms -authz-id=&quot;uid:3999 gid:3999,true username:cms_oidc&quot;
 # assuming that dCache WebDAV service runs on default HTTPS port 443 for doors dcache.example.com
 #gplazma.oidc.audience-targets = https://dcache.example.com
 # you can specify multiple audiences (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
 gplazma.oidc.audience-targets = https://wlcg.cern.ch/jwt/v1/any dcache.example.com https://dcache.example.com https://dcache.example.com:2880 https://alias.example.com roots://dcache.example.com:1094
 # ...
-</code></pre>
-<pre><code># /etc/dcache/multi-mapfile.oidc
-op:wlcg               uid:1999 gid:1999,true username:wlcg_oidc
-op:atlas              uid:2999 gid:2999,true username:atlas_oidc
-op:cms                uid:3999 gid:3999,true username:cms_oidc
 </code></pre>
 <h2 id="supporting-x509-and-token-access-at-same-time">Supporting X.509 and token access at same time</h2>
 <h3 id="dcache-ownership-inheritance">dCache ownership inheritance</h3>
@@ -986,7 +994,7 @@ A::EVERYONE@:rxtc
 <li>Group based authorization - when dCache decodes groups from the token (e.g. from <code>wlcg.groups</code> claim in case of WLCG profile) mapping can be applied to <code>oidcgrp:/vo/group_name</code></li>
 <li>Scope based authorization - dCache supports access based on storage capabilities defined in several OIDC profiles (e.g. WLCG &amp; SciToken) </li>
 </ol>
-<p>It is not straightforward to configure dCache properly to use just scope based authorization. WLCG experiments prefers capability security model when it comes to the storage access and that means access with just issuer or group based authorization should be denied. Current dCache releases can't be directly configured to allow access only to one of listed authorization methods and it is necessary to apply special mapping in order to achieve desired behavior.</p>
+<p>WLCG experiments prefers capability security model when it comes to the storage access and that means access with just issuer or group based authorization should be denied. Current dCache releases can't be directly configured to allow access only to one of listed authorization methods and it is necessary to apply special mapping in order to achieve desired behavior.</p>
 <p>dCache OIDC plugin configured to use WLCG profile accepts additional configuration parameter <code>authz-id</code> which is used only for tokens that came with explicit AuthZ statements in the scope claim (<code>storage.*:/</code> scope). This behavior enables us to differentiate clients later during identity mapping based on the authorizations available in the token. Clients that did not came with scope based authorization will not be mapped to the dCache <code>uid</code> and <code>gid</code> and/or their namespace root can be set to non-existing directory. Wrong mapping leads to rejected client request.</p>
 <p>Following changes needs to be applied to the dCache token configuration described earlier
 * gPlazma OIDC provider configuration must be configured with <code>authz-id</code> parameter</p>
@@ -1152,7 +1160,7 @@ group:noop            read-only root:/noop home:/
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6c14ae12.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
       
     
   </body>
