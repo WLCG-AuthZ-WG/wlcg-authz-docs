@@ -10,6 +10,8 @@ There are several dCache instances already included in the [testbed](https://git
 
 ### dCache 7.2 configuration
 
+**WARNING**: LHC experiments don't consider dCache 7.x for transfers with tokens.
+
 To accept connection authorized with WLCG JWT tokens it is necessary to add `scitoken` plugin in the chain of gPlazma auth plugins. Just add following line in your `/etc/dcache/gplazma.conf` configuration
 ```
 auth     optional     scitoken
@@ -41,21 +43,20 @@ op:cms                uid:3999 gid:3999,true username:cms_oidc
 Be wery careful how you map WLCG JWT token indentity and when you support also X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories or rely on dCache ownership inheritance from the parent directory.
 
 ### dCache 8.2/9.2 configuration
-This version comes with
+These dCache versions comes with important updates.
 
 1. WLCG JWT profile support integrated in "oidc" gPlazma plugin
 2. Support for access with tokens with roots:// protocol on same port 1094
 3. Starting with 8.2.7 preferred authorization plugin is set to ZTN and we can simply rely on BEARER_TOKEN variable
-4. Symlinks properly handled since 8.2.22 (the minimal secure version that can be used by LHC experiments with special configuration for tokens)
-5. WLCG JWT explicit authorization implemented in 8.2.33 and 9.2.0
-6. Fixed storage scopes without path 8.2.35 and 9.2.3, otherwise special workaround needs to be applied on IAM token issuer side (available for ATLAS)
+4. Symlinks properly handled since 8.2.22 (minimal version usable by LHC experiments, but with special configuration for tokens)
+5. WLCG JWT explicit authorization implemented in 8.2.33 and 9.2.0 (needs special workaround in IAM token issuer configuration - available e.g. in ATLAS IAM)
+6. Recommended for WLCG experiments are 8.2.35+ and 9.2.3+
 
-Following configuration updates should add support for token access
+Following minimal configuration adds support to access files with WLCG JWL tokens
 ```
 # /etc/dcache/gplazma.conf
 ...
 auth     optional     oidc
-map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.oidc
 ...
 ```
 ```
@@ -63,20 +64,14 @@ map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.o
 # ...
 [centralDomain/gplazma]
 # assuming that VO starts in top level directory
-gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg
-gplazma.oidc.provider!altas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas
-gplazma.oidc.provider!cms = https://cms-auth.web.cern.ch/ -profile=wlcg -prefix=/cms
+gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg -authz-id="uid:1999 gid:1999,true username:wlcg_oidc"
+gplazma.oidc.provider!altas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2999 gid:2999,true username:atlas_oidc"
+gplazma.oidc.provider!cms = https://cms-auth.web.cern.ch/ -profile=wlcg -prefix=/cms -authz-id="uid:3999 gid:3999,true username:cms_oidc"
 # assuming that dCache WebDAV service runs on default HTTPS port 443 for doors dcache.example.com
 #gplazma.oidc.audience-targets = https://dcache.example.com
 # you can specify multiple audiences (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
 gplazma.oidc.audience-targets = https://wlcg.cern.ch/jwt/v1/any dcache.example.com https://dcache.example.com https://dcache.example.com:2880 https://alias.example.com roots://dcache.example.com:1094
 # ...
-```
-```
-# /etc/dcache/multi-mapfile.oidc
-op:wlcg               uid:1999 gid:1999,true username:wlcg_oidc
-op:atlas              uid:2999 gid:2999,true username:atlas_oidc
-op:cms                uid:3999 gid:3999,true username:cms_oidc
 ```
 
 ## Supporting X.509 and token access at same time
@@ -127,7 +122,7 @@ nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:20
 2. Group based authorization - when dCache decodes groups from the token (e.g. from `wlcg.groups` claim in case of WLCG profile) mapping can be applied to `oidcgrp:/vo/group_name`
 3. Scope based authorization - dCache supports access based on storage capabilities defined in several OIDC profiles (e.g. WLCG & SciToken) 
 
-It is not straightforward to configure dCache properly to use just scope based authorization. WLCG experiments prefers capability security model when it comes to the storage access and that means access with just issuer or group based authorization should be denied. Current dCache releases can't be directly configured to allow access only to one of listed authorization methods and it is necessary to apply special mapping in order to achieve desired behavior.
+WLCG experiments prefers capability security model when it comes to the storage access and that means access with just issuer or group based authorization should be denied. Current dCache releases can't be directly configured to allow access only to one of listed authorization methods and it is necessary to apply special mapping in order to achieve desired behavior.
 
 dCache OIDC plugin configured to use WLCG profile accepts additional configuration parameter `authz-id` which is used only for tokens that came with explicit AuthZ statements in the scope claim (`storage.*:/` scope). This behavior enables us to differentiate clients later during identity mapping based on the authorizations available in the token. Clients that did not came with scope based authorization will not be mapped to the dCache `uid` and `gid` and/or their namespace root can be set to non-existing directory. Wrong mapping leads to rejected client request.
 
