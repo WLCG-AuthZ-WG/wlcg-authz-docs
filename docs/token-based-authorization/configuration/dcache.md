@@ -40,17 +40,16 @@ op:atlas              uid:2999 gid:2999,true username:atlas_oidc
 op:cms                uid:3999 gid:3999,true username:cms_oidc
 ```
 
-Be wery careful how you map WLCG JWT token indentity and when you support also X.509 voms proxies. Most probably it'll be necessary to very carefully add additional ACLs to your VO (sub)directories or rely on dCache ownership inheritance from the parent directory.
+Be careful how you map WLCG JWT token indentity when you support also X.509 voms proxies and your dCache rely on ACLs for VO (sub)directories. WLCG JWT tokens allows access based on [scope or group authorization](https://github.com/WLCG-AuthZ-WG/common-jwt-profile/blob/master/profile.md#authorization) and specific requirements wre not considered in the simple mentioned above. The following sections provide some ideas to consider.
 
 ### dCache 8.2/9.2 configuration
 These dCache versions comes with important updates.
 
-1. WLCG JWT profile support integrated in "oidc" gPlazma plugin
-2. Support for access with tokens with roots:// protocol on same port 1094
-3. Starting with 8.2.7 preferred authorization plugin is set to ZTN and we can simply rely on BEARER_TOKEN variable
-4. Symlinks properly handled since 8.2.22 (minimal version usable by LHC experiments, but with special configuration for tokens)
-5. WLCG JWT explicit authorization implemented in 8.2.32 and 9.2.0 (needs special workaround in IAM token issuer configuration - available e.g. in ATLAS IAM)
-6. Recommended for WLCG experiments are 8.2.35+ and 9.2.3+
+1. dCache 8.2 comes with WLCG JWT profile support integrated in "oidc" gPlazma plugin and `root://` + `roots://` protocol configured on the same port
+2. Starting with 8.2.7 preferred authorization plugin is set to ZTN and we can simply rely on BEARER_TOKEN variable
+3. Symlinks properly handled since 8.2.22
+4. WLCG JWT explicit authorization implemented in 8.2.32 and 9.2.0 (needs workaround in IAM token issuer)
+5. Recommended for WLCG experiments are 8.2.35+ and 9.2.3+ (versions older than 8.2.22 can't be used with WLCG JWT tokens)
 
 Following minimal configuration adds support to access files with WLCG JWL tokens
 ```
@@ -60,21 +59,26 @@ auth     optional     oidc
 ...
 ```
 ```
-# /etc/dcache/layouts/your_layout_file.conf
+# /etc/dcache/layouts/layout_file.conf
 # ...
 [centralDomain/gplazma]
 # assuming that VO starts in top level directory
-gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg -authz-id="uid:1999 gid:1999,true username:wlcg_oidc"
-gplazma.oidc.provider!altas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2999 gid:2999,true username:atlas_oidc"
-gplazma.oidc.provider!cms = https://cms-auth.web.cern.ch/ -profile=wlcg -prefix=/cms -authz-id="uid:3999 gid:3999,true username:cms_oidc"
+gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg -authz-id="uid:1999 gid:1999 username:wlcg_oidc"
+gplazma.oidc.provider!altas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2999 gid:2999 username:atlas_oidc"
+gplazma.oidc.provider!cms = https://cms-auth.web.cern.ch/ -profile=wlcg -prefix=/cms -authz-id="uid:3999 gid:3999 username:cms_oidc"
 # assuming that dCache WebDAV service runs on default HTTPS port 443 for doors dcache.example.com
 #gplazma.oidc.audience-targets = https://dcache.example.com
 # you can specify multiple audiences (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
-gplazma.oidc.audience-targets = https://wlcg.cern.ch/jwt/v1/any dcache.example.com https://dcache.example.com https://dcache.example.com:2880 https://alias.example.com roots://dcache.example.com:1094
+gplazma.oidc.audience-targets = https://wlcg.cern.ch/jwt/v1/any https://dcache.example.com https://dcache.example.com:2880 https://alias.example.com roots://dcache.example.com:1094 dcache.example.com ARBITRARY_STRING_REQUESTED_BY_EXPERIMENT
 # ...
 ```
+This configuration is sufficient for VOs that rely exclusively on scope based authorization and dCache which is not configured with ownership inheritance create new files with defined `uid` and `gid` number.
+
+Access to the storage is restricted the the tokens with `aud` claim that match one of configured `gplazma.oidc.audience-targets`. It is up to experiments (VOs) to create tokens with desired audience and that's why one configuration for multiple VOs doesn't really weaken security for individual experiments.
 
 ## Supporting X.509 and token access at same time
+
+There are (at least) two different ways that ensure consistent access for both authorization methods.
 
 ### dCache ownership inheritance
 
@@ -122,52 +126,43 @@ nfs4_setfacl -R -P -s A:fdg:2000:rx,A:fdg:2001:rwaDdx,A:fdg:2002:rwaDdx,A:fdg:20
 2. Group based authorization - when dCache decodes groups from the token (e.g. from `wlcg.groups` claim in case of WLCG profile) mapping can be applied to `oidcgrp:/vo/group_name`
 3. Scope based authorization - dCache supports access based on storage capabilities defined in several OIDC profiles (e.g. WLCG & SciToken) 
 
-WLCG experiments prefers capability security model when it comes to the storage access and that means access with just issuer or group based authorization should be denied. Current dCache releases can't be directly configured to allow access only to one of listed authorization methods and it is necessary to apply special mapping in order to achieve desired behavior.
+WLCG experiments prefers capability security model when it comes to the storage access and that means access with just issuer or group based authorization should be denied. dCache OIDC plugin configured to use WLCG profile (selected by `-profile=wlcg` parameter) accepts additional configuration parameter `authz-id` which is used only for tokens that came with explicit AuthZ statements in the scope claim (e.g. `storage.read:/foo` scope). This parameter can be used to map directly token issuer to the dCache `uid`, `gid` and `username`. Clients that did not came with scope based authorization will not get mapping defined by `authz-id` and they'll not be authorized to access dCache storage. In case supported VO rely on issuer/group based authorization you could use `non-authz-id` parameter in the `gplazma.oidc.provider` configuration or later map `op:provider` and/or `oidcgrp:/vo/group` with `multimap` plugin. Wrong/missing mapping as usually leads to rejected client request.
 
-dCache OIDC plugin configured to use WLCG profile accepts additional configuration parameter `authz-id` which is used only for tokens that came with explicit AuthZ statements in the scope claim (`storage.*:/` scope). This behavior enables us to differentiate clients later during identity mapping based on the authorizations available in the token. Clients that did not came with scope based authorization will not be mapped to the dCache `uid` and `gid` and/or their namespace root can be set to non-existing directory. Wrong mapping leads to rejected client request.
-
-Following changes needs to be applied to the dCache token configuration described earlier
+Following changes needs to be applied to the dCache configuration to allow access for tokens with both, scope + group based authorization
 * gPlazma OIDC provider configuration must be configured with `authz-id` parameter
 ```
-# /etc/dcache/layouts/your_layout_file.conf
+# /etc/dcache/layouts/layout_file.conf
 # ...
 [centralDomain/gplazma]
 # assuming that VO starts in top level directory
-gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg -authz-id=username:wlcg_oidc_with_storage_scope
+gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg -authz-id="username:atlas_oidc_scope_based uid:1000 gid:1000" -non-authz-id="username:atlas_oidc_group_based uid:1100 gid:1100"
 # ...
 ```
-* new multimap mapping for unsupported OIDC authorization methods
+* new multimap mapping for WLCG groups defined in access token
 ```
 # /etc/dcache/gplazma.conf
 ...
 auth     optional     oidc
 map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.oidc
-map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.oidc-noop
 ...
 session  sufficient   omnisession
 #session optional     authzdb
 ...
 ```
-* content of multimap files ensure access only to the clients that use tokens with explicit `storage.*` authorization
+* content of multimap files to map additional groups
 ```
 # /etc/dcache/multi-mapfile.oidc
-username:wlcg_oidc_with_storage_scope     uid:1999 gid:1999,true group:writer
+# you could define access for tokens that don't even come with any WLCG group using issuer
+#op:wlcg              gid:1200
+oidcgrp:/wlcg         gid:1300
+oidcgrp:/wlcg/test    gid:1400
 ```
-```
-# /etc/dcache/multi-mapfile.oidc-noop
-# intentionally wrong/insufficient mapping with missing dCache uid and gid
-op:wlcg               username:noop group:noop
-```
-* assign non-existing root for tokens without storage scopes
-```
-# /etc/dcache/omnisession.conf
-group:noop            read-only root:/noop home:/
-```
-In case dCache still rely on old `authzdb` plugin than namespace root can be set in `/etc/grid-security/storage-authzdb` to the non-existing directory, e.g.
+In case dCache still rely on old `authzdb` plugin than namespace root can be set in `/etc/grid-security/storage-authzdb`, but you would have to create new group in the `gplazma.oidc.provider` configuration (e.g. `group:atlas_oidc`) or in the identity mapfiles to be able to set
 ```
 # /etc/grid-security/storage-authzdb
-authorize noop read-only 1999 1999 / /noop /
+authorize atlas_oidc 1000 1000 / / /
 ```
+(not tested, author of this document have no sufficient experience with this deprecated module)
 
 ## Storage mapping and permissions configuration
 
@@ -176,6 +171,8 @@ authorize noop read-only 1999 1999 / /noop /
 Storage [configuration](https://github.com/indigo-iam/wlcg-jwt-compliance-tests) for compliance tests.
 
 ### ATLAS
+
+ATLAS rely exclusively on scope based authorization, never include any mapping for `op:atlas` or `oidcgrp:/atlas` in your dCache configuration files.
 
 With ***dCache ownership inheritance*** the configuration is straightforward and it is sufficient to set [right ownership](https://twiki.cern.ch/twiki/bin/viewauth/AtlasComputing/StorageSetUp#Recommendation) only to the top level directories in the root of ATLAS namespace. Most common configuration can be very simple
 
@@ -206,58 +203,31 @@ Both configurations works well with clients accessing storage either with X.509 
 
 #### configuration
 ```
-# /etc/dcache/layouts/your_layout_file.conf
+# /etc/dcache/layouts/layout_file.conf
 # ...
+# use your own gplazma domain name (this example assumes gPlazma runs in centralDomain)
 [centralDomain/gplazma]
-# assuming that VO starts in top level directory /atlas
-gplazma.oidc.provider!atlas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id=username:atlas_oidc_with_storage_scope
-# you can specify multiple audiences, e.g. https://wlcg.cern.ch/jwt/v1/any is necessary
-# for compliance testbed and also CMS, but for ATLAS it is currently sufficient to use
-# "headnode" (doors) hostname(s) / hostnames defined in the ATLAS Rucio protocol configuration
-# that can be obtained with `rucio-admin rse info PRAGUELCG2_DATADISK` or from ATLAS CRIC web interface
-gplazma.oidc.audience-targets = davs.example.com xroot.example.com
+# VO issuer prefix:
+# assuming that namespace for VO data is stored in the top level directory /atlas
+gplazma.oidc.provider!atlas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2001 gid:2001 username:atlas_oidc_with_storage_scope"
+# In case ATLAS VO namespace starts in /pnfs/example.com/atlas than you must use this full prefix
+# in the provider configuration. Using "/" prefix (most probably for any VO) is wrong with severe
+# security implications
+#
+# Audience:
+# audience contains union of `aud` claims used by all supported VOs for ATLAS it is currently
+# sufficient to use "headnode" (doors) hostname(s) / hostnames defined in the ATLAS Rucio protocol
+# configuration (see `rucio-admin rse info PRAGUELCG2_DATADISK` or ATLAS CRIC web interface
+# https://atlas-cric.cern.ch/core/storageresource/list/), but to be compliant also with WLCG JWT profile
+# requirements (which can become also ATLAS Rucio requirements in the future) for protocols
+# davs://davs.example.com:443/atlas/data and root://xroot.example.com:1094/atlas/data
+# you should use at least following configuration
+gplazma.oidc.audience-targets = https://davs.example.com roots://xroot.example.com:1094 davs.example.com xroot.example.com
 # ...
 ```
 ```
 # /etc/dcache/gplazma.conf
 ...
 auth     optional     oidc
-map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.oidc
-map      sufficient   multimap gplazma.multimap.file=/etc/dcache/multi-mapfile.oidc-noop
-...
-# this depends if your dCache still rely on storage-authzdb or omnisession as described in earlier sections
-session  sufficient   omnisession
-#session optional     authzdb
-...
-```
-```
-# /etc/dcache/multi-mapfile.oidc
-# This mapping applies to the tokens that came with explicit AuthZ
-# statements in the scope claim (storage.*:/ scopes in case of
-# WLCG/SciTokens).
-username:atlas_oidc_with_storage_scope     uid:2000 gid:2001,true
-# sites that used DPM to dCache migration tools should add group:writer
-#username:atlas_oidc_with_storage_scope    uid:2000 gid:2001,true group:writer
-```
-```
-# /etc/dcache/multi-mapfile.oidc-noop
-# Tokens with just group (oidcgrp:) or issuer (op:) based authorization
-# are not mapped in the multi-mapfile.oidc, because dCache doesn't add
-# principals from authz-id parameter defined with gplazma.oidc.provider
-#
-# If we would like to support just capability based access with WLCG/SciToken
-# profile (tokens with storage.*:/ scopes) we intentionally use bad (sufficient)
-# mapping configured here to deny access. Although missing dCache uid and gid
-# mapping is sufficient to reject clients special group "noop" is also mapped
-# to non-existing directory in the omnisession or storage-authzdb configuration file.
-op:atlas              username:noop group:noop
-```
-```
-# /etc/dcache/omnisession.conf
-...
-# deny access by mapping "noop" group to non-existing root directiory
-# this is here just for safety, because client should be already kicked
-# out while its identity is not even mapped to any dCache uid and gid
-group:noop            read-only root:/noop home:/
 ...
 ```
