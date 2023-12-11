@@ -222,7 +222,7 @@ gplazma.oidc.provider!atlas = https://atlas-auth.web.cern.ch/ -profile=wlcg -pre
 # requirements (which can become also ATLAS Rucio requirements in the future) for protocols
 # davs://davs.example.com:443/atlas/data and root://xroot.example.com:1094/atlas/data
 # you should use at least following configuration
-gplazma.oidc.audience-targets = https://davs.example.com roots://xroot.example.com:1094 davs.example.com xroot.example.com
+gplazma.oidc.audience-targets = https://wlcg.cern.ch/jwt/v1/any https://davs.example.com roots://xroot.example.com:1094 davs.example.com xroot.example.com
 # ...
 ```
 ```
