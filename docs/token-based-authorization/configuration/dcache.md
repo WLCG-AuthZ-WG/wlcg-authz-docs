@@ -49,7 +49,7 @@ These dCache versions comes with important updates.
 2. Support for access with tokens with roots:// protocol on same port 1094
 3. Starting with 8.2.7 preferred authorization plugin is set to ZTN and we can simply rely on BEARER_TOKEN variable
 4. Symlinks properly handled since 8.2.22 (minimal version usable by LHC experiments, but with special configuration for tokens)
-5. WLCG JWT explicit authorization implemented in 8.2.33 and 9.2.0 (needs special workaround in IAM token issuer configuration - available e.g. in ATLAS IAM)
+5. WLCG JWT explicit authorization implemented in 8.2.32 and 9.2.0 (needs special workaround in IAM token issuer configuration - available e.g. in ATLAS IAM)
 6. Recommended for WLCG experiments are 8.2.35+ and 9.2.3+
 
 Following minimal configuration adds support to access files with WLCG JWL tokens
