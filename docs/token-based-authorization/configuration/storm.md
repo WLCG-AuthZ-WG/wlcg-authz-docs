@@ -134,6 +134,12 @@ Further policies can be added following the StoRM WebDAV  [documentation](http:/
 To configure support for HTTP TPC, follow the instructions in the [StoRM WebDAV
 documentation][storm-webdav-tpc-doc].
 
+## VO Examples
+
+### ATLAS
+
+> TODO: insert example here
+
 [storm-webdav]: http://italiangrid.github.io/storm/release-notes/storm-webdav/1.2.1/
 [storm-webdav-tpc-doc]: https://github.com/italiangrid/storm-webdav/blob/master/doc/tpc.md
 
