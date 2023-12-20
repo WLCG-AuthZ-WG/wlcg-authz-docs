@@ -123,7 +123,7 @@ be equally translated for clients that comes with tokens, e.g.
 # /etc/xrootd/scitokens.cfg
 [Global]
 onmissing = passthrough
-audience = https://eosatlas.cern.ch
+audience = https://wlcg.cern.ch/jwt/v1/any, roots://eosatlas.cern.ch:1094, https://eosatlas.cern.ch, eosatlas.cern.ch
 
 [Issuer ATLAS]
 issuer = https://atlas-auth.web.cern.ch/
