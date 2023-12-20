@@ -19,8 +19,7 @@ deployment, you need to:
 ```
 [Global]
 onmissing = passthrough
-# don't use https://wlcg.cern.ch/jwt/v1/any on production instances
-audience = https://xrd.example.com:1094, https://wlcg.cern.ch/jwt/v1/any
+audience = https://wlcg.cern.ch/jwt/v1/any, https://xrd.example.com:1094, roots://xrd.example.com:1094
 
 [Issuer WLCG IAM]
 issuer = https://wlcg.cloud.cnaf.infn.it/
