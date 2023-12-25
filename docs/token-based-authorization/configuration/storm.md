@@ -158,7 +158,7 @@ wlcgScopeAuthzEnabled=true
 fineGrainedAuthzEnabled=true
 ```
 * /etc/storm/webdav/config/application.yml
-```
+```yml
 oauth:
   enable-oidc: true  
   issuers:
