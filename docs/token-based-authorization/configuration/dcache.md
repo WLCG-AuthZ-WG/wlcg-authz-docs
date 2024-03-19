@@ -25,7 +25,9 @@ This line alone is not sufficient for gPlazma service configuration, because it 
 # assuming that VO starts in top level directory
 gplazma.scitoken.issuer!wlcg = https://wlcg.cloud.cnaf.infn.it/ /wlcg
 gplazma.scitoken.issuer!altas = https://atlas-auth.web.cern.ch/ /atlas
+gplazma.scitoken.issuer!altas_new = https://atlas-auth.cern.ch/ /atlas
 gplazma.scitoken.issuer!cms = https://cms-auth.web.cern.ch/ /cms
+gplazma.scitoken.issuer!cms_new = https://cms-auth.cern.ch/ /cms
 # assuming that dCache WebDAV service runs on default HTTPS port 443 for doors dcache.example.com
 #gplazma.scitoken.audience-targets = https://dcache.example.com
 # you can specify multiple audiences (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
@@ -51,6 +53,8 @@ These dCache versions comes with important updates.
 4. WLCG JWT explicit authorization implemented in 8.2.32 and 9.2.0 (needs workaround in IAM token issuer)
 5. Recommended for WLCG experiments are 8.2.35+ and 9.2.3+ (versions older than 8.2.22 can't be used with WLCG JWT tokens)
 
+**WARNING**: in April 2024 CERN IAM is going to add new token issuer hostnames and you should add them also in the configuration files (yes, this is sensitive from security point of view but currently we don't have official list of trusted token issuer names associated with VOs).
+
 Following minimal configuration adds support to access files with WLCG JWL tokens
 ```
 # /etc/dcache/gplazma.conf
@@ -65,7 +69,9 @@ auth     optional     oidc
 # assuming that VO starts in top level directory
 gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg -authz-id="uid:1999 gid:1999 username:wlcg_oidc"
 gplazma.oidc.provider!altas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2999 gid:2999 username:atlas_oidc"
+gplazma.oidc.provider!altas_new = https://atlas-auth.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2999 gid:2999 username:atlas_oidc"
 gplazma.oidc.provider!cms = https://cms-auth.web.cern.ch/ -profile=wlcg -prefix=/cms -authz-id="uid:3999 gid:3999 username:cms_oidc"
+gplazma.oidc.provider!cms_new = https://cms-auth.cern.ch/ -profile=wlcg -prefix=/cms -authz-id="uid:3999 gid:3999 username:cms_oidc"
 # assuming that dCache WebDAV service runs on default HTTPS port 443 for doors dcache.example.com
 #gplazma.oidc.audience-targets = https://dcache.example.com
 # you can specify multiple audiences (https://wlcg.cern.ch/jwt/v1/any is necessary for compliance testbed)
@@ -210,6 +216,9 @@ Both configurations works well with clients accessing storage either with X.509 
 # VO issuer prefix:
 # assuming that namespace for VO data is stored in the top level directory /atlas
 gplazma.oidc.provider!atlas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2001 gid:2001 username:atlas_oidc_with_storage_scope"
+# in April 2024 CERN is going to introduce new token issuer hostnames for experiments
+# to be ready for this update you should include also new issuer hostname
+gplazma.oidc.provider!atlas_new = https://atlas-auth.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2001 gid:2001 username:atlas_oidc_with_storage_scope"
 # In case ATLAS VO namespace starts in /pnfs/example.com/atlas than you must use this full prefix
 # in the provider configuration. Using "/" prefix (most probably for any VO) is wrong with severe
 # security implications
