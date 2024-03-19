@@ -216,8 +216,8 @@ Both configurations works well with clients accessing storage either with X.509 
 # VO issuer prefix:
 # assuming that namespace for VO data is stored in the top level directory /atlas
 gplazma.oidc.provider!atlas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2001 gid:2001 username:atlas_oidc_with_storage_scope"
-# in April 2024 CERN is going to introduce new token issuer hostnames for experiments
-# to be ready for this update you should include also new issuer hostname
+# in April 2024 CERN is going to introduce new token issuer hostnames for WLCG experiments
+# and to be ready for this update new issuer hostname should be also included in the configuration
 gplazma.oidc.provider!atlas_new = https://atlas-auth.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2001 gid:2001 username:atlas_oidc_with_storage_scope"
 # In case ATLAS VO namespace starts in /pnfs/example.com/atlas than you must use this full prefix
 # in the provider configuration. Using "/" prefix (most probably for any VO) is wrong with severe
