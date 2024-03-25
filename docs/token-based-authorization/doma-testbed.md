@@ -11,8 +11,11 @@ To be able to use tokens it is necessary to know which token issuer is used by i
  VO  | Issuer
 ---- | ------
 WLCG IAM | https://wlcg.cloud.cnaf.infn.it/
-ATLAS IAM | https://atlas-auth.web.cern.ch/
-CMS IAM | https://cms-auth.web.cern.ch/
+ALICE IAM | https://atlice-auth.cern.ch/
+ATLAS IAM | https://atlas-auth.cern.ch/
+CMS IAM | https://cms-auth.cern.ch/
+LHCB IAM | https://lhcb-auth.cern.ch/
+DTEAM IAM | https://dteam-auth.cern.ch/
 DUNE | https://cilogon.org/dune
 Fermilab | https://cilogon.org/fermilab
 
@@ -54,38 +57,38 @@ authtokens = 85ff127e07ea6660c727831b99e18e4e96b319283f8d2cc8113f405bad2ba261@eg
 # recommendation for ATLAS configuration may change in fugure
 # (this is not the official ATLAS site configuration documentation)
 [authgroup: atlas_iam_prd]
-authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.create *
-authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.read *
-authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.modify *
-authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.cancel *
+authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.cern.ch/ https://arc1.example.com compute.create *
+authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.cern.ch/ https://arc1.example.com compute.read *
+authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.cern.ch/ https://arc1.example.com compute.modify *
+authtokens = 7dee38a3-6ab8-4fe2-9e4c-58039c21d817 https://atlas-auth.cern.ch/ https://arc1.example.com compute.cancel *
 [authgroup: atlas_iam_plt]
-authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.create *
-authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.read *
-authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.modify *
-authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.cancel *
+authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.cern.ch/ https://arc1.example.com compute.create *
+authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.cern.ch/ https://arc1.example.com compute.read *
+authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.cern.ch/ https://arc1.example.com compute.modify *
+authtokens = 750e9609-485a-4ed4-bf16-d5cc46c71024 https://atlas-auth.cern.ch/ https://arc1.example.com compute.cancel *
 [authgroup: atlas_iam_sgm]
-authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.create *
-authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.read *
-authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.modify *
-authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.web.cern.ch/ https://arc1.example.com compute.cancel *
+authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.cern.ch/ https://arc1.example.com compute.create *
+authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.cern.ch/ https://arc1.example.com compute.read *
+authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.cern.ch/ https://arc1.example.com compute.modify *
+authtokens = 5c5d2a4d-9177-3efa-912f-1b4e5c9fb660 https://atlas-auth.cern.ch/ https://arc1.example.com compute.cancel *
 
 # again, just an example for ARC-CE running on arc1.example.com
 # (this is not the official CMS site configuration documentation)
 [authgroup: cms_iam_pilot]
-authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.create *
-authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.read *
-authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.modify *
-authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.cancel *
+authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.cern.ch/ https://arc1.example.com compute.create *
+authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.cern.ch/ https://arc1.example.com compute.read *
+authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.cern.ch/ https://arc1.example.com compute.modify *
+authtokens = bad55f4e-602c-4e8d-a5c5-bd8ffb762113 https://cms-auth.cern.ch/ https://arc1.example.com compute.cancel *
 [authgroup: cms_iam_test]
-authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.create *
-authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.read *
-authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.modify *
-authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.cancel *
+authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.cern.ch/ https://arc1.example.com compute.create *
+authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.cern.ch/ https://arc1.example.com compute.read *
+authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.cern.ch/ https://arc1.example.com compute.modify *
+authtokens = 08ca855e-d715-410e-a6ff-ad77306e1763 https://cms-auth.cern.ch/ https://arc1.example.com compute.cancel *
 [authgroup: cms_iam_itb]
-authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.create *
-authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.read *
-authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.modify *
-authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.web.cern.ch/ https://arc1.example.com compute.cancel *
+authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.cern.ch/ https://arc1.example.com compute.create *
+authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.cern.ch/ https://arc1.example.com compute.read *
+authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.cern.ch/ https://arc1.example.com compute.modify *
+authtokens = 490a9a36-0268-4070-8813-65af031be5a3 https://cms-auth.cern.ch/ https://arc1.example.com compute.cancel *
 
 # this assumes existence of local users wlcg, egi, atlasprd, atlasplt, atlassgm, cmsplt, cmstest and cmsitb with corresponding groups
 [mapping]
