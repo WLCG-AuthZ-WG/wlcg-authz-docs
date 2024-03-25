@@ -101,6 +101,14 @@ issuer = https://atlas-auth.web.cern.ch/
 base_path = /your/base/path/for/atlas
 map_subject = False
 default_user = xrootd
+
+# in April 2024 CERN is going to introduce new token issuer hostnames for WLCG experiments
+# and to be ready for this update new issuer hostname should be also included in the configuration
+[Issuer ATLASNEW]
+issuer = https://atlas-auth.cern.ch/
+base_path = /your/base/path/for/atlas
+map_subject = False
+default_user = xrootd
 ```
 Plus update `ofs.authlib` in your XRootD configuration file with `libXrdAccSciTokens.so`
 as mentioned in section with WLCG compliance testbed configuration.
@@ -126,6 +134,15 @@ audience = https://wlcg.cern.ch/jwt/v1/any, roots://eosatlas.cern.ch:1094, https
 
 [Issuer ATLAS]
 issuer = https://atlas-auth.web.cern.ch/
+base_path = /eos/atlas
+map_subject = False
+name_mapfile = /etc/xrootd/scitokens.map
+default_user = atlas001
+
+# in April 2024 CERN is going to introduce new token issuer hostnames for WLCG experiments
+# and to be ready for this update new issuer hostname should be also included in the configuration
+[Issuer ATLASNEW]
+issuer = https://atlas-auth.cern.ch/
 base_path = /eos/atlas
 map_subject = False
 name_mapfile = /etc/xrootd/scitokens.map
