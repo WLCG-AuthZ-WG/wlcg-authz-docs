@@ -24,6 +24,7 @@ This line alone is not sufficient for gPlazma service configuration, because it 
 [centralDomain/gplazma]
 # assuming that VO starts in top level directory
 gplazma.scitoken.issuer!wlcg = https://wlcg.cloud.cnaf.infn.it/ /wlcg
+gplazma.scitoken.issuer!dteam = https://dteam-auth.cern.ch/ /dteam
 gplazma.scitoken.issuer!altas = https://atlas-auth.web.cern.ch/ /atlas
 gplazma.scitoken.issuer!altas_new = https://atlas-auth.cern.ch/ /atlas
 gplazma.scitoken.issuer!cms = https://cms-auth.web.cern.ch/ /cms
@@ -68,6 +69,7 @@ auth     optional     oidc
 [centralDomain/gplazma]
 # assuming that VO starts in top level directory
 gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg -authz-id="uid:1999 gid:1999 username:wlcg_oidc"
+gplazma.oidc.provider!dteam = https://dteam-auth.cern.ch/ -profile=wlcg -prefix=/dteam -authz-id="uid:4999 gid:4999 username:dteam_oidc"
 gplazma.oidc.provider!altas = https://atlas-auth.web.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2999 gid:2999 username:atlas_oidc"
 gplazma.oidc.provider!altas_new = https://atlas-auth.cern.ch/ -profile=wlcg -prefix=/atlas -authz-id="uid:2999 gid:2999 username:atlas_oidc"
 gplazma.oidc.provider!cms = https://cms-auth.web.cern.ch/ -profile=wlcg -prefix=/cms -authz-id="uid:3999 gid:3999 username:cms_oidc"
@@ -141,7 +143,7 @@ Following changes needs to be applied to the dCache configuration to allow acces
 # ...
 [centralDomain/gplazma]
 # assuming that VO starts in top level directory
-gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg -authz-id="username:atlas_oidc_scope_based uid:1000 gid:1000" -non-authz-id="username:atlas_oidc_group_based uid:1100 gid:1100"
+gplazma.oidc.provider!wlcg = https://wlcg.cloud.cnaf.infn.it/ -profile=wlcg -prefix=/wlcg -authz-id="username:wlcg_oidc_scope_based uid:1000 gid:1000" -non-authz-id="username:wlcg_oidc_group_based uid:1100 gid:1100"
 # ...
 ```
 * new multimap mapping for WLCG groups defined in access token
