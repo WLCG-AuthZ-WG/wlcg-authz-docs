@@ -89,12 +89,13 @@ x wlcgtknusr_x509 wlcgtknusr
 If you use very simple XRootD configuration with posix backend and `acc.authdb`
 to specify permission for clients using X.509 VOMS proxy certificate than it
 should be sufficient to add `/etc/xrootd/scitokens.cfg` configuration file
-for `xrd.example.com:1094` and top level VO directory `/your/base/path/for/atlas`
+for `xrd.example.com:1094` that supports access with WebDAV + xroot protocol
+and top level VO directory `/your/base/path/for/atlas`
 ```
 # /etc/xrootd/scitokens.cfg
 [Global]
 onmissing = passthrough
-audience = https://xrd.example.com:1094
+audience = https://wlcg.cern.ch/jwt/v1/any, roots://xrd.example.com:1094, https://xrd.example.com:1094, xrd.example.com
 
 [Issuer ATLAS]
 issuer = https://atlas-auth.web.cern.ch/
