@@ -26,7 +26,6 @@ issuer = https://wlcg.cloud.cnaf.infn.it/
 base_path = /data/grid/wlcg
 map_subject = false
 default_user = xrootd
-authorization_strategy = capability
 ```
 
 - Note that the `onmissing = passthrough` part is needed to continue with
