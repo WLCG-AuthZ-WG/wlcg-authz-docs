@@ -26,6 +26,7 @@ issuer = https://wlcg.cloud.cnaf.infn.it/
 base_path = /data/grid/wlcg
 map_subject = false
 default_user = xrootd
+authorization_strategy = capability
 ```
 
 - Note that the `onmissing = passthrough` part is needed to continue with
@@ -102,6 +103,7 @@ issuer = https://atlas-auth.web.cern.ch/
 base_path = /your/base/path/for/atlas
 map_subject = False
 default_user = xrootd
+authorization_strategy = capability
 
 # in April 2024 CERN is going to introduce new token issuer hostnames for WLCG experiments
 # and to be ready for this update new issuer hostname should be also included in the configuration
@@ -110,6 +112,7 @@ issuer = https://atlas-auth.cern.ch/
 base_path = /your/base/path/for/atlas
 map_subject = False
 default_user = xrootd
+authorization_strategy = capability
 ```
 Plus update `ofs.authlib` in your XRootD configuration file with `libXrdAccSciTokens.so`
 as mentioned in section with WLCG compliance testbed configuration.
@@ -139,6 +142,7 @@ base_path = /eos/atlas
 map_subject = False
 name_mapfile = /etc/xrootd/scitokens.map
 default_user = atlas001
+authorization_strategy = capability
 
 # in April 2024 CERN is going to introduce new token issuer hostnames for WLCG experiments
 # and to be ready for this update new issuer hostname should be also included in the configuration
@@ -148,6 +152,7 @@ base_path = /eos/atlas
 map_subject = False
 name_mapfile = /etc/xrootd/scitokens.map
 default_user = atlas001
+authorization_strategy = capability
 ```
 * /etc/xrootd/scitokens.map (map all non-default users with different privileges)
 ```
