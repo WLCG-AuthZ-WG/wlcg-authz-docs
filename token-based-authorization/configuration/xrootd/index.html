@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.33">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.66ac8b77.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.3cba04c6.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
@@ -143,7 +143,7 @@
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
@@ -704,6 +704,7 @@ issuer = https://wlcg.cloud.cnaf.infn.it/
 base_path = /data/grid/wlcg
 map_subject = false
 default_user = xrootd
+authorization_strategy = capability
 </code></pre>
 <ul>
 <li>
@@ -783,6 +784,7 @@ issuer = https://atlas-auth.web.cern.ch/
 base_path = /your/base/path/for/atlas
 map_subject = False
 default_user = xrootd
+authorization_strategy = capability
 
 # in April 2024 CERN is going to introduce new token issuer hostnames for WLCG experiments
 # and to be ready for this update new issuer hostname should be also included in the configuration
@@ -791,6 +793,7 @@ issuer = https://atlas-auth.cern.ch/
 base_path = /your/base/path/for/atlas
 map_subject = False
 default_user = xrootd
+authorization_strategy = capability
 </code></pre>
 <p>Plus update <code>ofs.authlib</code> in your XRootD configuration file with <code>libXrdAccSciTokens.so</code>
 as mentioned in section with WLCG compliance testbed configuration.</p>
@@ -817,6 +820,7 @@ base_path = /eos/atlas
 map_subject = False
 name_mapfile = /etc/xrootd/scitokens.map
 default_user = atlas001
+authorization_strategy = capability
 
 # in April 2024 CERN is going to introduce new token issuer hostnames for WLCG experiments
 # and to be ready for this update new issuer hostname should be also included in the configuration
@@ -826,6 +830,7 @@ base_path = /eos/atlas
 map_subject = False
 name_mapfile = /etc/xrootd/scitokens.map
 default_user = atlas001
+authorization_strategy = capability
 </code></pre>
 <ul>
 <li>/etc/xrootd/scitokens.map (map all non-default users with different privileges)</li>
@@ -896,7 +901,7 @@ to the identity that match owner it the EOS namespace, e.g.</p>
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.af256bd8.min.js"></script>
       
     
   </body>
