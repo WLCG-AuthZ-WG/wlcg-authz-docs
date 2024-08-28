@@ -26,6 +26,7 @@ issuer = https://wlcg.cloud.cnaf.infn.it/
 base_path = /data/grid/wlcg
 map_subject = false
 default_user = xrootd
+#authorization_strategy = capability group mapping
 ```
 
 - Note that the `onmissing = passthrough` part is needed to continue with
@@ -53,6 +54,8 @@ http.header2cgi Authorization authz
 = wlcgtknusr o: https://wlcg.cloud.cnaf.infn.it/ g: /wlcg
 x wlcgtknusr /data/grid/wlcg a  /data/grid/srr lr
 ```
+- SciToken library together with XRootD 5.7.0 support explicit authorization
+  stragegy configuration (related [xrootd#2121](https://github.com/xrootd/xrootd/issues/2121))
 
 This configuration enables flat authorization access on the storage to members
 of the WLCG VO with the `/wlcg` group,, i.e. all users will have read and write
