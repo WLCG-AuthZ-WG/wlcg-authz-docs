@@ -799,7 +799,10 @@ as mentioned in section with WLCG compliance testbed configuration.</p>
 <p>ATLAS plans to rely exclusively on storage scopes in the tokens and that's why
 your production <code>acc.authdb</code> configuration should not contain any mapping for
 <code>wlcg.groups</code> that can be present in the token. All accesses to the storage with
-tokens that doesn't contain relevant storage scopes should be rejected.</p>
+tokens that doesn't contain relevant storage scopes should be rejected. Newer
+version of scitoken library together with XRootD 5.7.0 now support also explicit
+strategy for token authorization using <code>authorization_strategy</code> configuration
+option (related <a href="https://github.com/xrootd/xrootd/issues/2121">xrootd#2121</a>).</p>
 <h3 id="eos-mapping-with-directories-using-different-identity">EOS mapping with directories using different identity</h3>
 <p>EOS migrated from CASTOR and configured with full compatibility
 with original CASTOR storage rely only on certificate subject
