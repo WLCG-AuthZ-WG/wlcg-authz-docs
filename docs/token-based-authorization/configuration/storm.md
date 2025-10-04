@@ -147,7 +147,7 @@ rootPath=/storage/gpfs_atlas/atlas
 filesystemType=posix
 accessPoints=/atlas
 vos=
-orgs=https://atlas-auth.web.cern.ch/
+orgs=https://atlas-auth.cern.ch/
 authenticatedReadEnabled=false
 anonymousReadEnabled=false
 voMapEnabled=false
@@ -163,7 +163,7 @@ oauth:
   enable-oidc: true  
   issuers:
     - name: atlas
-      issuer: https://atlas-auth.web.cern.ch/
+      issuer: https://atlas-auth.cern.ch/
 
 storm:
   authz:
