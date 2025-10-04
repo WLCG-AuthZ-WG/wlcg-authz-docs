@@ -101,15 +101,6 @@ onmissing = passthrough
 audience = https://wlcg.cern.ch/jwt/v1/any, roots://xrd.example.com:1094, https://xrd.example.com:1094, xrd.example.com
 
 [Issuer ATLAS]
-issuer = https://atlas-auth.web.cern.ch/
-base_path = /your/base/path/for/atlas
-map_subject = False
-default_user = xrootd
-authorization_strategy = capability
-
-# in April 2024 CERN is going to introduce new token issuer hostnames for WLCG experiments
-# and to be ready for this update new issuer hostname should be also included in the configuration
-[Issuer ATLASNEW]
 issuer = https://atlas-auth.cern.ch/
 base_path = /your/base/path/for/atlas
 map_subject = False
@@ -122,7 +113,7 @@ as mentioned in section with WLCG compliance testbed configuration.
 ATLAS plans to rely exclusively on storage scopes in the tokens and that's why
 your production `acc.authdb` configuration should not contain any mapping for
 `wlcg.groups` that can be present in the token. All accesses to the storage with
-tokens that doesn't contain relevant storage scopes should be rejected. Newer
+tokens that doesn't contain relevant storage scopes should be rejected. er
 version of scitoken library together with XRootD 5.7.0 now support also explicit
 strategy for token authorization using `authorization_strategy` configuration
 option (related [xrootd#2121](https://github.com/xrootd/xrootd/issues/2121)).
@@ -142,16 +133,6 @@ onmissing = passthrough
 audience = https://wlcg.cern.ch/jwt/v1/any, roots://eosatlas.cern.ch:1094, https://eosatlas.cern.ch, eosatlas.cern.ch
 
 [Issuer ATLAS]
-issuer = https://atlas-auth.web.cern.ch/
-base_path = /eos/atlas
-map_subject = False
-name_mapfile = /etc/xrootd/scitokens.map
-default_user = atlas001
-authorization_strategy = capability
-
-# in April 2024 CERN is going to introduce new token issuer hostnames for WLCG experiments
-# and to be ready for this update new issuer hostname should be also included in the configuration
-[Issuer ATLASNEW]
 issuer = https://atlas-auth.cern.ch/
 base_path = /eos/atlas
 map_subject = False
