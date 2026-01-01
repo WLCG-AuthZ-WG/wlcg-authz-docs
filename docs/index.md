@@ -19,18 +19,15 @@ certificates can be linked to an account.
 
 ## WLCG VO VOMS configuration
 
-!!! danger "New LSC files will be rolled out on Dec. 16th, 2022"
+!!! danger "New LSC files will be rolled out on Dec. 22th, 2025"
 
-      On Friday Dec. 16th, 2022 at 11 we will update the WLCC VO LSC
-      configuration. The reason for the update is that the current certificate
-      is going to expire and that the Sectigo CA INFN currently uses has
-      changed the structure of the DNs of the issued certificates. 
+      On Monday Dec. 22th, 2025 the WLCC VO LSC configuration will be updated.
+      The reason for the update is that the current certificate
+      from Sectigo CA is going to expire and new Harrica CA use different
+      structure of the DNs of the issued certificates. 
 
       The updated configuration that you find here is compliant with the new
       certificate. 
-
-      **Do not roll out this configuration before Dec. 16th, or VOMS validation
-      will break at your site**.
 
 
 - [VOMSES](./voms-config/wlcg-voms.cloud.cnaf.infn.it.vomses)
