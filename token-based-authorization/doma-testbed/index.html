@@ -1335,20 +1335,20 @@ authtokensgen = (iss=&quot;https://aai.egi.eu/auth/realms/egi&quot;) &amp; (sub=
 # recommendation for ATLAS configuration may change in fugure
 # (this is not the official ATLAS site configuration documentation)
 [authgroup: atlas_iam_prd]
-authtokensgen = (iss=&quot;https://atlas-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.farm.particle.cz&quot;) &amp; (sub=&quot;7dee38a3-6ab8-4fe2-9e4c-58039c21d817&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
+authtokensgen = (iss=&quot;https://atlas-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.example.com&quot;) &amp; (sub=&quot;7dee38a3-6ab8-4fe2-9e4c-58039c21d817&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
 [authgroup: atlas_iam_plt]
-authtokensgen = (iss=&quot;https://atlas-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.farm.particle.cz&quot;) &amp; (sub=&quot;750e9609-485a-4ed4-bf16-d5cc46c71024&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
+authtokensgen = (iss=&quot;https://atlas-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.example.com&quot;) &amp; (sub=&quot;750e9609-485a-4ed4-bf16-d5cc46c71024&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
 [authgroup: atlas_iam_sgm]
-authtokensgen = (iss=&quot;https://atlas-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.farm.particle.cz&quot;) &amp; (sub=&quot;5c5d2a4d-9177-3efa-912f-1b4e5c9fb660&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
+authtokensgen = (iss=&quot;https://atlas-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.example.com&quot;) &amp; (sub=&quot;5c5d2a4d-9177-3efa-912f-1b4e5c9fb660&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
 
 # again, just an example for ARC-CE running on arc1.example.com
 # (this is not the official CMS site configuration documentation)
 [authgroup: cms_iam_pilot]
-authtokensgen = (iss=&quot;https://atlas-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.farm.particle.cz&quot;) &amp; (sub=&quot;bad55f4e-602c-4e8d-a5c5-bd8ffb762113&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
+authtokensgen = (iss=&quot;https://cms-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.example.com&quot;) &amp; (sub=&quot;bad55f4e-602c-4e8d-a5c5-bd8ffb762113&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
 [authgroup: cms_iam_test]
-authtokensgen = (iss=&quot;https://atlas-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.farm.particle.cz&quot;) &amp; (sub=&quot;08ca855e-d715-410e-a6ff-ad77306e1763&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
+authtokensgen = (iss=&quot;https://cms-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.example.com&quot;) &amp; (sub=&quot;08ca855e-d715-410e-a6ff-ad77306e1763&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
 [authgroup: cms_iam_itb]
-authtokensgen = (iss=&quot;https://atlas-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.farm.particle.cz&quot;) &amp; (sub=&quot;490a9a36-0268-4070-8813-65af031be5a3&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
+authtokensgen = (iss=&quot;https://cms-auth.cern.ch/&quot;) &amp; (aud=&quot;https://arc1.example.com&quot;) &amp; (sub=&quot;490a9a36-0268-4070-8813-65af031be5a3&quot;) &amp; (scope~&quot;(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)&quot;)
 </code></pre>
 <h3 id="htcondor-ce"><a href="https://htcondor.github.io/htcondor-ce/v5/installation/htcondor-ce/">HTCondor-CE</a></h3>
 <p>It is possible to submit jobs with WLCG JWT token if HTCondor accepts <code>SCITOKENS</code>.
