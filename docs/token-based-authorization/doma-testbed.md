@@ -180,20 +180,20 @@ authtokensgen = (iss="https://aai.egi.eu/auth/realms/egi") & (sub="85ff127e07ea6
 # recommendation for ATLAS configuration may change in fugure
 # (this is not the official ATLAS site configuration documentation)
 [authgroup: atlas_iam_prd]
-authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="7dee38a3-6ab8-4fe2-9e4c-58039c21d817") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.example.com") & (sub="7dee38a3-6ab8-4fe2-9e4c-58039c21d817") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
 [authgroup: atlas_iam_plt]
-authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="750e9609-485a-4ed4-bf16-d5cc46c71024") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.example.com") & (sub="750e9609-485a-4ed4-bf16-d5cc46c71024") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
 [authgroup: atlas_iam_sgm]
-authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="5c5d2a4d-9177-3efa-912f-1b4e5c9fb660") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.example.com") & (sub="5c5d2a4d-9177-3efa-912f-1b4e5c9fb660") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
 
 # again, just an example for ARC-CE running on arc1.example.com
 # (this is not the official CMS site configuration documentation)
 [authgroup: cms_iam_pilot]
-authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="bad55f4e-602c-4e8d-a5c5-bd8ffb762113") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+authtokensgen = (iss="https://cms-auth.cern.ch/") & (aud="https://arc1.example.com") & (sub="bad55f4e-602c-4e8d-a5c5-bd8ffb762113") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
 [authgroup: cms_iam_test]
-authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="08ca855e-d715-410e-a6ff-ad77306e1763") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+authtokensgen = (iss="https://cms-auth.cern.ch/") & (aud="https://arc1.example.com") & (sub="08ca855e-d715-410e-a6ff-ad77306e1763") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
 [authgroup: cms_iam_itb]
-authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="490a9a36-0268-4070-8813-65af031be5a3") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+authtokensgen = (iss="https://cms-auth.cern.ch/") & (aud="https://arc1.example.com") & (sub="490a9a36-0268-4070-8813-65af031be5a3") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
 ```
 
 ### [HTCondor-CE](https://htcondor.github.io/htcondor-ce/v5/installation/htcondor-ce/)
