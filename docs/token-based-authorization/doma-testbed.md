@@ -6,24 +6,31 @@ Send mail to [wlcg-doma-tpc e-group](https://e-groups.cern.ch/e-groups/Egroup.do
 
 ## IAM
 
-To be able to use tokens it is necessary to know which token issuer is used by individual VOs. For tests we use WLCG IAM token issuer which provides services for "wlcg" VO, e.g.
+There are multiple token issuer implementations, each supporting different token profiles. Within our community, the most widely used and significant implementations are following:
 
- VO  | Issuer
----- | ------
-WLCG IAM | https://wlcg.cloud.cnaf.infn.it/
-ALICE IAM | https://atlice-auth.cern.ch/
-ATLAS IAM | https://atlas-auth.cern.ch/
-CMS IAM | https://cms-auth.cern.ch/
-LHCB IAM | https://lhcb-auth.cern.ch/
-DTEAM IAM | https://dteam-auth.cern.ch/
-DUNE | https://cilogon.org/dune
-Fermilab | https://cilogon.org/fermilab
+* [Indigo-iam](https://github.com/indigo-iam/iam/) ([documentation](https://indigo-iam.github.io/v/current/docs/)) supports WLCG and AARC profiles
+* [OA4MP](https://oa4mp.org/) supports SciToken and WLCG profiles
+* EGI KeyCloak supports AARC profile
 
-OSG have token isser details stored with all VO detail in their [virtual-organization topology](https://github.com/opensciencegrid/topology/tree/master/virtual-organizations) files. WLCG/EGI currently doesn't provide common (trusted) place with token isser details, but naturally this could become part of [EGI VO ID Cards](https://operations-portal.egi.eu/vo/view/voname/atlas) (briefly touched this topic [here](https://indico.cern.ch/event/1177943/?note=203576)).
+IAM instances can be deployed to serve a single VO (experiment), as in the case of CERN’s Indigo-IAM, or configured for multi-VO environments, such as EGI Check-In or Fermilab. The token issuer URL is a critical configuration parameter. Below is an (incomplete) list of production issuers currently used by HEP experiments:
+
+ VO  | Issuer | Implementation | Profile | Note
+---- | ------ | -------------- | ------- | ----
+WLCG IAM | https://wlcg.cloud.cnaf.infn.it/ | Indigo-IAM | WLCG | test instance for WLCG JWT token developers
+ALICE IAM | https://atlice-auth.cern.ch/ | Indigo-IAM | WLCG |
+ATLAS IAM | https://atlas-auth.cern.ch/ | Indigo-IAM | WLCG |
+CMS IAM | https://cms-auth.cern.ch/ | Indigo-IAM | WLCG |
+LHCB IAM | https://lhcb-auth.cern.ch/ | Indigo-IAM | WLCG |
+DTEAM IAM | https://dteam-auth.cern.ch/ | Indigo-IAM | WLCG | test instance for Ops
+DUNE | https://cilogon.org/dune | OA4MP | WLCG |
+Fermilab | https://cilogon.org/fermilab | OA4MP | WLCG |
+EGI | https://aai.egi.eu/auth/realms/egi | KeyCloak | AARC |
+
+More details about token issuers used by OSG can be found [virtual-organization topology](https://github.com/opensciencegrid/topology/tree/master/virtual-organizations) files. WLCG/EGI currently doesn't provide common (trusted) place with token isser details, but naturally this could become part of [EGI VO ID Cards](https://operations-portal.egi.eu/vo/view/voname/atlas) (briefly touched this topic [here](https://indico.cern.ch/event/1177943/?note=203576)).
 
 ## CE
 
-### [ARC-CE](https://www.nordugrid.org/arc/arc6/misc/oidc_tokens.html)
+### Legacy [ARC-CE 6.x](https://www.nordugrid.org/arc/arc6/misc/oidc_tokens.html)
 
 ARC-CE 6.12 still has limited support for WLCG JWT tokens and they can be only used
 to submit jobs with HTTP based protocols (`EMI-ES` and `REST` interface). With current
@@ -142,12 +149,52 @@ arcsub --debug=DEBUG --info-endpoint-type arcrest --submission-endpoint-type arc
 ```
 ARC-CE support token discovery as described in [WLCG Bearer Token Discovery](https://zenodo.org/record/3937438)
 
-### Configured endpoints
+#### Configured endpoints
 Site | Host | VO | Audience | Group
 ---- | ---- | -- | -------- | -----
 [praguelcg2](https://goc.egi.eu/portal/index.php?Page_Type=Site&id=288) | arc1.farm.particle.cz, arc2.farm.particle.cz | wlcg | * | /wlcg/pilots
 [praguelcg2](https://goc.egi.eu/portal/index.php?Page_Type=Site&id=288) | arc1.farm.particle.cz, arc2.farm.particle.cz | atlas, dune | * | *
 
+### [ARC-CE 7.x](https://www.nordugrid.org/arc/arc7/tech/oidc_tokens/oidc_tokens.html)
+
+This ARC-CE release comes with improved token support and provides also more
+flexible token configuration which can [match arbitrary OIDC token claim](https://www.nordugrid.org/arc/arc7/admins/reference.html#authtokensgen).
+This can be used to replace `authtokens` configuration lines required by ARC-CE 6.x
+with more compact expression and same behavior can be achieved with
+
+```
+[authgroup: wlcg_iam]
+# capability based authorization that use compute.* scopes
+authtokensgen = (iss="https://wlcg.cloud.cnaf.infn.it/") & (aud="https://arc1.example.com") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+# group based authentication that use /wlcg/pilots group (LHC experiments prefer capabilities)
+authtokensgen = (iss="https://wlcg.cloud.cnaf.infn.it/") & (wlcg.groups="/wlcg/pilots")
+
+# accept token issued by EGI Check-in for job submission (both old MitreID and new Keycloak issuer)
+[authgroup: egi_aai]
+# very rough / DANGEROUS configuration - accepting all tokens without restrictions
+#authtokensgen = (iss="https://aai.egi.eu/auth/realms/egi")
+# it is possible to restrict job submission to the specific EGI user
+authtokensgen = (iss="https://aai.egi.eu/auth/realms/egi") & (sub="85ff127e07ea6660c727831b99e18e4e96b319283f8d2cc8113f405bad2ba261@egi.eu")
+
+# just an example for ARC-CE running on arc1.example.com
+# recommendation for ATLAS configuration may change in fugure
+# (this is not the official ATLAS site configuration documentation)
+[authgroup: atlas_iam_prd]
+authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="7dee38a3-6ab8-4fe2-9e4c-58039c21d817") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+[authgroup: atlas_iam_plt]
+authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="750e9609-485a-4ed4-bf16-d5cc46c71024") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+[authgroup: atlas_iam_sgm]
+authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="5c5d2a4d-9177-3efa-912f-1b4e5c9fb660") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+
+# again, just an example for ARC-CE running on arc1.example.com
+# (this is not the official CMS site configuration documentation)
+[authgroup: cms_iam_pilot]
+authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="bad55f4e-602c-4e8d-a5c5-bd8ffb762113") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+[authgroup: cms_iam_test]
+authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="08ca855e-d715-410e-a6ff-ad77306e1763") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+[authgroup: cms_iam_itb]
+authtokensgen = (iss="https://atlas-auth.cern.ch/") & (aud="https://arc1.farm.particle.cz") & (sub="490a9a36-0268-4070-8813-65af031be5a3") & (scope~"(^|.*[[:space:]])(compute\.create|compute\.read|compute\.cancel|compute\.modify)([[:space:]].*|$)")
+```
 
 ### [HTCondor-CE](https://htcondor.github.io/htcondor-ce/v5/installation/htcondor-ce/)
 
