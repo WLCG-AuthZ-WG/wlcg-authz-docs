@@ -165,6 +165,13 @@ oauth:
     - name: atlas
       issuer: https://atlas-auth.cern.ch/
 
+# Check the audience claim as specified in the WLCG Common JWT Profiles
+    enforce-audience-checks: true
+    audiences:
+        - https://wlcg.cern.ch/jwt/v1/any
+        - https://<webdav-hostname>:<webdav-port>
+        - <webdav-hostname>
+
 storm:
   authz:
     policies:
